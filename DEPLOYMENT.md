@@ -1,5 +1,7 @@
 # RCE Career Hub - Deployment Guide
 
+> 📖 **For a complete step-by-step deployment guide, see [VERCEL_DEPLOYMENT_GUIDE.md](./VERCEL_DEPLOYMENT_GUIDE.md)**
+
 ## Overview
 This guide covers deploying the RCE Career Hub application to Vercel or other hosting platforms.
 
@@ -13,8 +15,10 @@ This guide covers deploying the RCE Career Hub application to Vercel or other ho
 
 ### 1. Install Dependencies
 \`\`\`bash
-npm install
+npm install --legacy-peer-deps
 \`\`\`
+
+**Note:** The `--legacy-peer-deps` flag is required due to React 19 peer dependency conflicts with some packages (e.g., vaul).
 
 ### 2. Configure Environment Variables
 \`\`\`bash
@@ -94,13 +98,31 @@ CMD ["npm", "start"]
 
 ## Environment Variables for Production
 
+### Required Variables
 \`\`\`
-NEXT_PUBLIC_APP_URL=https://your-domain.com
-NEXT_PUBLIC_API_URL=https://your-domain.com/api
-DATABASE_URL=your_production_database_url
+NEXT_PUBLIC_APP_URL=https://your-project-name.vercel.app
+\`\`\`
+
+### Optional Variables (for full functionality)
+\`\`\`
+# OpenAI API (for AI chatbot features)
+OPENAI_API_KEY=sk-your-openai-api-key
+
+# Supabase (if using database)
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+
+# Database (if using Prisma/PostgreSQL)
+DATABASE_URL=postgresql://user:password@host:5432/database
+
+# Authentication (if using NextAuth)
 NEXTAUTH_SECRET=generate_a_strong_secret
 NEXTAUTH_URL=https://your-domain.com
 \`\`\`
+
+**Note:** The application currently works with mock data, so database variables are optional. AI chatbot features require `OPENAI_API_KEY`.
 
 ## Post-Deployment Checklist
 
