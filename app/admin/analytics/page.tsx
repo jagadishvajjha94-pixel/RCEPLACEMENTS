@@ -6,6 +6,7 @@ import { motion } from "framer-motion"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Label } from "@/components/ui/label"
 import {
   LineChart,
   Line,
@@ -20,7 +21,7 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-} from "recharts"
+} from "@/components/recharts-wrapper"
 import { TrendingUp, Users, Briefcase, Award, Download, Filter, Calendar } from "lucide-react"
 import { AdminSidebar } from "@/components/admin-sidebar"
 import { AdminHeader } from "@/components/admin-header"
@@ -293,10 +294,7 @@ export default function AnalyticsPage() {
           </div>
         </div>
       </main>
+      </div>
     </div>
   )
-}
-
-function Label({ children, ...props }: any) {
-  return <label className="text-sm font-medium" {...props}>{children}</label>
 }

@@ -21,7 +21,7 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-} from "recharts"
+} from "@/components/recharts-wrapper"
 import { Download, Calendar, TrendingUp, Users, Award, Building, Filter } from "lucide-react"
 import { AuthService } from "@/lib/auth-service"
 import { PlacementAnalyticsService, ConsolidatedSheetService } from "@/lib/placement-service"

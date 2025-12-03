@@ -23,7 +23,7 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-} from "recharts"
+} from "@/components/recharts-wrapper"
 import type { User as AuthUser } from "@/lib/auth-service"
 
 const COLORS = ["#FF8C42", "#2E86AB", "#A23B72", "#F18F01", "#06A77D"]

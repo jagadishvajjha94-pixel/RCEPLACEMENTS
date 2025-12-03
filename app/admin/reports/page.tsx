@@ -18,7 +18,7 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-} from "recharts"
+} from "@/components/recharts-wrapper"
 import {
   Building2,
   Users,
