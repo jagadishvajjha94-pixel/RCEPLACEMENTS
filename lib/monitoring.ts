@@ -12,7 +12,11 @@ export const trackError = (error: Error, context?: Record<string, unknown>) => {
   console.error("Error tracked:", error, context)
 
   // Send to error tracking service in production
-  if (process.env.NODE_ENV === "production") {
+  const isProduction = typeof window !== 'undefined' 
+    ? import.meta.env.MODE === 'production'
+    : (typeof process !== 'undefined' && process.env.NODE_ENV === "production")
+  
+  if (isProduction) {
     // Example: Sentry integration
     // Sentry.captureException(error, { contexts: { context } })
   }
@@ -21,7 +25,11 @@ export const trackError = (error: Error, context?: Record<string, unknown>) => {
 export const logPerformance = (metricName: string, duration: number) => {
   console.log(`⏱️ ${metricName}: ${duration}ms`)
 
-  if (process.env.NODE_ENV === "production") {
+  const isProduction = typeof window !== 'undefined'
+    ? import.meta.env.MODE === 'production'
+    : (typeof process !== 'undefined' && process.env.NODE_ENV === "production")
+
+  if (isProduction) {
     trackEvent("performance_metric", {
       metric: metricName,
       duration,

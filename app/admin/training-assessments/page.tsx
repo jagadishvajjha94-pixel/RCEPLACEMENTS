@@ -1,4 +1,3 @@
-"use client"
 
 import { useState } from "react"
 import { motion } from "framer-motion"
@@ -26,6 +25,40 @@ export default function TrainingAssessmentsPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedYear, setSelectedYear] = useState("2025-26")
   const [selectedBranch, setSelectedBranch] = useState("all")
+  const [uploadingFile, setUploadingFile] = useState<string | null>(null)
+
+  const handleUpload = (itemName: string) => {
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.accept = '.pdf,.xlsx,.xls,.doc,.docx'
+    input.onchange = (e: any) => {
+      const file = e.target.files[0]
+      if (file) {
+        setUploadingFile(itemName)
+        // Simulate upload
+        setTimeout(() => {
+          alert(`${itemName} uploaded successfully!`)
+          setUploadingFile(null)
+        }, 1000)
+      }
+    }
+    input.click()
+  }
+
+  const handleDownload = (itemName: string) => {
+    // Create a mock file download
+    const blob = new Blob([`Sample ${itemName} data`], { type: 'text/plain' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `${itemName.replace(/\s+/g, '_')}_${selectedYear}.txt`
+    link.click()
+    URL.revokeObjectURL(url)
+  }
+
+  const handleView = (itemName: string, branchOrYear?: string) => {
+    alert(`Viewing ${itemName}${branchOrYear ? ` for ${branchOrYear}` : ''}`)
+  }
 
   const branches = ["CSE", "ECE", "MECH", "CIVIL", "EEE", "AI&ML", "CS", "IOT", "AI&DS", "MBA"]
 
@@ -112,11 +145,22 @@ export default function TrainingAssessmentsPage() {
                         <h3 className="text-lg font-bold text-gray-900">{item}</h3>
                       </div>
                       <div className="flex gap-2">
-                        <Button variant="outline" size="sm" className="flex-1 gap-2">
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="flex-1 gap-2"
+                          onClick={() => handleUpload(item)}
+                          disabled={uploadingFile === item}
+                        >
                           <Upload className="w-4 h-4" />
-                          Upload
+                          {uploadingFile === item ? "Uploading..." : "Upload"}
                         </Button>
-                        <Button variant="outline" size="sm" className="flex-1 gap-2">
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="flex-1 gap-2"
+                          onClick={() => handleDownload(item)}
+                        >
                           <Download className="w-4 h-4" />
                           Download
                         </Button>
@@ -131,7 +175,7 @@ export default function TrainingAssessmentsPage() {
                 <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-xl font-bold text-gray-900">Assessments</h3>
-                    <Button className="gap-2">
+                    <Button className="gap-2" onClick={() => handleUpload("Assessment")}>
                       <Upload className="w-4 h-4" />
                       Upload Assessment
                     </Button>
@@ -141,7 +185,7 @@ export default function TrainingAssessmentsPage() {
                       <div key={idx} className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
                         <div className="flex items-center justify-between">
                           <span className="font-medium text-sm">{item}</span>
-                          <Button variant="ghost" size="sm">View</Button>
+                          <Button variant="ghost" size="sm" onClick={() => handleView(item)}>View</Button>
                         </div>
                       </div>
                     ))}
@@ -154,7 +198,7 @@ export default function TrainingAssessmentsPage() {
                     {branches.map((branch) => (
                       <div key={branch} className="p-4 border border-gray-200 rounded-lg">
                         <span className="font-medium">{branch}</span>
-                        <Button variant="outline" size="sm" className="mt-2 w-full">View</Button>
+                        <Button variant="outline" size="sm" className="mt-2 w-full" onClick={() => handleView("Assessment Sheet", branch)}>View</Button>
                       </div>
                     ))}
                   </div>
@@ -166,7 +210,7 @@ export default function TrainingAssessmentsPage() {
                 <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-xl font-bold text-gray-900">Assignments</h3>
-                    <Button className="gap-2">
+                    <Button className="gap-2" onClick={() => handleUpload("Assignment")}>
                       <Upload className="w-4 h-4" />
                       Upload Assignment
                     </Button>
@@ -178,7 +222,7 @@ export default function TrainingAssessmentsPage() {
                         {branches.slice(0, 5).map((branch) => (
                           <div key={branch} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                             <span className="font-medium">{branch}</span>
-                            <Button variant="outline" size="sm">View</Button>
+                            <Button variant="outline" size="sm" onClick={() => handleView("Assignment", branch)}>View</Button>
                           </div>
                         ))}
                       </div>
@@ -189,7 +233,7 @@ export default function TrainingAssessmentsPage() {
                         {["2025-26", "2024-25", "2023-24"].map((year) => (
                           <div key={year} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                             <span className="font-medium">{year}</span>
-                            <Button variant="outline" size="sm">View</Button>
+                            <Button variant="outline" size="sm" onClick={() => handleView("Assignment", branch)}>View</Button>
                           </div>
                         ))}
                       </div>
@@ -203,7 +247,7 @@ export default function TrainingAssessmentsPage() {
                 <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-xl font-bold text-gray-900">Attendance Sheets</h3>
-                    <Button className="gap-2">
+                    <Button className="gap-2" onClick={() => handleUpload("Attendance")}>
                       <Upload className="w-4 h-4" />
                       Upload Attendance
                     </Button>
@@ -215,7 +259,7 @@ export default function TrainingAssessmentsPage() {
                         {branches.slice(0, 5).map((branch) => (
                           <div key={branch} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                             <span className="font-medium">{branch}</span>
-                            <Button variant="outline" size="sm">View</Button>
+                            <Button variant="outline" size="sm" onClick={() => handleView("Assignment", branch)}>View</Button>
                           </div>
                         ))}
                       </div>
@@ -226,7 +270,7 @@ export default function TrainingAssessmentsPage() {
                         {["2025-26", "2024-25", "2023-24"].map((year) => (
                           <div key={year} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                             <span className="font-medium">{year}</span>
-                            <Button variant="outline" size="sm">View</Button>
+                            <Button variant="outline" size="sm" onClick={() => handleView("Assignment", branch)}>View</Button>
                           </div>
                         ))}
                       </div>

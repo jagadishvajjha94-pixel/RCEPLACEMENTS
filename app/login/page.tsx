@@ -1,7 +1,6 @@
-"use client"
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -13,7 +12,7 @@ import { AuthService } from "@/lib/auth-service"
 type RoleType = "student" | "faculty" | "admin"
 
 export default function LoginPage() {
-  const router = useRouter()
+  const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState<RoleType>("student")
   const [isRegistering, setIsRegistering] = useState(false)
   const [error, setError] = useState("")
@@ -64,9 +63,9 @@ export default function LoginPage() {
         AuthService.login(googleEmail, user.password)
         
         if (activeTab === "student") {
-          router.push("/student/dashboard")
+          navigate("/student/dashboard")
         } else if (activeTab === "faculty") {
-          router.push("/faculty/dashboard")
+          navigate("/faculty/dashboard")
         }
       }
       setIsGoogleLoading(false)
@@ -87,11 +86,11 @@ export default function LoginPage() {
 
       // Redirect based on role
       if (user.role === "student") {
-        router.push("/student/dashboard")
+        navigate("/student/dashboard")
       } else if (user.role === "faculty") {
-        router.push("/faculty/dashboard")
+        navigate("/faculty/dashboard")
       } else if (user.role === "admin") {
-        router.push("/admin/dashboard")
+        navigate("/admin/dashboard")
       }
     } else {
       setError("Invalid email or password")
@@ -134,9 +133,9 @@ export default function LoginPage() {
       AuthService.login(registerData.email, registerData.password)
       
       if (activeTab === "student") {
-        router.push("/student/dashboard")
+        navigate("/student/dashboard")
       } else if (activeTab === "faculty") {
-        router.push("/faculty/dashboard")
+        navigate("/faculty/dashboard")
       }
     } else {
       setError("Email already registered. Please login instead.")

@@ -1,5 +1,3 @@
-"use client"
-
 import type React from "react"
 import { StudentSidebar } from "@/components/student-sidebar"
 import { StudentHeader } from "@/components/student-header"

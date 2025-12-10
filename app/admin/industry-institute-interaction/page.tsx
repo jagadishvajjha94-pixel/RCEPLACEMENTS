@@ -1,4 +1,3 @@
-"use client"
 
 import { useState } from "react"
 import { motion } from "framer-motion"
@@ -19,15 +18,54 @@ import {
 } from "lucide-react"
 import { AdminSidebar } from "@/components/admin-sidebar"
 import { AdminHeader } from "@/components/admin-header"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
 
 export default function IndustryInstituteInteractionPage() {
   const [selectedYear, setSelectedYear] = useState("2025-26")
   const [searchQuery, setSearchQuery] = useState("")
+  const [showAddCompanyModal, setShowAddCompanyModal] = useState(false)
   const [companies, setCompanies] = useState([
     { id: "1", name: "Infosys", year: "2025-26" },
     { id: "2", name: "TCS", year: "2025-26" },
     { id: "3", name: "Wipro", year: "2025-26" },
   ])
+  
+  const handleUpload = (companyId: string, fileType: string) => {
+    const input = document.createElement("input")
+    input.type = "file"
+    input.accept = ".pdf,.doc,.docx,.jpg,.png"
+    input.onchange = (e: any) => {
+      const file = e.target.files[0]
+      if (file) {
+        alert(`File "${file.name}" uploaded successfully for ${fileType}`)
+        // In real app, upload to server
+      }
+    }
+    input.click()
+  }
+  
+  const handleDownload = (fileName: string) => {
+    alert(`Downloading ${fileName}...`)
+    // In real app, download from server
+  }
+  
+  const handleAddCompany = () => {
+    setShowAddCompanyModal(true)
+  }
+  
+  const handleExportData = () => {
+    const data = JSON.stringify(companies, null, 2)
+    const blob = new Blob([data], { type: "application/json" })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement("a")
+    link.href = url
+    link.download = `iii-data-${selectedYear}.json`
+    link.click()
+    URL.revokeObjectURL(url)
+  }
 
   const filteredCompanies = companies.filter(c =>
     c.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -51,11 +89,11 @@ export default function IndustryInstituteInteractionPage() {
                 <p className="text-gray-600">Manage industry visits, MoUs, talks, and interactions</p>
               </div>
               <div className="flex gap-2">
-                <Button variant="outline" className="gap-2">
+                <Button variant="outline" className="gap-2" onClick={handleExportData}>
                   <Download className="w-4 h-4" />
                   Export Data
                 </Button>
-                <Button className="gap-2">
+                <Button className="gap-2" onClick={handleAddCompany}>
                   <Building2 className="w-4 h-4" />
                   Add Company
                 </Button>
@@ -116,9 +154,14 @@ export default function IndustryInstituteInteractionPage() {
                             <FileText className="w-4 h-4 text-gray-600" />
                             <span className="text-sm text-gray-700">Scanned Circular</span>
                           </div>
-                          <Button variant="ghost" size="sm" className="gap-1">
-                            <Upload className="w-3 h-3" />
-                          </Button>
+                          <div className="flex gap-1">
+                            <Button variant="ghost" size="sm" className="gap-1" onClick={() => handleUpload(company.id, "Scanned Circular")}>
+                              <Upload className="w-3 h-3" />
+                            </Button>
+                            <Button variant="ghost" size="sm" className="gap-1" onClick={() => handleDownload(`${company.name}-circular.pdf`)}>
+                              <Download className="w-3 h-3" />
+                            </Button>
+                          </div>
                         </div>
                         
                         <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
@@ -126,9 +169,14 @@ export default function IndustryInstituteInteractionPage() {
                             <Mail className="w-4 h-4 text-gray-600" />
                             <span className="text-sm text-gray-700">Mail Communication</span>
                           </div>
-                          <Button variant="ghost" size="sm" className="gap-1">
-                            <Upload className="w-3 h-3" />
-                          </Button>
+                          <div className="flex gap-1">
+                            <Button variant="ghost" size="sm" className="gap-1" onClick={() => handleUpload(company.id, "Scanned Circular")}>
+                              <Upload className="w-3 h-3" />
+                            </Button>
+                            <Button variant="ghost" size="sm" className="gap-1" onClick={() => handleDownload(`${company.name}-circular.pdf`)}>
+                              <Download className="w-3 h-3" />
+                            </Button>
+                          </div>
                         </div>
                         
                         <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
@@ -136,9 +184,14 @@ export default function IndustryInstituteInteractionPage() {
                             <FileCheck className="w-4 h-4 text-gray-600" />
                             <span className="text-sm text-gray-700">Scanned Report</span>
                           </div>
-                          <Button variant="ghost" size="sm" className="gap-1">
-                            <Upload className="w-3 h-3" />
-                          </Button>
+                          <div className="flex gap-1">
+                            <Button variant="ghost" size="sm" className="gap-1" onClick={() => handleUpload(company.id, "Scanned Circular")}>
+                              <Upload className="w-3 h-3" />
+                            </Button>
+                            <Button variant="ghost" size="sm" className="gap-1" onClick={() => handleDownload(`${company.name}-circular.pdf`)}>
+                              <Download className="w-3 h-3" />
+                            </Button>
+                          </div>
                         </div>
                         
                         <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
@@ -146,9 +199,14 @@ export default function IndustryInstituteInteractionPage() {
                             <FileText className="w-4 h-4 text-gray-600" />
                             <span className="text-sm text-gray-700">Scanned Sign Sheets</span>
                           </div>
-                          <Button variant="ghost" size="sm" className="gap-1">
-                            <Upload className="w-3 h-3" />
-                          </Button>
+                          <div className="flex gap-1">
+                            <Button variant="ghost" size="sm" className="gap-1" onClick={() => handleUpload(company.id, "Scanned Circular")}>
+                              <Upload className="w-3 h-3" />
+                            </Button>
+                            <Button variant="ghost" size="sm" className="gap-1" onClick={() => handleDownload(`${company.name}-circular.pdf`)}>
+                              <Download className="w-3 h-3" />
+                            </Button>
+                          </div>
                         </div>
                       </div>
                     </Card>
@@ -217,6 +275,40 @@ export default function IndustryInstituteInteractionPage() {
                 </Card>
               </TabsContent>
             </Tabs>
+            
+            {/* Add Company Modal */}
+            <Dialog open={showAddCompanyModal} onOpenChange={setShowAddCompanyModal}>
+              <DialogContent className="bg-white max-w-2xl">
+                <DialogHeader>
+                  <DialogTitle className="text-2xl font-bold">Add New Company</DialogTitle>
+                </DialogHeader>
+                <form onSubmit={(e) => {
+                  e.preventDefault()
+                  const formData = new FormData(e.target as HTMLFormElement)
+                  const newCompany = {
+                    id: String(companies.length + 1),
+                    name: formData.get("name") as string,
+                    year: selectedYear,
+                  }
+                  setCompanies([...companies, newCompany])
+                  setShowAddCompanyModal(false)
+                  alert("Company added successfully!")
+                }} className="space-y-4 mt-4">
+                  <div>
+                    <Label htmlFor="name">Company Name *</Label>
+                    <Input id="name" name="name" required placeholder="Enter company name" />
+                  </div>
+                  <div>
+                    <Label htmlFor="description">Description</Label>
+                    <Textarea id="description" name="description" placeholder="Company description (optional)" rows={3} />
+                  </div>
+                  <div className="flex gap-2 pt-4">
+                    <Button type="submit" className="flex-1">Add Company</Button>
+                    <Button type="button" variant="outline" className="flex-1" onClick={() => setShowAddCompanyModal(false)}>Cancel</Button>
+                  </div>
+                </form>
+              </DialogContent>
+            </Dialog>
           </div>
         </main>
       </div>

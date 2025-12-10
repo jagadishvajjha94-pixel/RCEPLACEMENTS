@@ -1,7 +1,6 @@
-"use client"
 
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useNavigate, useLocation } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -38,11 +37,21 @@ import {
   XCircle,
   Building,
   Package,
+  Heart,
+  MessageCircle,
+  Share2,
+  Image as ImageIcon,
+  Trophy,
+  Briefcase as BriefcaseIcon,
+  GraduationCap as GraduationCapIcon,
+  X,
 } from "lucide-react"
-import Link from "next/link"
+import { Link } from "react-router-dom"
 import { AuthService } from "@/lib/auth-service"
 import { PlacementDriveService, RegistrationService, type PlacementDrive, type StudentRegistration } from "@/lib/placement-service"
 import { initializeAllMockData } from "@/lib/mock-data-initializer"
+import { mockToppers, mockNewsFeed, type Topper, type NewsFeed, type FacultyFeedback } from "@/lib/mock-data"
+import { FacultyFeedbackService } from "@/lib/db-service"
 import type { User as AuthUser } from "@/lib/auth-service"
 
 const containerVariants: any = {
@@ -59,7 +68,7 @@ const itemVariants: any = {
 }
 
 export default function StudentDashboard() {
-  const router = useRouter()
+  const navigate = useNavigate()
   const [user, setUser] = useState<AuthUser | null>(null)
   const [drives, setDrives] = useState<PlacementDrive[]>([])
   const [registrations, setRegistrations] = useState<StudentRegistration[]>([])
@@ -67,14 +76,39 @@ export default function StudentDashboard() {
   const [showApplicationForm, setShowApplicationForm] = useState(false)
   const [showOfferUpload, setShowOfferUpload] = useState(false)
   const [selectedRegistration, setSelectedRegistration] = useState<StudentRegistration | null>(null)
-  const [searchQuery, setSearchQuery] = useState("")
   const [loading, setLoading] = useState(true)
+  const [selectedTopper, setSelectedTopper] = useState<Topper | null>(null)
+  const [showResumeModal, setShowResumeModal] = useState(false)
+  const [facultyFeedback, setFacultyFeedback] = useState<FacultyFeedback[]>([])
   const [studentStats, setStudentStats] = useState({
     appliedDrives: 0,
     selectedDrives: 0,
     cgpa: 0,
     rank: 0,
   })
+  
+  // Get toppers by category
+  const trainingToppers = mockToppers.filter(t => t.category === "training")
+  const academicToppers = mockToppers.filter(t => t.category === "academic")
+  const placedStudents = mockToppers.filter(t => t.category === "placed")
+  
+  // Get user's branch
+  const userBranch = user?.profile?.branch || "CSE"
+  
+  // Get branch-wise toppers
+  const getBranchToppers = (branch: string, category: "training" | "academic" | "placed") => {
+    return mockToppers.filter(t => t.branch === branch && t.category === category).slice(0, 3)
+  }
+  
+  // Get college-wide toppers (top 3 across all branches)
+  const collegeTrainingToppers = trainingToppers.slice(0, 3)
+  const collegeAcademicToppers = academicToppers.slice(0, 3)
+  const collegePlacedStudents = placedStudents.slice(0, 3)
+  
+  // Get branch-wise toppers for user's branch
+  const branchTrainingToppers = getBranchToppers(userBranch, "training")
+  const branchAcademicToppers = getBranchToppers(userBranch, "academic")
+  const branchPlacedStudents = getBranchToppers(userBranch, "placed")
 
   // Enhanced application form state
   const [applicationData, setApplicationData] = useState({
@@ -99,7 +133,7 @@ export default function StudentDashboard() {
   useEffect(() => {
     const currentUser = AuthService.getCurrentUser()
     if (!currentUser || currentUser.role !== "student") {
-      router.push("/login")
+      navigate("/login")
       return
     }
 
@@ -121,7 +155,7 @@ export default function StudentDashboard() {
     })
 
     loadData(currentUser)
-  }, [router])
+  }, [navigate])
 
   const loadData = async (currentUser: AuthUser) => {
     setLoading(true)
@@ -149,6 +183,10 @@ export default function StudentDashboard() {
         cgpa,
         rank,
       })
+
+      // Load faculty feedback
+      const feedback = await FacultyFeedbackService.getByStudent(currentUser.id)
+      setFacultyFeedback(feedback)
     } catch (error) {
       console.error("Error loading data:", error)
     } finally {
@@ -158,7 +196,7 @@ export default function StudentDashboard() {
 
   const handleSignOut = () => {
     AuthService.logout()
-    router.push("/login")
+    navigate("/login")
   }
 
   const handleApply = async (e: React.FormEvent) => {
@@ -302,11 +340,6 @@ export default function StudentDashboard() {
     return `${hours}h left`
   }
 
-  const filteredDrives = drives.filter((drive) =>
-    drive.companyName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    drive.position.toLowerCase().includes(searchQuery.toLowerCase())
-  )
-
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -330,7 +363,7 @@ export default function StudentDashboard() {
             <p className="text-gray-600">Track your placement journey and manage applications</p>
           </div>
           <div className="flex gap-3">
-            <Link href="/student/profile">
+            <Link to="/student/profile">
               <Button variant="outline" className="gap-2">
                 <User className="w-4 h-4" />
                 Edit Profile
@@ -414,307 +447,390 @@ export default function StudentDashboard() {
           </motion.div>
         </div>
 
-        {/* Main Content */}
-        <Tabs defaultValue="drives" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="drives">Active Drives</TabsTrigger>
-            <TabsTrigger value="applications">My Applications</TabsTrigger>
-          </TabsList>
-
-          {/* Active Drives Tab */}
-          <TabsContent value="drives" className="space-y-6">
-            {/* Search */}
-            <Card className="p-4 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
-                <Input
-                  placeholder="Search drives by company or position..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
-                />
-              </div>
-            </Card>
-
-            {/* Drives List */}
-            {filteredDrives.length === 0 ? (
-              <Card className="p-12 text-center border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
-                <Briefcase className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
-                <h3 className="text-xl font-bold mb-2">No Active Drives</h3>
-                <p className="text-muted-foreground">Check back later for new placement opportunities</p>
-              </Card>
-            ) : (
-              <div className="grid gap-6">
-                {filteredDrives.map((drive) => {
-                  const registration = getRegistrationStatus(drive.id)
-                  const expired = isExpired(drive.deadline)
-                  
-                  return (
+        {/* Toppers Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="space-y-6"
+        >
+          <div className="flex items-center justify-between">
+            <h2 className="text-2xl font-bold">Top Performers</h2>
+          </div>
+          
+          {/* College-wide Toppers */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4 text-muted-foreground">College-wide Top Performers</h3>
+            <div className="grid md:grid-cols-3 gap-6">
+              {/* Training Toppers */}
+              <Card className="bg-white p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <Trophy className="w-5 h-5 text-yellow-500" />
+                  <h3 className="text-lg font-bold">Training Toppers</h3>
+                </div>
+                <div className="space-y-3">
+                  {collegeTrainingToppers.map((topper, index) => (
                     <motion.div
-                      key={drive.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
+                      key={topper.id}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                      onClick={() => {
+                        setSelectedTopper(topper)
+                        setShowResumeModal(true)
+                      }}
                     >
-                      <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm hover:shadow-xl transition-all">
-                        <div className="flex flex-col md:flex-row justify-between gap-4">
-                          <div className="flex-1">
-                            <div className="flex items-start justify-between mb-4">
-                              <div>
-                                <div className="flex items-center gap-3 mb-2">
-                                  <h3 className="text-2xl font-bold">{drive.companyName}</h3>
-                                  {getStatusBadge(registration, drive)}
-                                </div>
-                                <p className="text-lg text-muted-foreground mb-2">{drive.position}</p>
-                                <div className="flex gap-2 flex-wrap">
-                                  <Badge variant="outline" className="gap-1">
-                                    <Package className="w-3 h-3" />
-                                    {drive.package}
-                                  </Badge>
-                                  <Badge variant="outline" className="gap-1">
-                                    <Building className="w-3 h-3" />
-                                    {drive.type}
-                                  </Badge>
-                                  <Badge 
-                                    variant={expired ? "destructive" : "default"}
-                                    className="gap-1"
-                                  >
-                                    <Clock className="w-3 h-3" />
-                                    {getTimeRemaining(drive.deadline)}
-                                  </Badge>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="grid md:grid-cols-2 gap-4 mb-4">
-                              <div>
-                                <p className="text-sm font-medium">Eligibility</p>
-                                <p className="text-sm text-muted-foreground">
-                                  {drive.eligibilityCriteria.minCGPA && `Min CGPA: ${drive.eligibilityCriteria.minCGPA}`}
-                                  {drive.eligibilityCriteria.branches && ` • Branches: ${drive.eligibilityCriteria.branches.join(", ")}`}
-                                </p>
-                              </div>
-                              <div>
-                                <p className="text-sm font-medium">Deadline</p>
-                                <p className="text-sm text-muted-foreground">
-                                  {new Date(drive.deadline).toLocaleDateString()} at {new Date(drive.deadline).toLocaleTimeString()}
-                                </p>
-                              </div>
-                            </div>
-
-                            <div className="flex gap-2 flex-wrap">
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => {
-                                  const modal = document.createElement("div")
-                                  modal.className = "fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 z-50"
-                                  
-                                  const container = document.createElement("div")
-                                  container.className = "bg-white dark:bg-slate-900 rounded-2xl max-w-3xl w-full p-8 shadow-2xl max-h-[90vh] overflow-y-auto border border-border"
-                                  
-                                  const header = document.createElement("div")
-                                  header.className = "flex justify-between items-center mb-4"
-                                  
-                                  const title = document.createElement("h2")
-                                  title.className = "text-2xl font-bold"
-                                  title.textContent = `Job Description - ${drive.companyName || ""}`
-                                  
-                                  const closeBtn = document.createElement("button")
-                                  closeBtn.className = "text-muted-foreground hover:text-foreground text-2xl leading-none"
-                                  closeBtn.textContent = "×"
-                                  closeBtn.onclick = () => modal.remove()
-                                  
-                                  header.appendChild(title)
-                                  header.appendChild(closeBtn)
-                                  
-                                  const content = document.createElement("div")
-                                  content.className = "prose max-w-none"
-                                  
-                                  const desc = document.createElement("p")
-                                  desc.className = "whitespace-pre-wrap text-sm leading-relaxed"
-                                  desc.textContent = drive.jobDescription || ""
-                                  
-                                  content.appendChild(desc)
-                                  
-                                  const footer = document.createElement("div")
-                                  footer.className = "mt-6 flex gap-2"
-                                  
-                                  const closeBtn2 = document.createElement("button")
-                                  closeBtn2.className = "px-4 py-2 bg-accent text-accent-foreground rounded-lg hover:opacity-90"
-                                  closeBtn2.textContent = "Close"
-                                  closeBtn2.onclick = () => modal.remove()
-                                  
-                                  footer.appendChild(closeBtn2)
-                                  
-                                  container.appendChild(header)
-                                  container.appendChild(content)
-                                  container.appendChild(footer)
-                                  modal.appendChild(container)
-                                  
-                                  document.body.appendChild(modal)
-                                  modal.addEventListener("click", (e) => {
-                                    if (e.target === modal) modal.remove()
-                                  })
-                                }}
-                              >
-                                <FileText className="w-4 h-4 mr-2" />
-                                View JD
-                              </Button>
-                              
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => window.open(drive.companyInfoLink, "_blank")}
-                              >
-                                <ExternalLink className="w-4 h-4 mr-2" />
-                                Company Info
-                              </Button>
-                            </div>
-                          </div>
-
-                          <div className="flex flex-col gap-2">
-                            {registration ? (
-                              <div className="space-y-2">
-                                <div className="text-center">
-                                  <p className="text-sm font-medium">Registration Status</p>
-                                  <p className="text-xs text-muted-foreground">
-                                    Submitted: {new Date(registration.submittedAt).toLocaleDateString()}
-                                  </p>
-                                </div>
-                                
-                                {!registration.hasOffer && (
-                                  <Button
-                                    size="sm"
-                                    onClick={() => {
-                                      setSelectedRegistration(registration)
-                                      setShowOfferUpload(true)
-                                    }}
-                                    className="gap-2"
-                                  >
-                                    <Upload className="w-4 h-4" />
-                                    Upload Offer
-                                  </Button>
-                                )}
-                                
-                                {registration.hasOffer && (
-                                  <Badge variant="default" className="w-full justify-center gap-1">
-                                    <CheckCircle className="w-3 h-3" />
-                                    Offer Uploaded
-                                  </Badge>
-                                )}
-                              </div>
-                            ) : (
-                              <Button
-                                onClick={() => {
-                                  setSelectedDrive(drive)
-                                  setShowApplicationForm(true)
-                                }}
-                                disabled={expired}
-                                className="gap-2"
-                              >
-                                {expired ? (
-                                  <>
-                                    <XCircle className="w-4 h-4" />
-                                    Expired
-                                  </>
-                                ) : (
-                                  <>
-                                    <Plus className="w-4 h-4" />
-                                    Apply Now
-                                  </>
-                                )}
-                              </Button>
-                            )}
-                          </div>
-                        </div>
-                      </Card>
+                      <img
+                        src={topper.picture}
+                        alt={topper.name}
+                        className="w-12 h-12 rounded-full border-2 border-primary object-cover"
+                      />
+                      <div className="flex-1">
+                        <p className="font-semibold text-sm">{topper.name}</p>
+                        <p className="text-xs text-muted-foreground">{topper.branch} • Rank #{topper.rank}</p>
+                      </div>
+                      <Badge className="bg-yellow-500">{topper.score}%</Badge>
                     </motion.div>
-                  )
-                })}
-              </div>
-            )}
-          </TabsContent>
-
-          {/* My Applications Tab */}
-          <TabsContent value="applications" className="space-y-6">
-            {registrations.length === 0 ? (
-              <Card className="p-12 text-center border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
-                <MessageSquare className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
-                <h3 className="text-xl font-bold mb-2">No Applications Yet</h3>
-                <p className="text-muted-foreground">Start applying to placement drives to see them here</p>
+                  ))}
+                </div>
               </Card>
-            ) : (
-              <div className="grid gap-6">
-                {registrations.map((registration) => {
-                  const drive = drives.find(d => d.id === registration.driveId)
-                  if (!drive) return null
-                  
-                  return (
+
+              {/* Academic Toppers */}
+              <Card className="bg-white p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <GraduationCapIcon className="w-5 h-5 text-blue-500" />
+                  <h3 className="text-lg font-bold">Academic Toppers</h3>
+                </div>
+                <div className="space-y-3">
+                  {collegeAcademicToppers.map((topper, index) => (
                     <motion.div
-                      key={registration.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
+                      key={topper.id}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                      onClick={() => {
+                        setSelectedTopper(topper)
+                        setShowResumeModal(true)
+                      }}
                     >
-                      <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm hover:shadow-xl transition-all">
-                        <div className="flex flex-col md:flex-row justify-between gap-4">
-                          <div className="flex-1">
-                            <div className="flex items-center gap-3 mb-2">
-                              <h3 className="text-xl font-bold">{drive.companyName}</h3>
-                              {getStatusBadge(registration, drive)}
-                              {registration.hasOffer && (
-                                <Badge variant="default" className="bg-green-500 gap-1">
-                                  <CheckCircle className="w-3 h-3" />
-                                  Offer Received
-                                </Badge>
-                              )}
-                            </div>
-                            <p className="text-muted-foreground mb-2">{drive.position}</p>
-                            <div className="grid md:grid-cols-2 gap-4 text-sm">
-                              <div>
-                                <p><strong>Package:</strong> {drive.package}</p>
-                                <p><strong>Type:</strong> {drive.type}</p>
-                              </div>
-                              <div>
-                                <p><strong>Applied:</strong> {new Date(registration.submittedAt).toLocaleDateString()}</p>
-                                <p><strong>Status:</strong> {registration.status}</p>
-                              </div>
-                            </div>
-                          </div>
-                          
-                          <div className="flex flex-col gap-2">
-                            {!registration.hasOffer && (
-                              <Button
-                                size="sm"
-                                onClick={() => {
-                                  setSelectedRegistration(registration)
-                                  setShowOfferUpload(true)
-                                }}
-                                className="gap-2"
-                              >
-                                <Upload className="w-4 h-4" />
-                                Upload Offer
-                              </Button>
-                            )}
-                            
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => window.open(drive.registrationLink, "_blank")}
-                              className="gap-2"
-                            >
-                              <ExternalLink className="w-4 h-4" />
-                              Career Portal
-                            </Button>
-                          </div>
-                        </div>
-                      </Card>
+                      <img
+                        src={topper.picture}
+                        alt={topper.name}
+                        className="w-12 h-12 rounded-full border-2 border-blue-500 object-cover"
+                      />
+                      <div className="flex-1">
+                        <p className="font-semibold text-sm">{topper.name}</p>
+                        <p className="text-xs text-muted-foreground">{topper.branch} • Rank #{topper.rank}</p>
+                      </div>
+                      <Badge className="bg-blue-500">CGPA {topper.cgpa}</Badge>
                     </motion.div>
-                  )
-                })}
-              </div>
-            )}
-          </TabsContent>
-        </Tabs>
+                  ))}
+                </div>
+              </Card>
+
+              {/* Placed Students */}
+              <Card className="bg-white p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <BriefcaseIcon className="w-5 h-5 text-green-500" />
+                  <h3 className="text-lg font-bold">Placed Students</h3>
+                </div>
+                <div className="space-y-3">
+                  {collegePlacedStudents.map((topper, index) => (
+                    <motion.div
+                      key={topper.id}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                      onClick={() => {
+                        setSelectedTopper(topper)
+                        setShowResumeModal(true)
+                      }}
+                    >
+                      <img
+                        src={topper.picture}
+                        alt={topper.name}
+                        className="w-12 h-12 rounded-full border-2 border-green-500 object-cover"
+                      />
+                      <div className="flex-1">
+                        <p className="font-semibold text-sm">{topper.name}</p>
+                        <p className="text-xs text-muted-foreground">{topper.company} • {topper.package}</p>
+                      </div>
+                      <Badge className="bg-green-500">Placed</Badge>
+                    </motion.div>
+                  ))}
+                </div>
+              </Card>
+            </div>
+          </div>
+
+          {/* Branch-wise Toppers */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4 text-muted-foreground">
+              {userBranch} Branch Top Performers
+            </h3>
+            <div className="grid md:grid-cols-3 gap-6">
+              {/* Branch Training Toppers */}
+              <Card className="bg-white p-6 border-2 border-primary/20">
+                <div className="flex items-center gap-2 mb-4">
+                  <Trophy className="w-5 h-5 text-yellow-500" />
+                  <h3 className="text-lg font-bold">Training Toppers</h3>
+                  <Badge variant="outline" className="ml-auto">{userBranch}</Badge>
+                </div>
+                <div className="space-y-3">
+                  {branchTrainingToppers.length > 0 ? (
+                    branchTrainingToppers.map((topper, index) => (
+                      <motion.div
+                        key={topper.id}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                        className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                        onClick={() => {
+                          setSelectedTopper(topper)
+                          setShowResumeModal(true)
+                        }}
+                      >
+                        <img
+                          src={topper.picture}
+                          alt={topper.name}
+                          className="w-12 h-12 rounded-full border-2 border-primary object-cover"
+                        />
+                        <div className="flex-1">
+                          <p className="font-semibold text-sm">{topper.name}</p>
+                          <p className="text-xs text-muted-foreground">Rank #{topper.rank}</p>
+                        </div>
+                        <Badge className="bg-yellow-500">{topper.score}%</Badge>
+                      </motion.div>
+                    ))
+                  ) : (
+                    <p className="text-sm text-muted-foreground text-center py-4">No toppers available</p>
+                  )}
+                </div>
+              </Card>
+
+              {/* Branch Academic Toppers */}
+              <Card className="bg-white p-6 border-2 border-primary/20">
+                <div className="flex items-center gap-2 mb-4">
+                  <GraduationCapIcon className="w-5 h-5 text-blue-500" />
+                  <h3 className="text-lg font-bold">Academic Toppers</h3>
+                  <Badge variant="outline" className="ml-auto">{userBranch}</Badge>
+                </div>
+                <div className="space-y-3">
+                  {branchAcademicToppers.length > 0 ? (
+                    branchAcademicToppers.map((topper, index) => (
+                      <motion.div
+                        key={topper.id}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                        className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                        onClick={() => {
+                          setSelectedTopper(topper)
+                          setShowResumeModal(true)
+                        }}
+                      >
+                        <img
+                          src={topper.picture}
+                          alt={topper.name}
+                          className="w-12 h-12 rounded-full border-2 border-blue-500 object-cover"
+                        />
+                        <div className="flex-1">
+                          <p className="font-semibold text-sm">{topper.name}</p>
+                          <p className="text-xs text-muted-foreground">Rank #{topper.rank}</p>
+                        </div>
+                        <Badge className="bg-blue-500">CGPA {topper.cgpa}</Badge>
+                      </motion.div>
+                    ))
+                  ) : (
+                    <p className="text-sm text-muted-foreground text-center py-4">No toppers available</p>
+                  )}
+                </div>
+              </Card>
+
+              {/* Branch Placed Students */}
+              <Card className="bg-white p-6 border-2 border-primary/20">
+                <div className="flex items-center gap-2 mb-4">
+                  <BriefcaseIcon className="w-5 h-5 text-green-500" />
+                  <h3 className="text-lg font-bold">Placed Students</h3>
+                  <Badge variant="outline" className="ml-auto">{userBranch}</Badge>
+                </div>
+                <div className="space-y-3">
+                  {branchPlacedStudents.length > 0 ? (
+                    branchPlacedStudents.map((topper, index) => (
+                      <motion.div
+                        key={topper.id}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                        className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                        onClick={() => {
+                          setSelectedTopper(topper)
+                          setShowResumeModal(true)
+                        }}
+                      >
+                        <img
+                          src={topper.picture}
+                          alt={topper.name}
+                          className="w-12 h-12 rounded-full border-2 border-green-500 object-cover"
+                        />
+                        <div className="flex-1">
+                          <p className="font-semibold text-sm">{topper.name}</p>
+                          <p className="text-xs text-muted-foreground">{topper.company} • {topper.package}</p>
+                        </div>
+                        <Badge className="bg-green-500">Placed</Badge>
+                      </motion.div>
+                    ))
+                  ) : (
+                    <p className="text-sm text-muted-foreground text-center py-4">No placements yet</p>
+                  )}
+                </div>
+              </Card>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* News Feed Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="space-y-6"
+        >
+          <div className="flex items-center justify-between">
+            <h2 className="text-2xl font-bold">College News Feed</h2>
+          </div>
+          
+          <div className="space-y-4">
+            {mockNewsFeed.map((news, index) => (
+              <motion.div
+                key={news.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <Card className="bg-white p-6">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold">
+                      {news.uploadedBy.split(' ').map(n => n[0]).join('')}
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <p className="font-semibold">{news.uploadedBy}</p>
+                        <Badge variant="outline" className="text-xs">
+                          {news.type}
+                        </Badge>
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        {new Date(news.uploadedAt).toLocaleDateString()} • {new Date(news.uploadedAt).toLocaleTimeString()}
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <h3 className="text-lg font-bold mb-2">{news.title}</h3>
+                  <p className="text-muted-foreground mb-4">{news.description}</p>
+                  
+                  {news.image && (
+                    <img
+                      src={news.image}
+                      alt={news.title}
+                      className="w-full rounded-lg mb-4 max-h-96 object-cover"
+                    />
+                  )}
+                  
+                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                    <button className="flex items-center gap-1 hover:text-red-500 transition-colors">
+                      <Heart className="w-4 h-4" />
+                      {news.likes}
+                    </button>
+                    <button className="flex items-center gap-1 hover:text-blue-500 transition-colors">
+                      <MessageCircle className="w-4 h-4" />
+                      {news.comments}
+                    </button>
+                    <button className="flex items-center gap-1 hover:text-green-500 transition-colors">
+                      <Share2 className="w-4 h-4" />
+                      Share
+                    </button>
+                  </div>
+                  
+                  {news.tags.length > 0 && (
+                    <div className="flex gap-2 mt-4 flex-wrap">
+                      {news.tags.map((tag) => (
+                        <Badge key={tag} variant="outline" className="text-xs">
+                          #{tag}
+                        </Badge>
+                      ))}
+                    </div>
+                  )}
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Faculty Feedback Section */}
+        {facultyFeedback.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="space-y-6"
+          >
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-bold">Faculty Feedback</h2>
+            </div>
+            
+            <div className="grid md:grid-cols-2 gap-6">
+              {facultyFeedback.map((feedback, index) => (
+                <motion.div
+                  key={feedback.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <Card className="bg-white p-6">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold">
+                          {feedback.facultyName.split(' ').map(n => n[0]).join('')}
+                        </div>
+                        <div>
+                          <p className="font-semibold">{feedback.facultyName}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {new Date(feedback.timestamp).toLocaleDateString()}
+                          </p>
+                        </div>
+                      </div>
+                      <Badge className={
+                        feedback.category === "academics" ? "bg-blue-500" : "bg-green-500"
+                      }>
+                        {feedback.category === "academics" ? "Academics" : "Training"}
+                      </Badge>
+                    </div>
+                    
+                    <h3 className="font-bold mb-2">{feedback.subject}</h3>
+                    <p className="text-sm text-muted-foreground mb-4">{feedback.content}</p>
+                    
+                    <div className="flex items-center gap-1">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <Award
+                          key={star}
+                          className={`w-4 h-4 ${
+                            star <= feedback.rating
+                              ? "fill-yellow-400 text-yellow-400"
+                              : "text-gray-300"
+                          }`}
+                        />
+                      ))}
+                      <span className="ml-2 text-sm text-muted-foreground">
+                        {feedback.rating} / 5
+                      </span>
+                    </div>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
 
         {/* Application Form Modal */}
         <AnimatePresence>
@@ -868,7 +984,7 @@ export default function StudentDashboard() {
 
         {/* Offer Upload Modal */}
         <Dialog open={showOfferUpload} onOpenChange={setShowOfferUpload}>
-          <DialogContent className="max-w-2xl bg-white dark:bg-slate-900">
+          <DialogContent className="max-w-2xl bg-white">
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
                 <Upload className="w-5 h-5" />
@@ -935,12 +1051,6 @@ export default function StudentDashboard() {
                 </div>
               </div>
 
-              <div className="bg-muted/50 rounded-lg p-4">
-                <p className="text-sm text-muted-foreground">
-                  <strong>Note:</strong> Upload at least one document to confirm your offer. 
-                  All documents should be in PDF format.
-                </p>
-              </div>
 
               <DialogFooter>
                 <Button type="button" variant="outline" onClick={() => setShowOfferUpload(false)}>
@@ -955,6 +1065,111 @@ export default function StudentDashboard() {
                 </Button>
               </DialogFooter>
             </form>
+          </DialogContent>
+        </Dialog>
+
+        {/* Resume Modal */}
+        <Dialog open={showResumeModal} onOpenChange={setShowResumeModal}>
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-white">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-3">
+                {selectedTopper && (
+                  <>
+                    <img
+                      src={selectedTopper.picture}
+                      alt={selectedTopper.name}
+                      className="w-12 h-12 rounded-full border-2 border-primary"
+                    />
+                    <div>
+                      <p className="text-xl">{selectedTopper.name}</p>
+                      <p className="text-sm text-muted-foreground font-normal">
+                        {selectedTopper.rollNumber} • {selectedTopper.branch}
+                      </p>
+                    </div>
+                  </>
+                )}
+              </DialogTitle>
+            </DialogHeader>
+            
+            {selectedTopper && (
+              <div className="space-y-4">
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-sm font-semibold mb-1">Category</p>
+                    <Badge className={
+                      selectedTopper.category === "training" ? "bg-yellow-500" :
+                      selectedTopper.category === "academic" ? "bg-blue-500" :
+                      "bg-green-500"
+                    }>
+                      {selectedTopper.category === "training" ? "Training Topper" :
+                       selectedTopper.category === "academic" ? "Academic Topper" :
+                       "Placed Student"}
+                    </Badge>
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold mb-1">Rank</p>
+                    <p className="text-lg font-bold">#{selectedTopper.rank}</p>
+                  </div>
+                  {selectedTopper.score && (
+                    <div>
+                      <p className="text-sm font-semibold mb-1">Training Score</p>
+                      <p className="text-lg font-bold">{selectedTopper.score}%</p>
+                    </div>
+                  )}
+                  {selectedTopper.cgpa && (
+                    <div>
+                      <p className="text-sm font-semibold mb-1">CGPA</p>
+                      <p className="text-lg font-bold">{selectedTopper.cgpa}</p>
+                    </div>
+                  )}
+                  {selectedTopper.company && (
+                    <>
+                      <div>
+                        <p className="text-sm font-semibold mb-1">Company</p>
+                        <p className="text-lg font-bold">{selectedTopper.company}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold mb-1">Package</p>
+                        <p className="text-lg font-bold">{selectedTopper.package}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold mb-1">Position</p>
+                        <p className="text-lg font-bold">{selectedTopper.position}</p>
+                      </div>
+                    </>
+                  )}
+                </div>
+                
+                {selectedTopper.achievement && (
+                  <div className="bg-accent/10 p-4 rounded-lg">
+                    <p className="text-sm font-semibold mb-1">Achievement</p>
+                    <p className="text-sm">{selectedTopper.achievement}</p>
+                  </div>
+                )}
+                
+                {selectedTopper.resumeUrl ? (
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                    <FileText className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
+                    <p className="font-semibold mb-2">Resume Used for Interview</p>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      This is the resume that helped {selectedTopper.name} crack the interview at {selectedTopper.company}
+                    </p>
+                    <Button
+                      onClick={() => window.open(selectedTopper.resumeUrl, "_blank")}
+                      className="gap-2"
+                    >
+                      <Download className="w-4 h-4" />
+                      View Resume
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                    <FileText className="w-16 h-16 mx-auto mb-4 text-muted-foreground opacity-50" />
+                    <p className="text-muted-foreground">Resume not available</p>
+                  </div>
+                )}
+              </div>
+            )}
           </DialogContent>
         </Dialog>
     </div>

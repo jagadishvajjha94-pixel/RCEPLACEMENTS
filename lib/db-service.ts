@@ -7,18 +7,30 @@ import {
   mockTrainings,
   mockAssignments,
   mockFeedback,
+  mockTimetables,
+  mockCompanySpecificPrep,
+  mockFacultyFeedback,
+  mockResources,
   type Student,
   type PlacementDrive,
   type Training,
   type Assignment,
   type Feedback,
+  type Timetable,
+  type CompanySpecificPrep,
+  type FacultyFeedback,
+  type Resource,
 } from "./mock-data"
 
 // Database configuration
 const DB_CONFIG = {
   isSupabaseEnabled: false, // Will be set to true when Supabase is connected
-  supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
-  supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+  supabaseUrl: typeof window !== 'undefined' 
+    ? (import.meta.env.VITE_SUPABASE_URL || import.meta.env.NEXT_PUBLIC_SUPABASE_URL || '')
+    : '',
+  supabaseKey: typeof window !== 'undefined'
+    ? (import.meta.env.VITE_SUPABASE_ANON_KEY || import.meta.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '')
+    : '',
 }
 
 // Student Service
@@ -230,6 +242,15 @@ export const AssignmentService = {
     return newAssignment
   },
 
+  // Update assignment
+  async update(id: string, data: Partial<Assignment>): Promise<Assignment | null> {
+    const index = mockAssignments.findIndex((a) => a.id === id)
+    if (index === -1) return null
+
+    mockAssignments[index] = { ...mockAssignments[index], ...data }
+    return mockAssignments[index]
+  },
+
   // Delete assignment
   async delete(id: string): Promise<boolean> {
     const index = mockAssignments.findIndex((a) => a.id === id)
@@ -318,6 +339,127 @@ export const FacultyStatsService = {
       assignmentsPending: assignments.length,
       avgAttendance: 89, // Mock value
     }
+  },
+}
+
+// Company-Specific Prep Service
+export const CompanySpecificPrepService = {
+  async getAll(): Promise<CompanySpecificPrep[]> {
+    return [...mockCompanySpecificPrep]
+  },
+  
+  async getByCompany(company: string): Promise<CompanySpecificPrep | null> {
+    const prep = mockCompanySpecificPrep.find(c => c.company.toLowerCase() === company.toLowerCase())
+    return prep || null
+  }
+}
+
+// Faculty Feedback Service
+export const FacultyFeedbackService = {
+  async getByStudent(studentId: string): Promise<FacultyFeedback[]> {
+    return mockFacultyFeedback.filter(f => f.studentId === studentId)
+  },
+  
+  async getAll(): Promise<FacultyFeedback[]> {
+    return [...mockFacultyFeedback]
+  }
+}
+
+// Timetable Service
+export const TimetableService = {
+  // Get timetables by filters
+  async getTimetables(filters?: {
+    branch?: string
+    section?: string
+    year?: string
+    semester?: number
+  }): Promise<Timetable[]> {
+    let timetables = [...mockTimetables]
+
+    if (filters?.branch) {
+      timetables = timetables.filter((t) => t.branch === filters.branch)
+    }
+    if (filters?.section) {
+      timetables = timetables.filter((t) => t.section === filters.section)
+    }
+    if (filters?.year) {
+      timetables = timetables.filter((t) => t.year === filters.year)
+    }
+    if (filters?.semester) {
+      timetables = timetables.filter((t) => t.semester === filters.semester)
+    }
+
+    return timetables
+  },
+
+  // Get timetable by ID
+  async getById(id: string): Promise<Timetable | null> {
+    const timetable = mockTimetables.find((t) => t.id === id)
+    return timetable || null
+  },
+
+  // Get timetables for a specific semester
+  async getBySemester(semester: number, branch?: string, section?: string): Promise<Timetable | null> {
+    let timetables = mockTimetables.filter((t) => t.semester === semester)
+    
+    if (branch) {
+      timetables = timetables.filter((t) => t.branch === branch)
+    }
+    if (section) {
+      timetables = timetables.filter((t) => t.section === section)
+    }
+
+    return timetables[0] || null
+  },
+}
+
+// Resource Service
+export const ResourceService = {
+  // Get all resources with optional filters
+  async getAll(filters?: {
+    category?: "exam" | "mid" | "interview" | "company"
+  }): Promise<Resource[]> {
+    let resources = [...mockResources]
+
+    if (filters?.category) {
+      resources = resources.filter((r) => r.category === filters.category)
+    }
+
+    return resources
+  },
+
+  // Get resource by ID
+  async getById(id: string): Promise<Resource | null> {
+    const resource = mockResources.find((r) => r.id === id)
+    return resource || null
+  },
+
+  // Create new resource
+  async create(data: Omit<Resource, "id">): Promise<Resource> {
+    const newResource: Resource = {
+      id: `RES${String(mockResources.length + 1).padStart(3, "0")}`,
+      ...data,
+    }
+    mockResources.push(newResource)
+    return newResource
+  },
+
+  // Update resource
+  async update(id: string, data: Partial<Resource>): Promise<Resource | null> {
+    const index = mockResources.findIndex((r) => r.id === id)
+    if (index === -1) return null
+
+    mockResources[index] = { ...mockResources[index], ...data }
+    return mockResources[index]
+  },
+
+  // Delete resource
+  async delete(id: string): Promise<boolean> {
+    const index = mockResources.findIndex((r) => r.id === id)
+    if (index === -1) return false
+
+    mockResources.splice(index, 1)
+    return true
   },
 }
 

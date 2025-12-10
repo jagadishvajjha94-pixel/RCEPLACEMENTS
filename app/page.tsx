@@ -1,9 +1,8 @@
-"use client"
 
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Briefcase, Users, BarChart3, BookOpen, Rocket, Star } from "lucide-react"
-import Link from "next/link"
+import { Link } from "react-router-dom"
 import { AnimatedCard } from "@/components/animated-card"
 import { InteractiveStats } from "@/components/interactive-stats"
 import { ScrollReveal } from "@/components/scroll-reveal"
@@ -96,12 +95,12 @@ export default function Home() {
               </p>
               
               <div className="flex flex-wrap gap-4">
-                <Link href="/login">
+                <Link to="/login">
                   <Button size="lg" className="gap-2 bg-accent text-accent-foreground hover:bg-accent/90 hover-lift">
                     Get Started <ArrowRight className="w-5 h-5" />
                   </Button>
                 </Link>
-                <Link href="#features">
+                <Link to="#features">
                   <Button size="lg" variant="outline" className="gap-2 bg-transparent hover-lift">
                     Learn More
                   </Button>
@@ -171,7 +170,7 @@ export default function Home() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {features.map((feature, index) => (
               <ScrollReveal key={index} direction={index % 2 === 0 ? "left" : "right"} delay={index * 0.1}>
-                <Link href={feature.href}>
+                <Link to={feature.href}>
                   <AnimatedCard
                     icon={feature.icon}
                     title={feature.title}
@@ -246,7 +245,7 @@ export default function Home() {
             <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
               Join RCE Career Hub today and connect with top companies seeking talent like yours
             </p>
-            <Link href="/login">
+            <Link to="/login">
               <Button size="lg" className="gap-2 bg-accent text-accent-foreground hover:bg-accent/90 hover-lift">
                 Start Your Journey <ArrowRight className="w-5 h-5" />
               </Button>

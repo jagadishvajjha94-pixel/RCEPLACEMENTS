@@ -1,7 +1,6 @@
-"use client"
 
 import { useState, useEffect, useCallback } from "react"
-import { useRouter } from "next/navigation"
+import { useNavigate } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -34,7 +33,7 @@ import {
 import { AdminSidebar } from "@/components/admin-sidebar"
 
 export default function AdminPlacementsPage() {
-  const router = useRouter()
+  const navigate = useNavigate()
   const [user, setUser] = useState<{ id: string; role: string } | null>(null)
   const [drives, setDrives] = useState<PlacementDrive[]>([])
   const [selectedDrive, setSelectedDrive] = useState<PlacementDrive | null>(null)
@@ -92,12 +91,12 @@ export default function AdminPlacementsPage() {
   useEffect(() => {
     const currentUser = AuthService.getCurrentUser()
     if (!currentUser || currentUser.role !== "admin") {
-      router.push("/login")
+      navigate("/login")
       return
     }
     setUser(currentUser)
     loadDrives()
-  }, [router, loadDrives])
+  }, [navigate, loadDrives])
 
   const handleCreateDrive = (e: React.FormEvent) => {
     e.preventDefault()
@@ -213,7 +212,7 @@ export default function AdminPlacementsPage() {
 
       <main className="flex-1 lg:ml-72 overflow-y-auto">
         <div className="min-h-screen bg-gradient-to-b from-background via-background to-accent/10 dark:to-accent/5">
-          <div className="p-4 md:p-8">
+          <div className="p-4 md:p-8 max-w-[1600px] mx-auto w-full">
             {/* Header */}
             <motion.div
               initial={{ opacity: 0, y: -20 }}

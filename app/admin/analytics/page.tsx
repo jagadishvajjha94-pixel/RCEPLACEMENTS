@@ -1,7 +1,6 @@
-"use client"
 
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -33,7 +32,7 @@ import type { User as AuthUser } from "@/lib/auth-service"
 const COLORS = ["#FF8C42", "#2E86AB", "#A23B72", "#F18F01", "#06A77D"]
 
 export default function AnalyticsPage() {
-  const router = useRouter()
+  const navigate = useNavigate()
   const [user, setUser] = useState<AuthUser | null>(null)
   const [stats, setStats] = useState<any>(null)
   const [academicYear, setAcademicYear] = useState("2024-25")
@@ -44,14 +43,14 @@ export default function AnalyticsPage() {
     if (typeof window === "undefined") return
     const currentUser = AuthService.getCurrentUser()
     if (!currentUser || currentUser.role !== "admin") {
-      router.push("/login")
+      navigate("/login")
       return
     }
     setUser(currentUser)
     // Initialize mock data if needed
     initializeAllMockData()
     loadAnalytics()
-  }, [router, academicYear, selectedBranch])
+  }, [navigate, academicYear, selectedBranch])
 
   const loadAnalytics = () => {
     setLoading(true)

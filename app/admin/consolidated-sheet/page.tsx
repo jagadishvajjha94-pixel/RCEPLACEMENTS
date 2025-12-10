@@ -1,7 +1,5 @@
-"use client"
-
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -10,8 +8,9 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Download, FileSpreadsheet, Filter, Search } from "lucide-react"
 import { AdminSidebar } from "@/components/admin-sidebar"
+import { AdminHeader } from "@/components/admin-header"
 import { AuthService } from "@/lib/auth-service"
-import { ConsolidatedSheetService, type ConsolidatedSheet } from "@/lib/placement-service"
+import { ConsolidatedSheetService, PlacementDriveService, RegistrationService, type ConsolidatedSheet } from "@/lib/placement-service"
 import { initializeAllMockData } from "@/lib/mock-data-initializer"
 import type { User as AuthUser } from "@/lib/auth-service"
 
@@ -19,7 +18,7 @@ const branches = ["CSE", "ECE", "Mechanical", "Civil", "EEE", "AIDS", "AI/ML", "
 const academicYears = ["2023-24", "2024-25", "2025-26"]
 
 export default function ConsolidatedSheetPage() {
-  const router = useRouter()
+  const navigate = useNavigate()
   const [user, setUser] = useState<AuthUser | null>(null)
   const [sheet, setSheet] = useState<ConsolidatedSheet | null>(null)
   const [loading, setLoading] = useState(false)
@@ -35,29 +34,75 @@ export default function ConsolidatedSheetPage() {
     if (typeof window === "undefined") return
     const currentUser = AuthService.getCurrentUser()
     if (!currentUser || currentUser.role !== "admin") {
-      router.push("/login")
+      navigate("/login")
       return
     }
     setUser(currentUser)
     // Initialize mock data if needed
-    initializeAllMockData()
-  }, [router])
+    try {
+      initializeAllMockData()
+      // Verify data was initialized
+      const drives = PlacementDriveService.getAll()
+      const registrations = RegistrationService.getAll()
+      if (drives.length === 0 || registrations.length === 0) {
+        console.warn("Mock data initialization may have failed. Drives:", drives.length, "Registrations:", registrations.length)
+      }
+    } catch (error) {
+      console.error("Error initializing mock data:", error)
+    }
+  }, [navigate])
 
   const generateSheet = () => {
-    setLoading(true)
-    const generatedSheet = ConsolidatedSheetService.generate({
-      academicYear: filters.academicYear,
-      branch: filters.branch || undefined,
-      minCGPA: filters.minCGPA ? parseFloat(filters.minCGPA) : undefined,
-      type: filters.type,
-    })
-    setSheet(generatedSheet)
-    setLoading(false)
+    try {
+      setLoading(true)
+      
+      // Ensure mock data is initialized
+      const drives = PlacementDriveService.getAll()
+      const registrations = RegistrationService.getAll()
+      
+      if (drives.length === 0 || registrations.length === 0) {
+        console.log("Initializing mock data...")
+        initializeAllMockData(true) // Force re-initialization
+      }
+      
+      const generatedSheet = ConsolidatedSheetService.generate({
+        academicYear: filters.academicYear,
+        branch: filters.branch || undefined,
+        minCGPA: filters.minCGPA ? parseFloat(filters.minCGPA) : undefined,
+        type: filters.type,
+      })
+      
+      setSheet(generatedSheet)
+      
+      if (generatedSheet.students.length === 0) {
+        alert("No students found matching the selected filters. Try adjusting your filters or ensure mock data is initialized.")
+      } else {
+        console.log(`Generated sheet with ${generatedSheet.students.length} students`)
+      }
+    } catch (error) {
+      console.error("Error generating sheet:", error)
+      alert("Failed to generate sheet. Please try again. Error: " + (error instanceof Error ? error.message : String(error)))
+    } finally {
+      setLoading(false)
+    }
   }
 
   const handleDownload = () => {
-    if (!sheet) return
-    ConsolidatedSheetService.downloadExcel(sheet)
+    if (!sheet) {
+      alert("Please generate a sheet first")
+      return
+    }
+    try {
+      if (sheet.students.length === 0) {
+        alert("No data to download. Please generate a sheet with data first.")
+        return
+      }
+      ConsolidatedSheetService.downloadExcel(sheet)
+      alert("Sheet downloaded successfully!")
+    } catch (error) {
+      console.error("Error downloading sheet:", error)
+      alert("Failed to download sheet. Please try again.")
+    }
   }
 
   const filteredStudents = sheet?.students.filter((student) => {
@@ -85,7 +130,7 @@ export default function ConsolidatedSheetPage() {
         <AdminHeader />
         <main className="flex-1 overflow-y-auto pt-16">
         <div className="min-h-screen bg-gradient-to-b from-background via-background to-accent/10 dark:to-accent/5">
-          <div className="p-4 md:p-8">
+          <div className="p-4 md:p-8 max-w-[1600px] mx-auto w-full">
             {/* Header */}
             <motion.div
               initial={{ opacity: 0, y: -20 }}
@@ -125,14 +170,14 @@ export default function ConsolidatedSheetPage() {
                 <div>
                   <Label htmlFor="branch">Branch</Label>
                   <Select
-                    value={filters.branch}
-                    onValueChange={(v) => setFilters({ ...filters, branch: v })}
+                    value={filters.branch || "all"}
+                    onValueChange={(v) => setFilters({ ...filters, branch: v === "all" ? "" : v })}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="All Branches" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All Branches</SelectItem>
+                      <SelectItem value="all">All Branches</SelectItem>
                       {branches.map((branch) => (
                         <SelectItem key={branch} value={branch}>
                           {branch}

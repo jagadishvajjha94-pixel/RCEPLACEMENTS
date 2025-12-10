@@ -1,7 +1,6 @@
-"use client"
 
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
 import { AdminSidebar } from "@/components/admin-sidebar"
 import { AdminHeader } from "@/components/admin-header"
@@ -14,7 +13,7 @@ import {
   Users,
   CheckCircle2,
   Building2,
-  Briefcase,
+  Briefcase,  
   TrendingUp,
   TrendingDown,
   Calendar,
@@ -46,7 +45,7 @@ import type { User as AuthUser } from "@/lib/auth-service"
 const COLORS = ["#3b82f6", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6"]
 
 export default function AdminDashboard() {
-  const router = useRouter()
+  const navigate = useNavigate()
   const [user, setUser] = useState<AuthUser | null>(null)
   const [loading, setLoading] = useState(true)
   const [stats, setStats] = useState({
@@ -65,13 +64,13 @@ export default function AdminDashboard() {
   useEffect(() => {
     const currentUser = AuthService.getCurrentUser()
     if (!currentUser || currentUser.role !== "admin") {
-      router.push("/login")
+      navigate("/login")
       return
     }
     setUser(currentUser)
     initializeAllMockData()
     loadDashboardData()
-  }, [router])
+  }, [navigate])
 
   const loadDashboardData = () => {
     setLoading(true)
@@ -209,7 +208,7 @@ export default function AdminDashboard() {
       <div className="flex-1 flex flex-col ml-72">
         <AdminHeader />
         <main className="flex-1 overflow-y-auto pt-16">
-          <div className="p-8 space-y-8">
+          <div className="p-8 space-y-8 max-w-[1600px] mx-auto w-full">
             {/* Welcome Section */}
             <motion.div
               initial={{ opacity: 0, y: -20 }}
@@ -225,14 +224,14 @@ export default function AdminDashboard() {
               <div className="flex gap-3">
                 <Button
                   variant="outline"
-                  onClick={() => router.push("/admin/drives")}
+                  onClick={() => navigate("/admin/drives")}
                   className="gap-2"
                 >
                   <Calendar className="w-4 h-4" />
                   Manage Drives
                 </Button>
                 <Button
-                  onClick={() => router.push("/admin/analytics")}
+                  onClick={() => navigate("/admin/analytics")}
                   className="gap-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800"
                 >
                   <Activity className="w-4 h-4" />
@@ -250,7 +249,7 @@ export default function AdminDashboard() {
                 icon={Users}
                 gradient="bg-gradient-to-br from-blue-500 to-blue-600"
                 trend={{ value: stats.growthRate, isPositive: true }}
-                onClick={() => router.push("/admin/students")}
+                onClick={() => navigate("/admin/students")}
               />
               <StatCard
                 title="Placed Students"
@@ -259,7 +258,7 @@ export default function AdminDashboard() {
                 icon={CheckCircle2}
                 gradient="bg-gradient-to-br from-green-500 to-emerald-600"
                 trend={{ value: 8.2, isPositive: true }}
-                onClick={() => router.push("/admin/analytics")}
+                onClick={() => navigate("/admin/analytics")}
               />
               <StatCard
                 title="Active Companies"
@@ -268,7 +267,7 @@ export default function AdminDashboard() {
                 icon={Building2}
                 gradient="bg-gradient-to-br from-purple-500 to-purple-600"
                 trend={{ value: 5.4, isPositive: true }}
-                onClick={() => router.push("/admin/placements")}
+                onClick={() => navigate("/admin/placements")}
               />
               <StatCard
                 title="Total Offers"
@@ -277,7 +276,7 @@ export default function AdminDashboard() {
                 icon={Briefcase}
                 gradient="bg-gradient-to-br from-orange-500 to-red-500"
                 trend={{ value: 12.3, isPositive: true }}
-                onClick={() => router.push("/admin/offer-statement")}
+                onClick={() => navigate("/admin/offer-statement")}
               />
             </div>
 
@@ -338,7 +337,7 @@ export default function AdminDashboard() {
                     <h3 className="text-lg font-bold text-gray-900">Placement Trends</h3>
                     <p className="text-sm text-gray-600">Monthly placement activity</p>
                   </div>
-                  <Button variant="ghost" size="sm" onClick={() => router.push("/admin/analytics")}>
+                  <Button variant="ghost" size="sm" onClick={() => navigate("/admin/analytics")}>
                     View All <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </div>
@@ -382,7 +381,7 @@ export default function AdminDashboard() {
                     <h3 className="text-lg font-bold text-gray-900">Placement Status</h3>
                     <p className="text-sm text-gray-600">Student distribution</p>
                   </div>
-                  <Button variant="ghost" size="sm" onClick={() => router.push("/admin/analytics")}>
+                  <Button variant="ghost" size="sm" onClick={() => navigate("/admin/analytics")}>
                     View All <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </div>
@@ -459,7 +458,7 @@ export default function AdminDashboard() {
                     <h3 className="text-lg font-bold text-gray-900">Top Companies</h3>
                     <p className="text-sm text-gray-600">Highest offers & packages</p>
                   </div>
-                  <Button variant="ghost" size="sm" onClick={() => router.push("/admin/placements")}>
+                  <Button variant="ghost" size="sm" onClick={() => navigate("/admin/placements")}>
                     View All <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </div>
@@ -469,7 +468,7 @@ export default function AdminDashboard() {
                       key={index}
                       whileHover={{ x: 4 }}
                       className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-white rounded-xl border border-gray-100 hover:border-blue-200 transition-colors cursor-pointer"
-                      onClick={() => router.push("/admin/placements")}
+                      onClick={() => navigate("/admin/placements")}
                     >
                       <div className="flex items-center gap-4">
                         <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-bold">
@@ -490,62 +489,6 @@ export default function AdminDashboard() {
               </Card>
             </div>
 
-            {/* Upcoming Drives */}
-            <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <h3 className="text-lg font-bold text-gray-900">Upcoming Placement Drives</h3>
-                  <p className="text-sm text-gray-600">Next scheduled drives</p>
-                </div>
-                <Button variant="ghost" size="sm" onClick={() => router.push("/admin/drives")}>
-                  View All <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </div>
-              {upcomingDrives.length === 0 ? (
-                <div className="text-center py-12">
-                  <Calendar className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                  <p className="text-gray-600 font-medium mb-2">No Upcoming Drives</p>
-                  <p className="text-sm text-gray-500 mb-4">No active placement drives scheduled.</p>
-                  <Button onClick={() => router.push("/admin/drives")} variant="outline">
-                    Create New Drive
-                  </Button>
-                </div>
-              ) : (
-                <div className="space-y-3">
-                  {upcomingDrives.map((drive, index) => {
-                    const registrations = RegistrationService.getByDrive(drive.id)
-                    const appliedCount = registrations.length
-                    return (
-                      <motion.div
-                        key={drive.id}
-                        whileHover={{ x: 4 }}
-                        className="flex items-center justify-between p-4 bg-gradient-to-r from-blue-50 to-white rounded-xl border border-blue-100 hover:border-blue-300 transition-colors cursor-pointer"
-                        onClick={() => router.push(`/admin/drives`)}
-                      >
-                        <div className="flex items-center gap-4">
-                          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-bold">
-                            {index + 1}
-                          </div>
-                          <div>
-                            <h4 className="font-semibold text-gray-900">{drive.companyName}</h4>
-                            <p className="text-sm text-gray-600">
-                              {drive.position} • Deadline: {new Date(drive.deadline).toLocaleDateString()}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-6">
-                          <div className="text-right">
-                            <p className="font-semibold text-gray-900">{appliedCount}</p>
-                            <p className="text-xs text-gray-500">Applications</p>
-                          </div>
-                          <ArrowRight className="w-5 h-5 text-gray-400" />
-                        </div>
-                      </motion.div>
-                    )
-                  })}
-                </div>
-              )}
-            </Card>
           </div>
         </main>
       </div>

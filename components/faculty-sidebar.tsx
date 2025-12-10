@@ -1,11 +1,10 @@
 "use client"
 
-import Link from "next/link"
+import { Link, useNavigate, useLocation } from "react-router-dom"
 import { motion } from "framer-motion"
 import { LayoutGrid, Users, BookOpen, FileText, Settings, LogOut, Menu, X, BarChart3, CheckSquare } from "lucide-react"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { useRouter, usePathname } from "next/navigation"
 import { AuthService } from "@/lib/auth-service"
 
 const navItems = [
@@ -20,8 +19,9 @@ const navItems = [
 export function FacultySidebar() {
   const [isOpen, setIsOpen] = useState(false)
   const [isDesktop, setIsDesktop] = useState(false)
-  const router = useRouter()
-  const pathname = usePathname()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const pathname = location.pathname
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -41,7 +41,7 @@ export function FacultySidebar() {
 
   const handleSignOut = () => {
     AuthService.logout()
-    router.push("/login")
+    navigate("/login")
   }
 
   return (
@@ -75,7 +75,7 @@ export function FacultySidebar() {
             const Icon = item.icon
             const isActive = pathname === item.href
             return (
-              <Link key={index} href={item.href} onClick={() => setIsOpen(false)}>
+              <Link key={index} to={item.href} onClick={() => setIsOpen(false)}>
                 <motion.div
                   whileHover={{ x: 5 }}
                   className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
@@ -93,7 +93,7 @@ export function FacultySidebar() {
         </nav>
 
         <div className="p-6 border-t border-[#2a4a6f] space-y-2">
-          <Link href="/faculty/settings">
+          <Link to="/faculty/settings">
             <motion.div
               whileHover={{ x: 5 }}
               className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10 transition-colors text-gray-300 hover:text-white"

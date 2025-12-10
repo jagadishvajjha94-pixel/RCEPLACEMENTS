@@ -1,7 +1,6 @@
-"use client"
 
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useNavigate } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -22,6 +21,11 @@ import {
   CheckCircle,
   Clock,
   TrendingUp,
+  BarChart3,
+  PieChart,
+  Award,
+  Briefcase,
+  X,
 } from "lucide-react"
 import { StudentService, TrainingService, AssignmentService, FacultyStatsService } from "@/lib/db-service"
 import { AuthService } from "@/lib/auth-service"
@@ -29,13 +33,13 @@ import type { Student, Training, Assignment } from "@/lib/mock-data"
 import type { User as AuthUser } from "@/lib/auth-service"
 
 const filterOptions = {
-  branch: ["CSE", "ECE", "Mechanical", "Civil", "EEE"],
+  branch: ["CSE", "ECE", "Mechanical", "Civil", "EEE", "AIDS", "AI/ML", "Cybersecurity", "IoT", "ServiceNow"],
   section: ["A", "B", "C"],
   year: ["1st", "2nd", "3rd", "4th"],
 }
 
 export default function FacultyDashboard() {
-  const router = useRouter()
+  const navigate = useNavigate()
   const [user, setUser] = useState<AuthUser | null>(null)
   const [selectedBranch, setSelectedBranch] = useState("CSE")
   const [selectedSection, setSelectedSection] = useState("A")
@@ -51,21 +55,44 @@ export default function FacultyDashboard() {
     assignmentsPending: 0,
     avgAttendance: 89,
   })
+  const [branchStats, setBranchStats] = useState<{ branch: string; count: number }[]>([])
+  const [selectedStudent, setSelectedStudent] = useState<Student | null>(null)
+  const [showStudentModal, setShowStudentModal] = useState(false)
 
   // Modal states
   const [showNewTraining, setShowNewTraining] = useState(false)
   const [showNewAssignment, setShowNewAssignment] = useState(false)
+  const [editingTraining, setEditingTraining] = useState<Training | null>(null)
+  const [editingAssignment, setEditingAssignment] = useState<Assignment | null>(null)
+  
+  // Form states
+  const [trainingForm, setTrainingForm] = useState({
+    title: "",
+    topic: "",
+    date: "",
+    time: "",
+    location: "",
+    instructor: user?.name || "",
+  })
+  
+  const [assignmentForm, setAssignmentForm] = useState({
+    title: "",
+    subject: "",
+    description: "",
+    dueDate: "",
+    totalMarks: 100,
+  })
 
   useEffect(() => {
     const currentUser = AuthService.getCurrentUser()
     if (!currentUser || currentUser.role !== "faculty") {
-      router.push("/login")
+      navigate("/login")
       return
     }
 
     setUser(currentUser)
     loadData()
-  }, [router])
+  }, [navigate])
 
   useEffect(() => {
     if (user) {
@@ -87,6 +114,13 @@ export default function FacultyDashboard() {
       setTrainings(trainingsData)
       setAssignments(assignmentsData)
       setFacultyStats(stats)
+      
+      // Calculate branch-wise statistics for graphs
+      const branchCounts: { [key: string]: number } = {}
+      studentsData.forEach(student => {
+        branchCounts[student.branch] = (branchCounts[student.branch] || 0) + 1
+      })
+      setBranchStats(Object.entries(branchCounts).map(([branch, count]) => ({ branch, count })))
     } catch (error) {
       console.error("Error loading data:", error)
     } finally {
@@ -96,21 +130,134 @@ export default function FacultyDashboard() {
 
   const handleSignOut = () => {
     AuthService.logout()
-    router.push("/login")
+    navigate("/login")
   }
 
   const handleCreateTraining = async (e: React.FormEvent) => {
     e.preventDefault()
-    // TODO: Implement training creation
-    setShowNewTraining(false)
-    loadData()
+    try {
+      if (editingTraining) {
+        await TrainingService.update(editingTraining.id, {
+          title: trainingForm.title,
+          topic: trainingForm.topic,
+          date: trainingForm.date,
+          time: trainingForm.time,
+          location: trainingForm.location,
+          instructor: trainingForm.instructor,
+          status: new Date(trainingForm.date) > new Date() ? "upcoming" : "ongoing",
+        })
+        setEditingTraining(null)
+      } else {
+        await TrainingService.create({
+          title: trainingForm.title,
+          topic: trainingForm.topic,
+          language: "English",
+          date: trainingForm.date,
+          time: trainingForm.time,
+          location: trainingForm.location,
+          branch: selectedBranch,
+          section: selectedSection,
+          year: selectedYear,
+          syllabusCovered: [],
+          instructor: trainingForm.instructor,
+          status: new Date(trainingForm.date) > new Date() ? "upcoming" : "ongoing",
+        })
+      }
+      setTrainingForm({ title: "", topic: "", date: "", time: "", location: "", instructor: user?.name || "" })
+      setShowNewTraining(false)
+      loadData()
+    } catch (error) {
+      console.error("Error saving training:", error)
+      alert("Failed to save training. Please try again.")
+    }
   }
 
   const handleCreateAssignment = async (e: React.FormEvent) => {
     e.preventDefault()
-    // TODO: Implement assignment creation
-    setShowNewAssignment(false)
-    loadData()
+    try {
+      if (editingAssignment) {
+        // Update assignment (if update method exists)
+        await AssignmentService.create({
+          title: assignmentForm.title,
+          subject: assignmentForm.subject,
+          description: assignmentForm.description,
+          dueDate: assignmentForm.dueDate,
+          totalMarks: assignmentForm.totalMarks,
+          uploadedBy: user?.id || "",
+          branch: selectedBranch,
+          section: selectedSection,
+          year: selectedYear,
+        })
+        setEditingAssignment(null)
+      } else {
+        await AssignmentService.create({
+          title: assignmentForm.title,
+          subject: assignmentForm.subject,
+          description: assignmentForm.description,
+          dueDate: assignmentForm.dueDate,
+          totalMarks: assignmentForm.totalMarks,
+          uploadedBy: user?.id || "",
+          branch: selectedBranch,
+          section: selectedSection,
+          year: selectedYear,
+        })
+      }
+      setAssignmentForm({ title: "", subject: "", description: "", dueDate: "", totalMarks: 100 })
+      setShowNewAssignment(false)
+      loadData()
+    } catch (error) {
+      console.error("Error saving assignment:", error)
+      alert("Failed to save assignment. Please try again.")
+    }
+  }
+
+  const handleEditTraining = (training: Training) => {
+    setTrainingForm({
+      title: training.title,
+      topic: training.topic,
+      date: training.date,
+      time: training.time,
+      location: training.location,
+      instructor: training.instructor,
+    })
+    setEditingTraining(training)
+    setShowNewTraining(true)
+  }
+
+  const handleDeleteTraining = async (id: string) => {
+    if (confirm("Are you sure you want to delete this training?")) {
+      try {
+        await TrainingService.update(id, { status: "completed" as any })
+        loadData()
+      } catch (error) {
+        console.error("Error deleting training:", error)
+        alert("Failed to delete training.")
+      }
+    }
+  }
+
+  const handleEditAssignment = (assignment: Assignment) => {
+    setAssignmentForm({
+      title: assignment.title,
+      subject: assignment.subject,
+      description: assignment.description,
+      dueDate: assignment.dueDate,
+      totalMarks: assignment.totalMarks,
+    })
+    setEditingAssignment(assignment)
+    setShowNewAssignment(true)
+  }
+
+  const handleDeleteAssignment = async (id: string) => {
+    if (confirm("Are you sure you want to delete this assignment?")) {
+      try {
+        await AssignmentService.delete(id)
+        loadData()
+      } catch (error) {
+        console.error("Error deleting assignment:", error)
+        alert("Failed to delete assignment.")
+      }
+    }
   }
 
   const filteredStudents = students.filter(
@@ -280,6 +427,84 @@ export default function FacultyDashboard() {
           </div>
         </motion.div>
 
+        {/* Graphical Visualizations */}
+        <motion.div
+          className="grid md:grid-cols-2 gap-6 mt-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          {/* Branch Distribution Chart */}
+          <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 shadow-sm">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-bold flex items-center gap-2">
+                <BarChart3 className="w-5 h-5 text-emerald-600" />
+                Branch Distribution
+              </h3>
+            </div>
+            <div className="space-y-3">
+              {branchStats.map((stat, index) => {
+                const maxCount = Math.max(...branchStats.map(s => s.count), 1)
+                const percentage = (stat.count / maxCount) * 100
+                return (
+                  <div key={stat.branch} className="space-y-1">
+                    <div className="flex justify-between items-center text-sm">
+                      <span className="font-medium">{stat.branch}</span>
+                      <span className="text-muted-foreground">{stat.count} students</span>
+                    </div>
+                    <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-3">
+                      <div
+                        className="bg-gradient-to-r from-emerald-500 to-teal-500 h-3 rounded-full transition-all duration-500"
+                        style={{ width: `${percentage}%` }}
+                      />
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </Card>
+
+          {/* Performance Overview */}
+          <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 shadow-sm">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-bold flex items-center gap-2">
+                <PieChart className="w-5 h-5 text-blue-600" />
+                Performance Overview
+              </h3>
+            </div>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <Users className="w-5 h-5 text-blue-600" />
+                  <span className="font-medium">Total Students</span>
+                </div>
+                <span className="text-2xl font-bold text-blue-600">{facultyStats.totalStudents}</span>
+              </div>
+              <div className="flex items-center justify-between p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <BookOpen className="w-5 h-5 text-green-600" />
+                  <span className="font-medium">Active Trainings</span>
+                </div>
+                <span className="text-2xl font-bold text-green-600">{facultyStats.ongoingTrainings}</span>
+              </div>
+              <div className="flex items-center justify-between p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <FileText className="w-5 h-5 text-purple-600" />
+                  <span className="font-medium">Assignments</span>
+                </div>
+                <span className="text-2xl font-bold text-purple-600">{facultyStats.assignmentsPending}</span>
+              </div>
+              <div className="flex items-center justify-between p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <TrendingUp className="w-5 h-5 text-orange-600" />
+                  <span className="font-medium">Avg Attendance</span>
+                </div>
+                <span className="text-2xl font-bold text-orange-600">{facultyStats.avgAttendance}%</span>
+              </div>
+            </div>
+          </Card>
+        </motion.div>
+
         {/* Enhanced Tabs - Resources tab removed */}
         <Tabs defaultValue="students" className="w-full">
           <TabsList className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-2 border-gray-100 shadow-lg">
@@ -346,7 +571,15 @@ export default function FacultyDashboard() {
                           </div>
                         </div>
                       </div>
-                      <Button variant="outline" size="sm" className="gap-2">
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="gap-2"
+                        onClick={() => {
+                          setSelectedStudent(student)
+                          setShowStudentModal(true)
+                        }}
+                      >
                         <Eye className="w-4 h-4" />
                         View Details
                       </Button>
@@ -411,10 +644,10 @@ export default function FacultyDashboard() {
                         </div>
                       </div>
                       <div className="flex gap-2">
-                        <Button variant="outline" size="sm">
+                        <Button variant="outline" size="sm" onClick={() => handleEditTraining(training)}>
                           <Edit className="w-4 h-4" />
                         </Button>
-                        <Button variant="outline" size="sm" className="text-red-600 hover:text-red-700">
+                        <Button variant="outline" size="sm" className="text-red-600 hover:text-red-700" onClick={() => handleDeleteTraining(training.id)}>
                           <Trash2 className="w-4 h-4" />
                         </Button>
                       </div>
@@ -469,10 +702,10 @@ export default function FacultyDashboard() {
                         </div>
                       </div>
                       <div className="flex gap-2">
-                        <Button variant="outline" size="sm">
+                        <Button variant="outline" size="sm" onClick={() => handleEditAssignment(assignment)}>
                           <Edit className="w-4 h-4" />
                         </Button>
-                        <Button variant="outline" size="sm" className="text-red-600 hover:text-red-700">
+                        <Button variant="outline" size="sm" className="text-red-600 hover:text-red-700" onClick={() => handleDeleteAssignment(assignment.id)}>
                           <Trash2 className="w-4 h-4" />
                         </Button>
                       </div>
@@ -506,29 +739,63 @@ export default function FacultyDashboard() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
             >
-              <h2 className="text-3xl font-bold mb-6">Create New Training</h2>
+              <h2 className="text-3xl font-bold mb-6">{editingTraining ? "Edit Training" : "Create New Training"}</h2>
               <form onSubmit={handleCreateTraining} className="space-y-4">
                 <div>
                   <label className="text-sm font-semibold mb-2 block">Training Title</label>
-                  <Input placeholder="e.g., Full Stack Development Workshop" required />
+                  <Input 
+                    placeholder="e.g., Full Stack Development Workshop" 
+                    value={trainingForm.title}
+                    onChange={(e) => setTrainingForm({ ...trainingForm, title: e.target.value })}
+                    required 
+                  />
                 </div>
                 <div>
                   <label className="text-sm font-semibold mb-2 block">Topic</label>
-                  <Input placeholder="e.g., React & Node.js Fundamentals" required />
+                  <Input 
+                    placeholder="e.g., React & Node.js Fundamentals" 
+                    value={trainingForm.topic}
+                    onChange={(e) => setTrainingForm({ ...trainingForm, topic: e.target.value })}
+                    required 
+                  />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="text-sm font-semibold mb-2 block">Date</label>
-                    <Input type="date" required />
+                    <Input 
+                      type="date" 
+                      value={trainingForm.date}
+                      onChange={(e) => setTrainingForm({ ...trainingForm, date: e.target.value })}
+                      required 
+                    />
                   </div>
                   <div>
                     <label className="text-sm font-semibold mb-2 block">Time</label>
-                    <Input type="time" required />
+                    <Input 
+                      type="time" 
+                      value={trainingForm.time}
+                      onChange={(e) => setTrainingForm({ ...trainingForm, time: e.target.value })}
+                      required 
+                    />
                   </div>
                 </div>
                 <div>
                   <label className="text-sm font-semibold mb-2 block">Location</label>
-                  <Input placeholder="e.g., Lab 1, A Building" required />
+                  <Input 
+                    placeholder="e.g., Lab 1, A Building" 
+                    value={trainingForm.location}
+                    onChange={(e) => setTrainingForm({ ...trainingForm, location: e.target.value })}
+                    required 
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-semibold mb-2 block">Instructor</label>
+                  <Input 
+                    placeholder="Instructor name" 
+                    value={trainingForm.instructor}
+                    onChange={(e) => setTrainingForm({ ...trainingForm, instructor: e.target.value })}
+                    required 
+                  />
                 </div>
                 <div className="flex gap-2 pt-4">
                   <Button type="button" variant="outline" className="flex-1" onClick={() => setShowNewTraining(false)}>
@@ -538,7 +805,7 @@ export default function FacultyDashboard() {
                     type="submit"
                     className="flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700"
                   >
-                    Create Training
+                    {editingTraining ? "Update Training" : "Create Training"}
                   </Button>
                 </div>
               </form>
@@ -564,28 +831,55 @@ export default function FacultyDashboard() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
             >
-              <h2 className="text-3xl font-bold mb-6">Create New Assignment</h2>
+              <h2 className="text-3xl font-bold mb-6">{editingAssignment ? "Edit Assignment" : "Create New Assignment"}</h2>
               <form onSubmit={handleCreateAssignment} className="space-y-4">
                 <div>
                   <label className="text-sm font-semibold mb-2 block">Assignment Title</label>
-                  <Input placeholder="e.g., Web Development Project" required />
+                  <Input 
+                    placeholder="e.g., Web Development Project" 
+                    value={assignmentForm.title}
+                    onChange={(e) => setAssignmentForm({ ...assignmentForm, title: e.target.value })}
+                    required 
+                  />
                 </div>
                 <div>
                   <label className="text-sm font-semibold mb-2 block">Subject</label>
-                  <Input placeholder="e.g., Full Stack Development" required />
+                  <Input 
+                    placeholder="e.g., Full Stack Development" 
+                    value={assignmentForm.subject}
+                    onChange={(e) => setAssignmentForm({ ...assignmentForm, subject: e.target.value })}
+                    required 
+                  />
                 </div>
                 <div>
                   <label className="text-sm font-semibold mb-2 block">Description</label>
-                  <Textarea placeholder="Describe the assignment requirements..." className="h-32" required />
+                  <Textarea 
+                    placeholder="Describe the assignment requirements..." 
+                    className="h-32" 
+                    value={assignmentForm.description}
+                    onChange={(e) => setAssignmentForm({ ...assignmentForm, description: e.target.value })}
+                    required 
+                  />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="text-sm font-semibold mb-2 block">Due Date</label>
-                    <Input type="date" required />
+                    <Input 
+                      type="date" 
+                      value={assignmentForm.dueDate}
+                      onChange={(e) => setAssignmentForm({ ...assignmentForm, dueDate: e.target.value })}
+                      required 
+                    />
                   </div>
                   <div>
                     <label className="text-sm font-semibold mb-2 block">Total Marks</label>
-                    <Input type="number" placeholder="100" required />
+                    <Input 
+                      type="number" 
+                      placeholder="100" 
+                      value={assignmentForm.totalMarks}
+                      onChange={(e) => setAssignmentForm({ ...assignmentForm, totalMarks: parseInt(e.target.value) || 100 })}
+                      required 
+                    />
                   </div>
                 </div>
                 <div className="flex gap-2 pt-4">
@@ -601,10 +895,145 @@ export default function FacultyDashboard() {
                     type="submit"
                     className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
                   >
-                    Create Assignment
+                    {editingAssignment ? "Update Assignment" : "Create Assignment"}
                   </Button>
                 </div>
               </form>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Student Performance Modal */}
+      <AnimatePresence>
+        {showStudentModal && selectedStudent && (
+          <motion.div
+            className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 z-50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowStudentModal(false)}
+          >
+            <motion.div
+              className="bg-white dark:bg-slate-900 rounded-2xl max-w-4xl w-full p-8 shadow-2xl max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+            >
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-3xl font-bold">Student Performance Details</h2>
+                <Button variant="ghost" size="sm" onClick={() => setShowStudentModal(false)}>
+                  <X className="w-5 h-5" />
+                </Button>
+              </div>
+
+              <div className="space-y-6">
+                {/* Student Basic Info */}
+                <Card className="p-6 bg-slate-50 dark:bg-slate-800/50">
+                  <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                    <Users className="w-5 h-5" />
+                    Student Information
+                  </h3>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div>
+                      <p className="text-sm text-muted-foreground">Name</p>
+                      <p className="font-semibold">{selectedStudent.name}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">Roll Number</p>
+                      <p className="font-semibold">{selectedStudent.rollNumber}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">Email</p>
+                      <p className="font-semibold">{selectedStudent.email}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">CGPA</p>
+                      <p className="font-semibold">{selectedStudent.cgpa}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">Branch</p>
+                      <p className="font-semibold">{selectedStudent.branch}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">Section</p>
+                      <p className="font-semibold">{selectedStudent.section}</p>
+                    </div>
+                  </div>
+                </Card>
+
+                {/* Offers Received */}
+                <Card className="p-6 bg-green-50 dark:bg-green-900/20">
+                  <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                    <Award className="w-5 h-5 text-green-600" />
+                    Job Offers
+                  </h3>
+                  {selectedStudent.selectedDrives.length > 0 ? (
+                    <div className="space-y-3">
+                      {selectedStudent.selectedDrives.map((driveId, index) => {
+                        // In real app, fetch drive details
+                        return (
+                          <div key={index} className="p-4 bg-white dark:bg-slate-800 rounded-lg border border-green-200 dark:border-green-800">
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <p className="font-semibold">Offer #{index + 1}</p>
+                                <p className="text-sm text-muted-foreground">Drive ID: {driveId}</p>
+                              </div>
+                              <Badge className="bg-green-500/20 text-green-700 dark:text-green-300">
+                                <CheckCircle className="w-4 h-4 mr-1" />
+                                Selected
+                              </Badge>
+                            </div>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  ) : (
+                    <p className="text-muted-foreground">No offers received yet.</p>
+                  )}
+                </Card>
+
+                {/* Performance Metrics */}
+                <Card className="p-6">
+                  <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                    <TrendingUp className="w-5 h-5" />
+                    Performance Metrics
+                  </h3>
+                  <div className="grid md:grid-cols-3 gap-4">
+                    <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                      <p className="text-sm text-muted-foreground mb-1">Applications</p>
+                      <p className="text-2xl font-bold text-blue-600">{selectedStudent.appliedDrives.length}</p>
+                    </div>
+                    <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                      <p className="text-sm text-muted-foreground mb-1">Offers</p>
+                      <p className="text-2xl font-bold text-green-600">{selectedStudent.selectedDrives.length}</p>
+                    </div>
+                    <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                      <p className="text-sm text-muted-foreground mb-1">CGPA</p>
+                      <p className="text-2xl font-bold text-purple-600">{selectedStudent.cgpa}</p>
+                    </div>
+                  </div>
+                </Card>
+
+                {/* Semester Performance */}
+                {selectedStudent.semesterMarks && selectedStudent.semesterMarks.length > 0 && (
+                  <Card className="p-6">
+                    <h3 className="text-xl font-bold mb-4">Semester Performance</h3>
+                    <div className="space-y-2">
+                      {selectedStudent.semesterMarks.map((sem, index) => (
+                        <div key={index} className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+                          <div>
+                            <p className="font-semibold">Semester {sem.semester}</p>
+                            <p className="text-sm text-muted-foreground">Grade: {sem.grade}</p>
+                          </div>
+                          <p className="text-lg font-bold">{sem.marks}%</p>
+                        </div>
+                      ))}
+                    </div>
+                  </Card>
+                )}
+              </div>
             </motion.div>
           </motion.div>
         )}

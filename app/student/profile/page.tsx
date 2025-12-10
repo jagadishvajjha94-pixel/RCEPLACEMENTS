@@ -1,17 +1,16 @@
-"use client"
 
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { ArrowLeft, Save, User, Mail, Phone, Linkedin, Github, Award } from "lucide-react"
+import { ArrowLeft, Save, User, Mail, Phone, Linkedin, Github, Award, Upload, FileText } from "lucide-react"
 import { AuthService } from "@/lib/auth-service"
 import type { User as AuthUser } from "@/lib/auth-service"
 
 export default function StudentProfile() {
-  const router = useRouter()
+  const navigate = useNavigate()
   const [user, setUser] = useState<AuthUser | null>(null)
   const [editing, setEditing] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -28,11 +27,13 @@ export default function StudentProfile() {
     linkedin: "",
     github: "",
   })
+  const [resumeFile, setResumeFile] = useState<File | null>(null)
+  const [resumeUrl, setResumeUrl] = useState<string>("")
 
   useEffect(() => {
     const currentUser = AuthService.getCurrentUser()
     if (!currentUser || currentUser.role !== "student") {
-      router.push("/login")
+      navigate("/login")
       return
     }
 
@@ -52,9 +53,21 @@ export default function StudentProfile() {
       github: currentUser.profile?.github || "",
     }
     setProfileData(newProfileData)
-  }, [router])
+    setResumeUrl(currentUser.profile?.resumeUrl || "")
+  }, [navigate])
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    let resumeUrlToSave = resumeUrl
+    
+    // If new resume file is uploaded, simulate upload
+    if (resumeFile) {
+      // In a real app, upload to storage service
+      // For now, create a local URL
+      const fileUrl = URL.createObjectURL(resumeFile)
+      resumeUrlToSave = fileUrl
+      setResumeUrl(fileUrl)
+    }
+
     AuthService.updateCurrentUser({
       name: profileData.name,
       profile: {
@@ -66,12 +79,29 @@ export default function StudentProfile() {
         phone: profileData.phone,
         linkedin: profileData.linkedin,
         github: profileData.github,
+        resumeUrl: resumeUrlToSave,
       },
     })
 
     setSuccess(true)
     setEditing(false)
+    setResumeFile(null)
     setTimeout(() => setSuccess(false), 3000)
+  }
+
+  const handleResumeUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        alert("File size must be less than 5 MB")
+        return
+      }
+      if (!file.type.includes("pdf") && !file.type.includes("doc")) {
+        alert("Please upload a PDF or DOC file")
+        return
+      }
+      setResumeFile(file)
+    }
   }
 
   if (!user) {
@@ -92,7 +122,7 @@ export default function StudentProfile() {
         >
           <Button
             variant="outline"
-            onClick={() => router.back()}
+            onClick={() => navigate(-1)}
             className="mb-6 gap-2"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -271,6 +301,63 @@ export default function StudentProfile() {
                       />
                     </div>
                   </div>
+                </div>
+              </div>
+
+              {/* Resume Upload Section */}
+              <div>
+                <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+                  <FileText className="w-5 h-5 text-indigo-600" />
+                  Resume
+                </h2>
+                <div className="space-y-4">
+                  {resumeUrl && !resumeFile && (
+                    <div className="flex items-center gap-4 p-4 bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-lg">
+                      <FileText className="w-8 h-8 text-green-600" />
+                      <div className="flex-1">
+                        <p className="font-semibold text-sm">Current Resume</p>
+                        <p className="text-xs text-muted-foreground">Resume uploaded successfully</p>
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => window.open(resumeUrl, '_blank')}
+                      >
+                        View
+                      </Button>
+                    </div>
+                  )}
+                  {editing && (
+                    <div>
+                      <label className="text-sm font-semibold mb-2 block">Upload Updated Resume</label>
+                      <div className="border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg p-6 text-center hover:border-primary transition-colors">
+                        <Upload className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
+                        <p className="text-sm text-muted-foreground mb-1">
+                          {resumeFile ? resumeFile.name : "Click to upload or drag and drop"}
+                        </p>
+                        <p className="text-xs text-muted-foreground mb-3">PDF or DOC (Max 5MB)</p>
+                        <Input
+                          type="file"
+                          accept=".pdf,.doc,.docx"
+                          onChange={handleResumeUpload}
+                          className="hidden"
+                          id="resume-upload"
+                        />
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={() => document.getElementById('resume-upload')?.click()}
+                          className="gap-2"
+                        >
+                          <Upload className="w-4 h-4" />
+                          {resumeFile ? "Change File" : "Choose File"}
+                        </Button>
+                        {resumeFile && (
+                          <p className="text-xs text-green-600 mt-2">✓ {resumeFile.name} selected</p>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

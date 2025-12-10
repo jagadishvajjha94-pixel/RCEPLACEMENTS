@@ -1,7 +1,6 @@
-"use client"
 
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useNavigate } from "react-router-dom"
 import { AuthService } from "@/lib/auth-service"
 import { AdminSidebar } from "@/components/admin-sidebar"
 import { AdminHeader } from "@/components/admin-header"
@@ -10,18 +9,18 @@ import { motion } from "framer-motion"
 import type { User as AuthUser } from "@/lib/auth-service"
 
 export default function AdminRegistrationsPage() {
-  const router = useRouter()
+  const navigate = useNavigate()
   const [user, setUser] = useState<AuthUser | null>(null)
 
   useEffect(() => {
     if (typeof window === "undefined") return
     const currentUser = AuthService.getCurrentUser()
     if (!currentUser || currentUser.role !== "admin") {
-      router.push("/login")
+      navigate("/login")
       return
     }
     setUser(currentUser)
-  }, [router])
+  }, [navigate])
 
   if (!user) {
     return (

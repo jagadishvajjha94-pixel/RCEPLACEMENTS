@@ -1,7 +1,6 @@
-"use client"
 
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -24,7 +23,7 @@ import { AdminHeader } from "@/components/admin-header"
 import { AuthService } from "@/lib/auth-service"
 
 export default function StudentsPage() {
-  const router = useRouter()
+  const navigate = useNavigate()
   const [user, setUser] = useState<any>(null)
   const [students, setStudents] = useState<any[]>([])
   const [searchQuery, setSearchQuery] = useState("")
@@ -35,7 +34,7 @@ export default function StudentsPage() {
     if (typeof window === "undefined") return
     const currentUser = AuthService.getCurrentUser()
     if (!currentUser || currentUser.role !== "admin") {
-      router.push("/login")
+      navigate("/login")
       return
     }
     setUser(currentUser)

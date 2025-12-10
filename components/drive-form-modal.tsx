@@ -260,7 +260,9 @@ export function DriveFormModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-5xl max-h-[95vh] overflow-hidden flex flex-col p-0 bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-700 shadow-2xl z-50 relative">
+      <DialogContent 
+        className="!max-w-[95vw] !w-[95vw] max-h-[90vh] overflow-hidden flex flex-col p-0 !bg-white border-2 border-gray-200 shadow-2xl z-[100]"
+      >
         <DialogHeader className="px-6 pt-6 pb-4 border-b-2 border-white/20 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 text-white relative overflow-hidden">
           <div 
             className="absolute inset-0 opacity-30" 
@@ -293,41 +295,41 @@ export function DriveFormModal({
         <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto bg-white dark:bg-gray-900">
           <div className="p-6">
             <Tabs defaultValue="company" className="w-full">
-              <TabsList className="grid w-full grid-cols-5 mb-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-2 border-blue-200/50 dark:border-blue-700/50 rounded-xl p-1 shadow-lg">
+              <TabsList className="grid grid-cols-5 w-full mb-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-2 border-blue-200/50 dark:border-blue-700/50 rounded-xl p-1.5 shadow-lg gap-1.5 h-auto">
                 <TabsTrigger 
                   value="company" 
-                  className="flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-blue-600 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all font-semibold"
+                  className="flex items-center justify-center gap-1.5 px-2 py-2.5 whitespace-nowrap data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-blue-600 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all font-semibold text-xs sm:text-sm rounded-md min-w-0"
                 >
-                  <Building2 className="w-4 h-4" />
-                  Company
+                  <Building2 className="w-4 h-4 flex-shrink-0" />
+                  <span className="truncate text-xs sm:text-sm">Company</span>
                 </TabsTrigger>
                 <TabsTrigger 
                   value="job" 
-                  className="flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-purple-600 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all font-semibold"
+                  className="flex items-center justify-center gap-1.5 px-2 py-2.5 whitespace-nowrap data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-purple-600 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all font-semibold text-xs sm:text-sm rounded-md min-w-0"
                 >
-                  <Briefcase className="w-4 h-4" />
-                  Job Details
+                  <Briefcase className="w-4 h-4 flex-shrink-0" />
+                  <span className="truncate text-xs sm:text-sm">Job Details</span>
                 </TabsTrigger>
                 <TabsTrigger 
                   value="eligibility" 
-                  className="flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-green-600 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all font-semibold"
+                  className="flex items-center justify-center gap-1.5 px-2 py-2.5 whitespace-nowrap data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-green-600 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all font-semibold text-xs sm:text-sm rounded-md min-w-0"
                 >
-                  <GraduationCap className="w-4 h-4" />
-                  Eligibility
+                  <GraduationCap className="w-4 h-4 flex-shrink-0" />
+                  <span className="truncate text-xs sm:text-sm">Eligibility</span>
                 </TabsTrigger>
                 <TabsTrigger 
                   value="profile" 
-                  className="flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-orange-500 data-[state=active]:to-orange-600 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all font-semibold"
+                  className="flex items-center justify-center gap-1.5 px-2 py-2.5 whitespace-nowrap data-[state=active]:bg-gradient-to-r data-[state=active]:from-orange-500 data-[state=active]:to-orange-600 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all font-semibold text-xs sm:text-sm rounded-md min-w-0"
                 >
-                  <Users className="w-4 h-4" />
-                  Profile Submission
+                  <Users className="w-4 h-4 flex-shrink-0" />
+                  <span className="truncate text-xs sm:text-sm">Profile</span>
                 </TabsTrigger>
                 <TabsTrigger 
                   value="additional" 
-                  className="flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-pink-500 data-[state=active]:to-pink-600 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all font-semibold"
+                  className="flex items-center justify-center gap-1.5 px-2 py-2.5 whitespace-nowrap data-[state=active]:bg-gradient-to-r data-[state=active]:from-pink-500 data-[state=active]:to-pink-600 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all font-semibold text-xs sm:text-sm rounded-md min-w-0"
                 >
-                  <FileText className="w-4 h-4" />
-                  Additional
+                  <FileText className="w-4 h-4 flex-shrink-0" />
+                  <span className="truncate text-xs sm:text-sm">Additional</span>
                 </TabsTrigger>
               </TabsList>
 

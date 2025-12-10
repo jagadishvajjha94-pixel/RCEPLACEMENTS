@@ -1,7 +1,6 @@
-"use client"
 
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useNavigate } from "react-router-dom"
 import { PlacementDriveService, type PlacementDrive } from "@/lib/placement-service"
 import { AuthService } from "@/lib/auth-service"
 import { motion } from "framer-motion"
@@ -17,7 +16,7 @@ import type { User as AuthUser } from "@/lib/auth-service"
 import { DriveFormModal } from "@/components/drive-form-modal"
 
 export default function AdminDrivesPage() {
-  const router = useRouter()
+  const navigate = useNavigate()
   const [user, setUser] = useState<AuthUser | null>(null)
   const [drives, setDrives] = useState<PlacementDrive[]>([])
   const [searchTerm, setSearchTerm] = useState("")
@@ -33,14 +32,14 @@ export default function AdminDrivesPage() {
     if (typeof window === "undefined") return
     const currentUser = AuthService.getCurrentUser()
     if (!currentUser || currentUser.role !== "admin") {
-      router.push("/login")
+      navigate("/login")
       return
     }
     setUser(currentUser)
     // Initialize mock data if needed
     initializeAllMockData()
     loadDrives()
-  }, [router])
+  }, [navigate])
 
   const loadDrives = () => {
     setLoading(true)
@@ -149,7 +148,7 @@ export default function AdminDrivesPage() {
                   className="gap-2"
                 >
                   <Download className="w-4 h-4" />
-                  Load Mock Data
+                  Load Data
               </Button>
                         <Button
                   onClick={() => {

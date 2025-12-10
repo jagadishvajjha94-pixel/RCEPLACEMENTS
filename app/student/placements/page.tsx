@@ -1,7 +1,6 @@
-"use client"
 
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useNavigate } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -27,6 +26,7 @@ import {
   Github,
   User,
   AlertCircle,
+  Award,
 } from "lucide-react"
 import { AuthService } from "@/lib/auth-service"
 import {
@@ -37,7 +37,7 @@ import {
 } from "@/lib/placement-service"
 
 export default function StudentPlacementsPage() {
-  const router = useRouter()
+  const navigate = useNavigate()
   const [user, setUser] = useState<any>(null)
   const [drives, setDrives] = useState<PlacementDrive[]>([])
   const [myRegistrations, setMyRegistrations] = useState<StudentRegistration[]>([])
@@ -65,7 +65,7 @@ export default function StudentPlacementsPage() {
   useEffect(() => {
     const currentUser = AuthService.getCurrentUser()
     if (!currentUser || currentUser.role !== "student") {
-      router.push("/login")
+      navigate("/login")
       return
     }
     setUser(currentUser)
@@ -84,7 +84,7 @@ export default function StudentPlacementsPage() {
     })
 
     loadData(currentUser)
-  }, [router])
+  }, [navigate])
 
   const loadData = (currentUser: any) => {
     // Get eligible drives for the student
@@ -117,6 +117,7 @@ export default function StudentPlacementsPage() {
         phone: applicationData.phone,
         linkedin: applicationData.linkedin,
         github: applicationData.github,
+        hasOffer: false,
       })
 
       alert(`✓ Registration submitted successfully!\n\nYou will now be redirected to ${selectedDrive.companyName}'s registration portal.`)
@@ -189,6 +190,7 @@ export default function StudentPlacementsPage() {
 
   return (
     <div className="p-8 space-y-8">
+      <main>
             {/* Header */}
             <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
               <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-2">
@@ -219,7 +221,7 @@ export default function StudentPlacementsPage() {
                   color: "from-orange-500 to-red-500",
                 },
               ].map((stat, index) => (
-                <Card key={index} className="glass-lg p-4">
+                <Card key={index} className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-4 shadow-sm">
                   <p className="text-sm text-muted-foreground mb-1">{stat.label}</p>
                   <p className="text-3xl font-bold">{stat.value}</p>
                 </Card>
@@ -227,7 +229,7 @@ export default function StudentPlacementsPage() {
             </motion.div>
 
             <Tabs defaultValue="active" className="w-full">
-              <TabsList className="glass-lg mb-6">
+              <TabsList className="bg-slate-100/90 dark:bg-slate-800/90 mb-6 shadow-sm border border-slate-200/60 dark:border-slate-700/60">
                 <TabsTrigger value="active">Active Drives</TabsTrigger>
                 <TabsTrigger value="applied">My Applications</TabsTrigger>
                 <TabsTrigger value="offers">Offers Received</TabsTrigger>
@@ -239,7 +241,7 @@ export default function StudentPlacementsPage() {
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="glass-lg rounded-lg p-6 mb-8"
+                  className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 rounded-lg p-6 mb-8 shadow-sm"
                 >
                   <div className="flex flex-col md:flex-row gap-4">
                     <div className="flex-1 relative">
@@ -285,7 +287,7 @@ export default function StudentPlacementsPage() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.05 }}
                       >
-                        <Card className="glass-lg p-6 hover:shadow-xl transition-all duration-300 h-full flex flex-col">
+                        <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 hover:shadow-xl transition-all duration-300 h-full flex flex-col shadow-sm">
                           <div className="mb-4">
                             <div className="flex items-start justify-between mb-2">
                               <div className="flex-1">
@@ -384,7 +386,7 @@ export default function StudentPlacementsPage() {
               <TabsContent value="applied">
                 <div className="space-y-4">
                   {myRegistrations.length === 0 ? (
-                    <Card className="glass-lg p-12 text-center">
+                    <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-12 text-center shadow-sm">
                       <FileText className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
                       <p className="text-muted-foreground text-lg">No applications yet</p>
                       <p className="text-sm text-muted-foreground mt-2">Start applying to drives to see them here</p>
@@ -395,7 +397,7 @@ export default function StudentPlacementsPage() {
                       if (!drive) return null
 
                       return (
-                        <Card key={registration.id} className="glass-lg p-6">
+                        <Card key={registration.id} className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 shadow-sm">
                           <div className="flex justify-between items-start mb-4">
                             <div>
                               <h3 className="text-xl font-bold">{drive.companyName}</h3>
@@ -447,7 +449,7 @@ export default function StudentPlacementsPage() {
               <TabsContent value="offers">
                 <div className="space-y-4">
                   {myRegistrations.filter((r) => r.hasOffer).length === 0 ? (
-                    <Card className="glass-lg p-12 text-center">
+                    <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-12 text-center shadow-sm">
                       <Award className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
                       <p className="text-muted-foreground text-lg">No offers yet</p>
                       <p className="text-sm text-muted-foreground mt-2">
@@ -462,7 +464,7 @@ export default function StudentPlacementsPage() {
                         if (!drive) return null
 
                         return (
-                          <Card key={registration.id} className="glass-lg p-6 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950 dark:to-emerald-950">
+                          <Card key={registration.id} className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950 dark:to-emerald-950 shadow-sm">
                             <div className="flex items-start gap-4">
                               <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
                                 <CheckCircle className="w-6 h-6 text-green-600" />
@@ -485,8 +487,6 @@ export default function StudentPlacementsPage() {
                 </div>
               </TabsContent>
             </Tabs>
-          </div>
-        </div>
       </main>
 
       {/* Application Form Modal */}
@@ -500,7 +500,7 @@ export default function StudentPlacementsPage() {
             onClick={() => setShowApplicationForm(false)}
           >
             <motion.div
-              className="bg-white dark:bg-slate-900 rounded-2xl max-w-2xl w-full p-8 shadow-2xl max-h-[90vh] overflow-y-auto border border-border"
+              className="bg-white rounded-2xl max-w-2xl w-full p-8 shadow-2xl max-h-[90vh] overflow-y-auto border border-border"
               onClick={(e) => e.stopPropagation()}
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -508,8 +508,8 @@ export default function StudentPlacementsPage() {
             >
               <div className="flex justify-between items-center mb-6">
                 <div>
-                  <h2 className="text-3xl font-bold">Register for {selectedDrive.companyName}</h2>
-                  <p className="text-muted-foreground">{selectedDrive.position}</p>
+                  <h2 className="text-3xl font-bold">Register for {selectedDrive?.companyName}</h2>
+                  <p className="text-muted-foreground">{selectedDrive?.position}</p>
                 </div>
                 <Button variant="ghost" size="icon" onClick={() => setShowApplicationForm(false)}>
                   <X className="w-5 h-5" />
@@ -632,12 +632,6 @@ export default function StudentPlacementsPage() {
                   />
                 </div>
 
-                <div className="bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 p-4 rounded-lg">
-                  <p className="text-sm text-blue-700 dark:text-blue-300">
-                    <strong>Note:</strong> After submitting this form, you will be redirected to {selectedDrive.companyName}'s
-                    registration portal to complete your application.
-                  </p>
-                </div>
 
                 <div className="flex gap-2 pt-4">
                   <Button
@@ -669,7 +663,7 @@ export default function StudentPlacementsPage() {
             onClick={() => setShowOfferUpload(false)}
           >
             <motion.div
-              className="bg-background rounded-2xl max-w-lg w-full p-8 shadow-2xl"
+              className="bg-white rounded-2xl max-w-lg w-full p-8 shadow-2xl"
               onClick={(e) => e.stopPropagation()}
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}

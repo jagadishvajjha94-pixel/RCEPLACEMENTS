@@ -1,12 +1,11 @@
 "use client"
 
-import Link from "next/link"
+import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
 import {
   Briefcase,
   LayoutGrid,
   FileText,
-  Settings,
   LogOut,
   Menu,
   X,
@@ -14,11 +13,11 @@ import {
   MessageSquare,
   Calendar,
   CheckSquare,
+  Sparkles,
 } from "lucide-react"
 import { useState, useEffect } from "react"
-import { usePathname } from "next/navigation"
+import { useNavigate, useLocation } from "react-router-dom"
 import { Button } from "@/components/ui/button"
-import { useRouter } from "next/navigation"
 import { AuthService } from "@/lib/auth-service"
 
 const navItems = [
@@ -26,6 +25,7 @@ const navItems = [
   { icon: Briefcase, label: "Placement Drives", href: "/student/drives" },
   { icon: CheckSquare, label: "My Applications", href: "/student/applications" },
   { icon: FileText, label: "My Documents", href: "/student/documents" },
+  { icon: Sparkles, label: "Resume Builder", href: "/student/resume-builder" },
   { icon: BookOpen, label: "Interview Prep", href: "/student/interview-prep" },
   { icon: MessageSquare, label: "Feedback", href: "/student/feedback" },
   { icon: Calendar, label: "Schedule", href: "/student/schedule" },
@@ -34,8 +34,9 @@ const navItems = [
 export function StudentSidebar() {
   const [isOpen, setIsOpen] = useState(false)
   const [isDesktop, setIsDesktop] = useState(false)
-  const router = useRouter()
-  const pathname = usePathname()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const pathname = location.pathname
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -55,7 +56,7 @@ export function StudentSidebar() {
 
   const handleSignOut = () => {
     AuthService.logout()
-    router.push("/login")
+    navigate("/login")
   }
 
   return (
@@ -89,7 +90,7 @@ export function StudentSidebar() {
             const Icon = item.icon
             const isActive = pathname === item.href
             return (
-              <Link key={index} href={item.href} onClick={() => setIsOpen(false)}>
+              <Link key={index} to={item.href} onClick={() => setIsOpen(false)}>
                 <motion.div
                   whileHover={{ x: 5 }}
                   className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
@@ -106,16 +107,7 @@ export function StudentSidebar() {
           })}
         </nav>
 
-        <div className="p-6 border-t border-[#2a4a6f] space-y-2">
-          <Link href="/student/settings">
-            <motion.div
-              whileHover={{ x: 5 }}
-              className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10 transition-colors text-gray-300 hover:text-white"
-            >
-              <Settings className="w-5 h-5" />
-              <span className="font-medium">Settings</span>
-            </motion.div>
-          </Link>
+        <div className="p-6 border-t border-[#2a4a6f]">
           <Button onClick={handleSignOut} className="w-full gap-2 bg-white/10 text-white hover:bg-white/20 border border-white/20">
             <LogOut className="w-4 h-4" />
             Sign Out

@@ -1,7 +1,6 @@
-"use client"
 
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useNavigate } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -31,7 +30,7 @@ import { initializeAllMockData } from "@/lib/mock-data-initializer"
 import type { User as AuthUser } from "@/lib/auth-service"
 
 export default function StudentApplicationsPage() {
-  const router = useRouter()
+  const navigate = useNavigate()
   const [user, setUser] = useState<AuthUser | null>(null)
   const [registrations, setRegistrations] = useState<StudentRegistration[]>([])
   const [drives, setDrives] = useState<any[]>([])
@@ -52,14 +51,14 @@ export default function StudentApplicationsPage() {
   useEffect(() => {
     const currentUser = AuthService.getCurrentUser()
     if (!currentUser || currentUser.role !== "student") {
-      router.push("/login")
+      navigate("/login")
       return
     }
     setUser(currentUser)
     // Initialize mock data if needed
     initializeAllMockData()
     loadData()
-  }, [router])
+  }, [navigate])
 
   const loadData = async () => {
     setLoading(true)
@@ -189,6 +188,7 @@ export default function StudentApplicationsPage() {
 
   return (
     <div className="p-8 space-y-8">
+      <main>
             {/* Header */}
             <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
               <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-2">
@@ -249,7 +249,7 @@ export default function StudentApplicationsPage() {
                 <Briefcase className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
                 <h3 className="text-xl font-bold mb-2">No Applications Found</h3>
                 <p className="text-muted-foreground mb-4">You haven't applied to any drives yet</p>
-                <Button onClick={() => router.push("/student/drives")} className="gap-2 bg-accent text-accent-foreground">
+                <Button onClick={() => navigate("/student/drives")} className="gap-2 bg-accent text-accent-foreground">
                   Browse Drives
                 </Button>
               </Card>
@@ -395,15 +395,13 @@ export default function StudentApplicationsPage() {
                 })}
               </div>
             )}
-          </div>
-        </div>
       </main>
 
       {/* Offer Upload Modal */}
       <AnimatePresence>
         {showOfferUpload && selectedRegistration && (
           <Dialog open={showOfferUpload} onOpenChange={setShowOfferUpload}>
-            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-white">
               <DialogHeader>
                 <DialogTitle className="text-2xl">Upload Offer Documents</DialogTitle>
               </DialogHeader>

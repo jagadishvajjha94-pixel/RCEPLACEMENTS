@@ -1,4 +1,3 @@
-"use client"
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
@@ -25,13 +24,13 @@ export default function SupportPage() {
       const res = await fetch("/api/support/chatbot", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question }),
+        body: JSON.stringify({ message: question }),
       })
 
       if (!res.ok) throw new Error("Failed to get response")
 
       const data = await res.json()
-      setResponse(data.answer || "No response received")
+      setResponse(data.response || data.answer || "No response received")
       setQuestion("")
     } catch (err) {
       setError("Failed to connect to chatbot. Please try again or contact support.")

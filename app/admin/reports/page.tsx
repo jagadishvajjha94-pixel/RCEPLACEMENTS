@@ -1,7 +1,6 @@
-"use client"
 
 import { useState, useEffect, useCallback } from "react"
-import { useRouter } from "next/navigation"
+import { useNavigate } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -41,7 +40,7 @@ import { AdminHeader } from "@/components/admin-header"
 const COLORS = ["#3b82f6", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6", "#06b6d4"]
 
 export default function ReportsPage() {
-  const router = useRouter()
+  const navigate = useNavigate()
   const [user, setUser] = useState<AuthUser | null>(null)
   const [loading, setLoading] = useState(true)
   const [mounted, setMounted] = useState(false)
@@ -179,13 +178,13 @@ export default function ReportsPage() {
     
     const currentUser = AuthService.getCurrentUser()
     if (!currentUser || currentUser.role !== "admin") {
-      router.push("/login")
+      navigate("/login")
       return
     }
     setUser(currentUser)
     initializeAllMockData()
     loadReportData()
-  }, [router, loadReportData, mounted])
+  }, [navigate, loadReportData, mounted])
 
   // Remove auto-reload on filter change - only reload when Apply Filter is clicked
   // useEffect(() => {
@@ -252,7 +251,7 @@ export default function ReportsPage() {
       <div className="flex-1 flex flex-col ml-72">
         <AdminHeader />
         <main className="flex-1 overflow-y-auto pt-16">
-          <div className="p-8 space-y-8">
+          <div className="p-8 space-y-8 max-w-[1600px] mx-auto w-full">
             {/* Header */}
             <motion.div
         initial={{ opacity: 0, y: -20 }}

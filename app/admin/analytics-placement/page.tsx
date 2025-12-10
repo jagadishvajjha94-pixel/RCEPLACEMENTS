@@ -1,8 +1,7 @@
-"use client"
-
 import { useState, useEffect, useCallback } from "react"
-import { useRouter } from "next/navigation"
+import { useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
+
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -30,7 +29,7 @@ import { AdminSidebar } from "@/components/admin-sidebar"
 const COLORS = ["#FF8C42", "#2E86AB", "#A23B72", "#F18F01", "#6A4C93"]
 
 export default function AnalyticsPlacementPage() {
-  const router = useRouter()
+  const navigate = useNavigate()
   const [user, setUser] = useState<{ id: string; role: string } | null>(null)
   const [stats, setStats] = useState<ReturnType<typeof PlacementAnalyticsService.getStats> | null>(null)
   const [trendData, setTrendData] = useState<Array<{ month: string; placements: number; internships: number }>>([])
@@ -60,12 +59,12 @@ export default function AnalyticsPlacementPage() {
   useEffect(() => {
     const currentUser = AuthService.getCurrentUser()
     if (!currentUser || currentUser.role !== "admin") {
-      router.push("/login")
+      navigate("/login")
       return
     }
     setUser(currentUser)
     loadAnalytics()
-  }, [router, loadAnalytics])
+  }, [navigate, loadAnalytics])
 
   const handleDownloadConsolidatedSheet = () => {
     const sheet = ConsolidatedSheetService.generate(sheetFilters)
@@ -229,7 +228,7 @@ export default function AnalyticsPlacementPage() {
                           cx="50%"
                           cy="50%"
                           labelLine={false}
-                          label={({ name, percentage }: { name: string; percentage: number }) => `${name}: ${percentage}%`}
+                          label={(entry: any) => `${entry.name}: ${entry.percentage || 0}%`}
                           outerRadius={100}
                           fill="#8884d8"
                           dataKey="placed"

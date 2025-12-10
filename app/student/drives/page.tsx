@@ -1,7 +1,6 @@
-"use client"
 
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useNavigate } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -16,7 +15,7 @@ import { initializeAllMockData } from "@/lib/mock-data-initializer"
 import type { User as AuthUser } from "@/lib/auth-service"
 
 export default function StudentDrivesPage() {
-  const router = useRouter()
+  const navigate = useNavigate()
   const [user, setUser] = useState<AuthUser | null>(null)
   const [drives, setDrives] = useState<PlacementDrive[]>([])
   const [registrations, setRegistrations] = useState<StudentRegistration[]>([])
@@ -29,14 +28,14 @@ export default function StudentDrivesPage() {
   useEffect(() => {
     const currentUser = AuthService.getCurrentUser()
     if (!currentUser || currentUser.role !== "student") {
-      router.push("/login")
+      navigate("/login")
       return
     }
     setUser(currentUser)
     // Initialize mock data if needed
     initializeAllMockData()
     loadData()
-  }, [router])
+  }, [navigate])
 
   const loadData = () => {
     setLoading(true)
@@ -345,7 +344,7 @@ export default function StudentDrivesPage() {
       <AnimatePresence>
         {showApplicationModal && selectedDrive && (
           <Dialog open={showApplicationModal} onOpenChange={setShowApplicationModal}>
-            <DialogContent>
+            <DialogContent className="bg-white">
               <DialogHeader>
                 <DialogTitle>Confirm Application</DialogTitle>
               </DialogHeader>
@@ -371,13 +370,6 @@ export default function StudentDrivesPage() {
                     <strong>Min CGPA Required:</strong> {selectedDrive.eligibilityCriteria.minCGPA}
                   </div>
                 )}
-                <div className="bg-accent/10 p-3 rounded-lg">
-                  <p className="text-sm">
-                    <strong>Note:</strong> After confirming, you will be redirected to the company's registration
-                    portal. Your application data will be automatically submitted to both the company portal and admin
-                    dashboard.
-                  </p>
-                </div>
               </div>
               <DialogFooter>
                 <Button variant="outline" onClick={() => setShowApplicationModal(false)}>

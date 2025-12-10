@@ -1,11 +1,10 @@
 "use client"
 
-import Link from "next/link"
+import { Link, useNavigate, useLocation } from "react-router-dom"
 import { motion } from "framer-motion"
 import { LayoutGrid, Briefcase, Users, BarChart3, Settings, LogOut, Menu, X, TrendingUp, FileText, FileSpreadsheet, Award, UserCheck, Building2, GraduationCap, Phone, BookOpen, HelpCircle, Link2, MessageSquare, BookCheck, Zap, Code, Image, Database } from "lucide-react"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { useRouter, usePathname } from "next/navigation"
 import { AuthService } from "@/lib/auth-service"
 
 const navItems = [
@@ -15,7 +14,6 @@ const navItems = [
   { icon: UserCheck, label: "Registration Management", href: "/admin/registrations" },
   { icon: FileSpreadsheet, label: "Consolidated Sheet", href: "/admin/consolidated-sheet" },
   { icon: Award, label: "Offer Statement", href: "/admin/offer-statement" },
-  { icon: Users, label: "Student Management", href: "/admin/students" },
   { icon: FileText, label: "Reports", href: "/admin/reports" },
   { icon: Briefcase, label: "Placement A to Z", href: "/admin/placement-a-to-z" },
   { icon: Building2, label: "Industry Institute Interaction", href: "/admin/industry-institute-interaction" },
@@ -36,8 +34,9 @@ const navItems = [
 export function AdminSidebar() {
   const [isOpen, setIsOpen] = useState(false)
   const [isDesktop, setIsDesktop] = useState(false)
-  const router = useRouter()
-  const pathname = usePathname()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const pathname = location.pathname
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -57,7 +56,7 @@ export function AdminSidebar() {
 
   const handleSignOut = () => {
     AuthService.logout()
-    router.push("/login")
+    navigate("/login")
   }
 
   return (
@@ -91,7 +90,7 @@ export function AdminSidebar() {
             const Icon = item.icon
             const isActive = pathname === item.href
             return (
-              <Link key={index} href={item.href} onClick={() => setIsOpen(false)}>
+              <Link key={index} to={item.href} onClick={() => setIsOpen(false)}>
                 <motion.div
                   whileHover={{ x: 5 }}
                   className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
@@ -109,7 +108,7 @@ export function AdminSidebar() {
         </nav>
 
         <div className="p-6 border-t border-[#2a4a6f] space-y-2">
-          <Link href="/admin/settings">
+          <Link to="/admin/settings">
             <motion.div
               whileHover={{ x: 5 }}
               className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10 transition-colors text-gray-300 hover:text-white"

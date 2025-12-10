@@ -1,4 +1,3 @@
-"use client"
 
 import { useState } from "react"
 import { motion } from "framer-motion"
@@ -6,7 +5,6 @@ import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Upload, FileText, ImageIcon, Trash2, Download, Share2, Folder, Plus, Clock } from "lucide-react"
-import { StudentSidebar } from "@/components/student-sidebar"
 
 const mockDocuments = [
   {
@@ -64,8 +62,89 @@ const categories = [
 ]
 
 export default function StudentDocumentsPage() {
-  const [selectedCategory, setSelectedCategory] = useState(null)
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [documents, setDocuments] = useState(mockDocuments)
+  const [showUploadModal, setShowUploadModal] = useState(false)
+  const [uploading, setUploading] = useState(false)
+
+  const handleUpload = () => {
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.accept = '.pdf,.doc,.docx,.jpg,.jpeg,.png'
+    input.onchange = async (e: any) => {
+      const file = e.target.files[0]
+      if (file) {
+        if (file.size > 10 * 1024 * 1024) {
+          alert('File size must be less than 10 MB')
+          return
+        }
+        setUploading(true)
+        try {
+          const formData = new FormData()
+          formData.append('file', file)
+          const response = await fetch('/api/upload', {
+            method: 'POST',
+            body: formData,
+          })
+          if (response.ok) {
+            const data = await response.json()
+            const newDoc = {
+              id: documents.length + 1,
+              name: file.name,
+              type: file.type.split('/')[1].toUpperCase(),
+              size: `${(file.size / 1024 / 1024).toFixed(1)} MB`,
+              uploadedDate: new Date().toISOString().split('T')[0],
+              category: 'Other',
+              icon: FileText,
+            }
+            setDocuments([newDoc, ...documents])
+            alert('Document uploaded successfully!')
+          } else {
+            throw new Error('Upload failed')
+          }
+        } catch (error) {
+          alert('Failed to upload document. Please try again.')
+        } finally {
+          setUploading(false)
+        }
+      }
+    }
+    input.click()
+  }
+
+  const handleDownload = (doc: any) => {
+    // Create a mock download
+    const blob = new Blob([`Mock content for ${doc.name}`], { type: 'text/plain' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = doc.name
+    link.click()
+    URL.revokeObjectURL(url)
+  }
+
+  const handleShare = (doc: any) => {
+    if (navigator.share) {
+      navigator.share({
+        title: doc.name,
+        text: `Check out this document: ${doc.name}`,
+      }).catch(() => {
+        // Fallback to copy link
+        navigator.clipboard.writeText(window.location.href)
+        alert('Link copied to clipboard!')
+      })
+    } else {
+      navigator.clipboard.writeText(window.location.href)
+      alert('Link copied to clipboard!')
+    }
+  }
+
+  const handleDelete = (id: number) => {
+    if (confirm('Are you sure you want to delete this document?')) {
+      setDocuments(documents.filter(doc => doc.id !== id))
+      alert('Document deleted successfully!')
+    }
+  }
 
   const filteredDocuments = selectedCategory ? documents.filter((doc) => doc.category === selectedCategory) : documents
 
@@ -83,9 +162,13 @@ export default function StudentDocumentsPage() {
                 </h1>
                 <p className="text-muted-foreground">Upload and manage your resume, certificates, and documents</p>
               </div>
-              <Button className="gap-2 bg-accent text-accent-foreground">
+              <Button 
+                className="gap-2 bg-accent text-accent-foreground"
+                onClick={handleUpload}
+                disabled={uploading}
+              >
                 <Upload className="w-4 h-4" />
-                Upload Document
+                {uploading ? "Uploading..." : "Upload Document"}
               </Button>
             </motion.div>
 
@@ -166,16 +249,30 @@ export default function StudentDocumentsPage() {
                                 </div>
                               </div>
                               <div className="flex gap-2">
-                                <Button size="sm" variant="ghost" className="gap-1">
+                                <Button 
+                                  size="sm" 
+                                  variant="ghost" 
+                                  className="gap-1"
+                                  onClick={() => handleDownload(doc)}
+                                  title="Download"
+                                >
                                   <Download className="w-4 h-4" />
                                 </Button>
-                                <Button size="sm" variant="ghost" className="gap-1">
+                                <Button 
+                                  size="sm" 
+                                  variant="ghost" 
+                                  className="gap-1"
+                                  onClick={() => handleShare(doc)}
+                                  title="Share"
+                                >
                                   <Share2 className="w-4 h-4" />
                                 </Button>
                                 <Button
                                   size="sm"
                                   variant="ghost"
                                   className="gap-1 text-destructive hover:bg-destructive/10"
+                                  onClick={() => handleDelete(doc.id)}
+                                  title="Delete"
                                 >
                                   <Trash2 className="w-4 h-4" />
                                 </Button>
@@ -191,9 +288,13 @@ export default function StudentDocumentsPage() {
                     <Upload className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-50" />
                     <h3 className="font-semibold mb-2">No documents uploaded yet</h3>
                     <p className="text-muted-foreground mb-6">Upload your resume and documents to get started</p>
-                    <Button className="gap-2 bg-accent text-accent-foreground">
+                    <Button 
+                      className="gap-2 bg-accent text-accent-foreground"
+                      onClick={handleUpload}
+                      disabled={uploading}
+                    >
                       <Plus className="w-4 h-4" />
-                      Upload First Document
+                      {uploading ? "Uploading..." : "Upload First Document"}
                     </Button>
                   </Card>
                 )}
