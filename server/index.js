@@ -446,6 +446,15 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error('Error:', err);
+  
+  // Handle Multer-specific errors (for multer 2.x compatibility)
+  if (err.name === 'MulterError') {
+    return res.status(400).json({ 
+      success: false, 
+      error: err.message || 'File upload error' 
+    });
+  }
+  
   res.status(500).json({ success: false, error: 'Internal server error' });
 });
 
