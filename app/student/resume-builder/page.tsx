@@ -35,6 +35,8 @@ import {
 } from "lucide-react"
 import { Link } from "react-router-dom"
 import { AuthService } from "@/lib/auth-service"
+import jsPDF from "jspdf"
+import html2canvas from "html2canvas"
 
 interface ResumeData {
   personalInfo: {
@@ -532,7 +534,7 @@ function ResumePreview({ data, templateId }: { data: ResumeData; templateId: str
 export default function ResumeBuilderPage() {
   const [selectedTemplate, setSelectedTemplate] = useState<string>("template-1")
   const [showTemplateModal, setShowTemplateModal] = useState(false)
-  const [showPreview, setShowPreview] = useState(true)
+  const [showPreview, setShowPreview] = useState(false)
   const [atsScore, setAtsScore] = useState(0)
   const [aiSuggestions, setAiSuggestions] = useState<AISuggestion[]>([])
   const [showSuggestions, setShowSuggestions] = useState(true)
@@ -857,21 +859,95 @@ export default function ResumeBuilderPage() {
     }))
   }
 
-  const handleSaveResume = () => {
-    const resumeJson = JSON.stringify(resumeData, null, 2)
-    const blob = new Blob([resumeJson], { type: "application/json" })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement("a")
-    a.href = url
-    a.download = `resume-${resumeData.personalInfo.name || "resume"}.json`
-    a.click()
-    URL.revokeObjectURL(url)
-    alert("Resume saved successfully!")
+  const handleSaveResume = async () => {
+    try {
+      await handleExportPDF()
+    } catch (error) {
+      console.error("Error saving resume:", error)
+      alert("Failed to save resume. Please try again.")
+    }
   }
 
-  const handleExportPDF = () => {
-    // In a real implementation, this would generate a PDF
-    alert("PDF export feature will be available soon!")
+  const handleExportPDF = async () => {
+    try {
+      // Find the preview element
+      const previewElement = document.getElementById('resume-preview-content')
+      if (!previewElement) {
+        // If preview is not open, temporarily show it
+        setShowPreview(true)
+        // Wait for DOM to update
+        await new Promise(resolve => setTimeout(resolve, 100))
+        const element = document.getElementById('resume-preview-content')
+        if (!element) {
+          alert("Please wait for preview to load, then try again.")
+          return
+        }
+      }
+
+      const element = previewElement || document.getElementById('resume-preview-content')
+      if (!element) {
+        alert("Preview element not found. Please try again.")
+        return
+      }
+
+      // Show loading message
+      const loadingMsg = document.createElement('div')
+      loadingMsg.textContent = 'Generating PDF...'
+      loadingMsg.style.position = 'fixed'
+      loadingMsg.style.top = '50%'
+      loadingMsg.style.left = '50%'
+      loadingMsg.style.transform = 'translate(-50%, -50%)'
+      loadingMsg.style.background = 'white'
+      loadingMsg.style.padding = '20px'
+      loadingMsg.style.borderRadius = '8px'
+      loadingMsg.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)'
+      loadingMsg.style.zIndex = '10000'
+      document.body.appendChild(loadingMsg)
+
+      // Create canvas from the preview element
+      const canvas = await html2canvas(element, {
+        scale: 2,
+        useCORS: true,
+        logging: false,
+        backgroundColor: '#ffffff',
+        width: element.scrollWidth,
+        height: element.scrollHeight
+      })
+
+      // Calculate dimensions
+      const imgWidth = canvas.width
+      const imgHeight = canvas.height
+      const pdfWidth = 210 // A4 width in mm
+      const pdfHeight = (imgHeight * pdfWidth) / imgWidth
+      
+      // Create PDF
+      const pdf = new jsPDF('p', 'mm', 'a4')
+      let heightLeft = pdfHeight
+      let position = 0
+
+      // Add first page
+      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, position, pdfWidth, pdfHeight)
+      heightLeft -= 297 // A4 height in mm
+
+      // Add additional pages if needed
+      while (heightLeft >= 0) {
+        position = heightLeft - pdfHeight
+        pdf.addPage()
+        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, position, pdfWidth, pdfHeight)
+        heightLeft -= 297
+      }
+
+      // Remove loading message
+      document.body.removeChild(loadingMsg)
+
+      // Download PDF
+      const fileName = `resume-${resumeData.personalInfo.name || "resume"}.pdf`
+      pdf.save(fileName)
+      alert("PDF downloaded successfully!")
+    } catch (error) {
+      console.error("Error generating PDF:", error)
+      alert("PDF generation failed: " + (error as Error).message)
+    }
   }
 
   const handleUploadResume = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -957,11 +1033,11 @@ export default function ResumeBuilderPage() {
             <div className="flex gap-2">
               <Button
                 variant="outline"
-                onClick={() => setShowPreview(!showPreview)}
+                onClick={() => setShowPreview(true)}
                 className="gap-2 bg-slate-50 dark:bg-slate-800/50"
               >
-                {showPreview ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                {showPreview ? "Hide Preview" : "Show Preview"}
+                <Eye className="w-4 h-4" />
+                Preview Resume
               </Button>
               <Button
                 variant="outline"
@@ -983,7 +1059,7 @@ export default function ResumeBuilderPage() {
                 className="gap-2 bg-blue-500 hover:bg-blue-600 text-white"
               >
                 <Save className="w-4 h-4" />
-                Save
+                Save as PDF
               </Button>
               <Button
                 onClick={handleExportPDF}
@@ -997,7 +1073,7 @@ export default function ResumeBuilderPage() {
           </div>
         </motion.div>
 
-        <div className={`grid gap-6 ${showPreview ? 'lg:grid-cols-6' : 'lg:grid-cols-4'}`}>
+        <div className="grid lg:grid-cols-4 gap-6">
           {/* Left Sidebar - Sections */}
           <div className="lg:col-span-1 space-y-4">
             <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-4 shadow-sm">
@@ -1495,7 +1571,7 @@ export default function ResumeBuilderPage() {
           </div>
 
           {/* Right Sidebar - AI Suggestions & ATS Score */}
-          <div className={`${showPreview ? 'lg:col-span-1' : 'lg:col-span-1'} space-y-4`}>
+          <div className="lg:col-span-1 space-y-4">
             {/* ATS Score Card */}
             <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-4 shadow-sm">
               <div className="flex items-center justify-between mb-4">
@@ -1652,28 +1728,6 @@ export default function ResumeBuilderPage() {
             </Card>
           </div>
 
-          {/* Preview Panel */}
-          {showPreview && (
-            <div className="lg:col-span-2 space-y-4">
-              <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-4 shadow-sm">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-semibold flex items-center gap-2">
-                    <Eye className="w-4 h-4" />
-                    Resume Preview
-                  </h3>
-                  <Badge variant="outline" className="text-xs">
-                    {resumeTemplates.find(t => t.id === selectedTemplate)?.name || "Template"}
-                  </Badge>
-                </div>
-                <div className="border-2 border-gray-300 rounded-lg overflow-hidden shadow-lg bg-white" style={{ minHeight: '600px', maxHeight: '800px', overflowY: 'auto' }}>
-                  <ResumePreview data={resumeData} templateId={selectedTemplate} />
-                </div>
-                <p className="text-xs text-muted-foreground mt-2 text-center">
-                  Preview updates in real-time as you edit your resume
-                </p>
-              </Card>
-            </div>
-          )}
         </div>
 
         {/* Template Selection Modal */}
@@ -1708,6 +1762,44 @@ export default function ResumeBuilderPage() {
                   </Badge>
                 </Card>
               ))}
+            </div>
+          </DialogContent>
+        </Dialog>
+
+        {/* Resume Preview Modal */}
+        <Dialog open={showPreview} onOpenChange={setShowPreview}>
+          <DialogContent className="max-w-5xl max-h-[95vh] overflow-y-auto bg-white p-0">
+            <DialogHeader className="px-6 pt-6 pb-4 border-b">
+              <div className="flex items-center justify-between">
+                <DialogTitle className="text-2xl font-bold flex items-center gap-2">
+                  <Eye className="w-5 h-5" />
+                  Resume Preview
+                </DialogTitle>
+                <div className="flex items-center gap-3">
+                  <Badge variant="outline" className="text-sm">
+                    {resumeTemplates.find(t => t.id === selectedTemplate)?.name || "Template"}
+                  </Badge>
+                  <Button
+                    onClick={handleExportPDF}
+                    className="gap-2 bg-blue-500 hover:bg-blue-600 text-white"
+                  >
+                    <Download className="w-4 h-4" />
+                    Download PDF
+                  </Button>
+                </div>
+              </div>
+            </DialogHeader>
+            <div className="p-6 overflow-y-auto">
+              <div 
+                id="resume-preview-content"
+                className="border-2 border-gray-300 rounded-lg overflow-hidden shadow-lg bg-white mx-auto"
+                style={{ maxWidth: '210mm', minHeight: '297mm' }}
+              >
+                <ResumePreview data={resumeData} templateId={selectedTemplate} />
+              </div>
+              <p className="text-xs text-muted-foreground mt-4 text-center">
+                Preview updates in real-time as you edit your resume. Click "Download PDF" to save your resume.
+              </p>
             </div>
           </DialogContent>
         </Dialog>
