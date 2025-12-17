@@ -127,13 +127,13 @@ const resumeTemplates: ResumeTemplate[] = [
 // Resume Preview Component
 function ResumePreview({ data, templateId }: { data: ResumeData; templateId: string }) {
   const renderTemplate1 = () => (
-    <div className="bg-white text-gray-900 p-8 space-y-6" style={{ fontFamily: 'Arial, sans-serif' }}>
+    <div className="bg-white text-gray-900 p-8 space-y-6" style={{ fontFamily: 'Arial, sans-serif', minHeight: '400px' }}>
       {/* Header */}
       <div className="border-b-2 border-blue-600 pb-4">
         <h1 className="text-3xl font-bold text-blue-600 mb-2">{data.personalInfo.name || "Your Name"}</h1>
         <div className="flex flex-wrap gap-4 text-sm text-gray-700">
-          {data.personalInfo.email && <span>📧 {data.personalInfo.email}</span>}
-          {data.personalInfo.phone && <span>📱 {data.personalInfo.phone}</span>}
+          {data.personalInfo.email ? <span>📧 {data.personalInfo.email}</span> : <span className="text-gray-400">📧 your.email@example.com</span>}
+          {data.personalInfo.phone ? <span>📱 {data.personalInfo.phone}</span> : <span className="text-gray-400">📱 +91 9876543210</span>}
           {data.personalInfo.address && <span>📍 {data.personalInfo.address}</span>}
           {data.personalInfo.linkedin && <span>💼 {data.personalInfo.linkedin}</span>}
           {data.personalInfo.github && <span>💻 {data.personalInfo.github}</span>}
@@ -141,331 +141,377 @@ function ResumePreview({ data, templateId }: { data: ResumeData; templateId: str
       </div>
 
       {/* Objective */}
-      {data.objective && (
-        <div>
-          <h2 className="text-xl font-bold text-blue-600 mb-2 border-b border-gray-300 pb-1">Objective</h2>
+      <div>
+        <h2 className="text-xl font-bold text-blue-600 mb-2 border-b border-gray-300 pb-1">Objective</h2>
+        {data.objective ? (
           <p className="text-gray-700">{data.objective}</p>
-        </div>
-      )}
+        ) : (
+          <p className="text-gray-400 italic">Add your career objective here...</p>
+        )}
+      </div>
 
       {/* Education */}
-      {data.education.length > 0 && (
-        <div>
-          <h2 className="text-xl font-bold text-blue-600 mb-2 border-b border-gray-300 pb-1">Education</h2>
-          {data.education.map((edu) => (
+      <div>
+        <h2 className="text-xl font-bold text-blue-600 mb-2 border-b border-gray-300 pb-1">Education</h2>
+        {data.education.length > 0 ? (
+          data.education.map((edu) => (
             <div key={edu.id} className="mb-3">
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="font-semibold">{edu.degree}</h3>
-                  <p className="text-gray-600">{edu.institution}</p>
+                  <h3 className="font-semibold">{edu.degree || "Degree"}</h3>
+                  <p className="text-gray-600">{edu.institution || "Institution"}</p>
                 </div>
                 <div className="text-right">
-                  <p className="font-semibold">{edu.year}</p>
+                  <p className="font-semibold">{edu.year || "Year"}</p>
                   {edu.cgpa && <p className="text-sm text-gray-600">CGPA: {edu.cgpa}</p>}
                 </div>
               </div>
               {edu.achievements && <p className="text-sm text-gray-600 mt-1">{edu.achievements}</p>}
             </div>
-          ))}
-        </div>
-      )}
+          ))
+        ) : (
+          <p className="text-gray-400 italic text-sm">Add your education details...</p>
+        )}
+      </div>
 
       {/* Experience */}
-      {data.experience.length > 0 && (
-        <div>
-          <h2 className="text-xl font-bold text-blue-600 mb-2 border-b border-gray-300 pb-1">Experience</h2>
-          {data.experience.map((exp) => (
+      <div>
+        <h2 className="text-xl font-bold text-blue-600 mb-2 border-b border-gray-300 pb-1">Experience</h2>
+        {data.experience.length > 0 ? (
+          data.experience.map((exp) => (
             <div key={exp.id} className="mb-3">
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="font-semibold">{exp.title}</h3>
-                  <p className="text-gray-600">{exp.company}</p>
+                  <h3 className="font-semibold">{exp.title || "Job Title"}</h3>
+                  <p className="text-gray-600">{exp.company || "Company"}</p>
                 </div>
-                <p className="text-sm text-gray-600">{exp.duration}</p>
+                <p className="text-sm text-gray-600">{exp.duration || "Duration"}</p>
               </div>
               {exp.description && <p className="text-gray-700 mt-1">{exp.description}</p>}
             </div>
-          ))}
-        </div>
-      )}
+          ))
+        ) : (
+          <p className="text-gray-400 italic text-sm">Add your work experience...</p>
+        )}
+      </div>
 
       {/* Projects */}
-      {data.projects.length > 0 && (
-        <div>
-          <h2 className="text-xl font-bold text-blue-600 mb-2 border-b border-gray-300 pb-1">Projects</h2>
-          {data.projects.map((proj) => (
+      <div>
+        <h2 className="text-xl font-bold text-blue-600 mb-2 border-b border-gray-300 pb-1">Projects</h2>
+        {data.projects.length > 0 ? (
+          data.projects.map((proj) => (
             <div key={proj.id} className="mb-3">
-              <h3 className="font-semibold">{proj.name}</h3>
+              <h3 className="font-semibold">{proj.name || "Project Name"}</h3>
               {proj.description && <p className="text-gray-700">{proj.description}</p>}
               {proj.tech && <p className="text-sm text-gray-600 mt-1">Tech: {proj.tech}</p>}
               {proj.link && <p className="text-sm text-blue-600 mt-1">🔗 {proj.link}</p>}
             </div>
-          ))}
-        </div>
-      )}
+          ))
+        ) : (
+          <p className="text-gray-400 italic text-sm">Add your projects...</p>
+        )}
+      </div>
 
       {/* Skills */}
-      {data.skills.length > 0 && (
-        <div>
-          <h2 className="text-xl font-bold text-blue-600 mb-2 border-b border-gray-300 pb-1">Skills</h2>
+      <div>
+        <h2 className="text-xl font-bold text-blue-600 mb-2 border-b border-gray-300 pb-1">Skills</h2>
+        {data.skills.length > 0 ? (
           <div className="flex flex-wrap gap-2">
             {data.skills.map((skill, idx) => (
               <span key={idx} className="bg-blue-100 text-blue-800 px-3 py-1 rounded text-sm">{skill}</span>
             ))}
           </div>
-        </div>
-      )}
+        ) : (
+          <p className="text-gray-400 italic text-sm">Add your skills...</p>
+        )}
+      </div>
 
       {/* Certifications */}
-      {data.certifications.length > 0 && (
-        <div>
-          <h2 className="text-xl font-bold text-blue-600 mb-2 border-b border-gray-300 pb-1">Certifications</h2>
-          {data.certifications.map((cert) => (
+      <div>
+        <h2 className="text-xl font-bold text-blue-600 mb-2 border-b border-gray-300 pb-1">Certifications</h2>
+        {data.certifications.length > 0 ? (
+          data.certifications.map((cert) => (
             <div key={cert.id} className="mb-2">
-              <h3 className="font-semibold">{cert.name}</h3>
-              <p className="text-sm text-gray-600">{cert.issuer} {cert.date && `• ${cert.date}`}</p>
+              <h3 className="font-semibold">{cert.name || "Certification Name"}</h3>
+              <p className="text-sm text-gray-600">{cert.issuer || "Issuer"} {cert.date && `• ${cert.date}`}</p>
             </div>
-          ))}
-        </div>
-      )}
+          ))
+        ) : (
+          <p className="text-gray-400 italic text-sm">Add your certifications...</p>
+        )}
+      </div>
     </div>
   )
 
   const renderTemplate2 = () => (
-    <div className="bg-white text-gray-900 p-8" style={{ fontFamily: 'Times New Roman, serif' }}>
+    <div className="bg-white text-gray-900 p-8" style={{ fontFamily: 'Times New Roman, serif', minHeight: '400px' }}>
       <div className="grid grid-cols-3 gap-6">
         {/* Left Column */}
         <div className="col-span-1 bg-gray-100 p-4">
           <h1 className="text-2xl font-bold mb-4">{data.personalInfo.name || "Your Name"}</h1>
           <div className="space-y-3 text-sm">
-            {data.personalInfo.email && <p>📧 {data.personalInfo.email}</p>}
-            {data.personalInfo.phone && <p>📱 {data.personalInfo.phone}</p>}
+            {data.personalInfo.email ? <p>📧 {data.personalInfo.email}</p> : <p className="text-gray-400">📧 email@example.com</p>}
+            {data.personalInfo.phone ? <p>📱 {data.personalInfo.phone}</p> : <p className="text-gray-400">📱 +91 9876543210</p>}
             {data.personalInfo.address && <p>📍 {data.personalInfo.address}</p>}
             {data.personalInfo.linkedin && <p>💼 {data.personalInfo.linkedin}</p>}
             {data.personalInfo.github && <p>💻 {data.personalInfo.github}</p>}
           </div>
           
-          {data.skills.length > 0 && (
-            <div className="mt-6">
-              <h2 className="font-bold text-lg mb-2">Skills</h2>
+          <div className="mt-6">
+            <h2 className="font-bold text-lg mb-2">Skills</h2>
+            {data.skills.length > 0 ? (
               <ul className="list-disc list-inside space-y-1 text-sm">
                 {data.skills.map((skill, idx) => (
                   <li key={idx}>{skill}</li>
                 ))}
               </ul>
-            </div>
-          )}
+            ) : (
+              <p className="text-xs text-gray-400 italic">Add skills...</p>
+            )}
+          </div>
         </div>
 
         {/* Right Column */}
         <div className="col-span-2 space-y-4">
-          {data.objective && (
-            <div>
-              <h2 className="text-lg font-bold border-b-2 border-gray-800 pb-1 mb-2">Objective</h2>
+          <div>
+            <h2 className="text-lg font-bold border-b-2 border-gray-800 pb-1 mb-2">Objective</h2>
+            {data.objective ? (
               <p className="text-sm">{data.objective}</p>
-            </div>
-          )}
+            ) : (
+              <p className="text-sm text-gray-400 italic">Add your career objective...</p>
+            )}
+          </div>
 
-          {data.education.length > 0 && (
-            <div>
-              <h2 className="text-lg font-bold border-b-2 border-gray-800 pb-1 mb-2">Education</h2>
-              {data.education.map((edu) => (
+          <div>
+            <h2 className="text-lg font-bold border-b-2 border-gray-800 pb-1 mb-2">Education</h2>
+            {data.education.length > 0 ? (
+              data.education.map((edu) => (
                 <div key={edu.id} className="mb-3">
-                  <h3 className="font-semibold">{edu.degree}</h3>
-                  <p className="text-sm">{edu.institution} • {edu.year} {edu.cgpa && `• CGPA: ${edu.cgpa}`}</p>
+                  <h3 className="font-semibold">{edu.degree || "Degree"}</h3>
+                  <p className="text-sm">{edu.institution || "Institution"} • {edu.year || "Year"} {edu.cgpa && `• CGPA: ${edu.cgpa}`}</p>
                   {edu.achievements && <p className="text-xs text-gray-600 mt-1">{edu.achievements}</p>}
                 </div>
-              ))}
-            </div>
-          )}
+              ))
+            ) : (
+              <p className="text-xs text-gray-400 italic">Add education...</p>
+            )}
+          </div>
 
-          {data.experience.length > 0 && (
-            <div>
-              <h2 className="text-lg font-bold border-b-2 border-gray-800 pb-1 mb-2">Experience</h2>
-              {data.experience.map((exp) => (
+          <div>
+            <h2 className="text-lg font-bold border-b-2 border-gray-800 pb-1 mb-2">Experience</h2>
+            {data.experience.length > 0 ? (
+              data.experience.map((exp) => (
                 <div key={exp.id} className="mb-3">
-                  <h3 className="font-semibold">{exp.title}</h3>
-                  <p className="text-sm">{exp.company} • {exp.duration}</p>
+                  <h3 className="font-semibold">{exp.title || "Job Title"}</h3>
+                  <p className="text-sm">{exp.company || "Company"} • {exp.duration || "Duration"}</p>
                   {exp.description && <p className="text-sm mt-1">{exp.description}</p>}
                 </div>
-              ))}
-            </div>
-          )}
+              ))
+            ) : (
+              <p className="text-xs text-gray-400 italic">Add experience...</p>
+            )}
+          </div>
 
-          {data.projects.length > 0 && (
-            <div>
-              <h2 className="text-lg font-bold border-b-2 border-gray-800 pb-1 mb-2">Projects</h2>
-              {data.projects.map((proj) => (
+          <div>
+            <h2 className="text-lg font-bold border-b-2 border-gray-800 pb-1 mb-2">Projects</h2>
+            {data.projects.length > 0 ? (
+              data.projects.map((proj) => (
                 <div key={proj.id} className="mb-3">
-                  <h3 className="font-semibold">{proj.name}</h3>
+                  <h3 className="font-semibold">{proj.name || "Project Name"}</h3>
                   {proj.description && <p className="text-sm">{proj.description}</p>}
                   {proj.tech && <p className="text-xs text-gray-600 mt-1">Tech: {proj.tech}</p>}
                 </div>
-              ))}
-            </div>
-          )}
+              ))
+            ) : (
+              <p className="text-xs text-gray-400 italic">Add projects...</p>
+            )}
+          </div>
 
-          {data.certifications.length > 0 && (
-            <div>
-              <h2 className="text-lg font-bold border-b-2 border-gray-800 pb-1 mb-2">Certifications</h2>
-              {data.certifications.map((cert) => (
+          <div>
+            <h2 className="text-lg font-bold border-b-2 border-gray-800 pb-1 mb-2">Certifications</h2>
+            {data.certifications.length > 0 ? (
+              data.certifications.map((cert) => (
                 <div key={cert.id} className="mb-2">
-                  <h3 className="font-semibold text-sm">{cert.name}</h3>
-                  <p className="text-xs text-gray-600">{cert.issuer} {cert.date && `• ${cert.date}`}</p>
+                  <h3 className="font-semibold text-sm">{cert.name || "Certification"}</h3>
+                  <p className="text-xs text-gray-600">{cert.issuer || "Issuer"} {cert.date && `• ${cert.date}`}</p>
                 </div>
-              ))}
-            </div>
-          )}
+              ))
+            ) : (
+              <p className="text-xs text-gray-400 italic">Add certifications...</p>
+            )}
+          </div>
         </div>
       </div>
     </div>
   )
 
   const renderTemplate3 = () => (
-    <div className="bg-gradient-to-br from-purple-50 to-pink-50 text-gray-900 p-8 space-y-6" style={{ fontFamily: 'Georgia, serif' }}>
+    <div className="bg-gradient-to-br from-purple-50 to-pink-50 text-gray-900 p-8 space-y-6" style={{ fontFamily: 'Georgia, serif', minHeight: '400px' }}>
       <div className="bg-white rounded-lg shadow-lg p-6">
         <h1 className="text-4xl font-bold text-purple-600 mb-3 text-center">{data.personalInfo.name || "Your Name"}</h1>
         <div className="flex justify-center flex-wrap gap-4 text-sm text-gray-700 mb-4">
-          {data.personalInfo.email && <span>📧 {data.personalInfo.email}</span>}
-          {data.personalInfo.phone && <span>📱 {data.personalInfo.phone}</span>}
+          {data.personalInfo.email ? <span>📧 {data.personalInfo.email}</span> : <span className="text-gray-400">📧 email@example.com</span>}
+          {data.personalInfo.phone ? <span>📱 {data.personalInfo.phone}</span> : <span className="text-gray-400">📱 +91 9876543210</span>}
           {data.personalInfo.linkedin && <span>💼 {data.personalInfo.linkedin}</span>}
         </div>
       </div>
 
-      {data.objective && (
-        <div className="bg-white rounded-lg shadow-md p-4">
-          <h2 className="text-xl font-bold text-pink-600 mb-2">Career Objective</h2>
+      <div className="bg-white rounded-lg shadow-md p-4">
+        <h2 className="text-xl font-bold text-pink-600 mb-2">Career Objective</h2>
+        {data.objective ? (
           <p className="text-gray-700">{data.objective}</p>
-        </div>
-      )}
+        ) : (
+          <p className="text-gray-400 italic">Add your career objective...</p>
+        )}
+      </div>
 
-      {data.education.length > 0 && (
-        <div className="bg-white rounded-lg shadow-md p-4">
-          <h2 className="text-xl font-bold text-purple-600 mb-3">Education</h2>
-          {data.education.map((edu) => (
+      <div className="bg-white rounded-lg shadow-md p-4">
+        <h2 className="text-xl font-bold text-purple-600 mb-3">Education</h2>
+        {data.education.length > 0 ? (
+          data.education.map((edu) => (
             <div key={edu.id} className="mb-3 pb-3 border-b border-gray-200 last:border-0">
-              <h3 className="font-semibold text-lg">{edu.degree}</h3>
-              <p className="text-gray-600">{edu.institution} • {edu.year}</p>
+              <h3 className="font-semibold text-lg">{edu.degree || "Degree"}</h3>
+              <p className="text-gray-600">{edu.institution || "Institution"} • {edu.year || "Year"}</p>
               {edu.cgpa && <p className="text-sm text-gray-500">CGPA: {edu.cgpa}</p>}
             </div>
-          ))}
-        </div>
-      )}
+          ))
+        ) : (
+          <p className="text-gray-400 italic text-sm">Add education...</p>
+        )}
+      </div>
 
-      {data.experience.length > 0 && (
-        <div className="bg-white rounded-lg shadow-md p-4">
-          <h2 className="text-xl font-bold text-pink-600 mb-3">Experience</h2>
-          {data.experience.map((exp) => (
+      <div className="bg-white rounded-lg shadow-md p-4">
+        <h2 className="text-xl font-bold text-pink-600 mb-3">Experience</h2>
+        {data.experience.length > 0 ? (
+          data.experience.map((exp) => (
             <div key={exp.id} className="mb-3 pb-3 border-b border-gray-200 last:border-0">
-              <h3 className="font-semibold">{exp.title} at {exp.company}</h3>
-              <p className="text-sm text-gray-600">{exp.duration}</p>
+              <h3 className="font-semibold">{exp.title || "Job Title"} at {exp.company || "Company"}</h3>
+              <p className="text-sm text-gray-600">{exp.duration || "Duration"}</p>
               {exp.description && <p className="text-gray-700 mt-2">{exp.description}</p>}
             </div>
-          ))}
-        </div>
-      )}
+          ))
+        ) : (
+          <p className="text-gray-400 italic text-sm">Add experience...</p>
+        )}
+      </div>
 
-      {data.projects.length > 0 && (
-        <div className="bg-white rounded-lg shadow-md p-4">
-          <h2 className="text-xl font-bold text-purple-600 mb-3">Projects</h2>
-          {data.projects.map((proj) => (
+      <div className="bg-white rounded-lg shadow-md p-4">
+        <h2 className="text-xl font-bold text-purple-600 mb-3">Projects</h2>
+        {data.projects.length > 0 ? (
+          data.projects.map((proj) => (
             <div key={proj.id} className="mb-3">
-              <h3 className="font-semibold">{proj.name}</h3>
+              <h3 className="font-semibold">{proj.name || "Project Name"}</h3>
               {proj.description && <p className="text-gray-700">{proj.description}</p>}
             </div>
-          ))}
-        </div>
-      )}
+          ))
+        ) : (
+          <p className="text-gray-400 italic text-sm">Add projects...</p>
+        )}
+      </div>
 
-      {data.skills.length > 0 && (
-        <div className="bg-white rounded-lg shadow-md p-4">
-          <h2 className="text-xl font-bold text-pink-600 mb-2">Skills</h2>
+      <div className="bg-white rounded-lg shadow-md p-4">
+        <h2 className="text-xl font-bold text-pink-600 mb-2">Skills</h2>
+        {data.skills.length > 0 ? (
           <div className="flex flex-wrap gap-2">
             {data.skills.map((skill, idx) => (
               <span key={idx} className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">{skill}</span>
             ))}
           </div>
-        </div>
-      )}
+        ) : (
+          <p className="text-gray-400 italic text-sm">Add skills...</p>
+        )}
+      </div>
     </div>
   )
 
   const renderTemplate4 = () => (
-    <div className="bg-white text-gray-900 p-8 space-y-5" style={{ fontFamily: 'Calibri, sans-serif', fontSize: '11pt' }}>
+    <div className="bg-white text-gray-900 p-8 space-y-5" style={{ fontFamily: 'Calibri, sans-serif', fontSize: '11pt', minHeight: '400px' }}>
       <div className="text-center border-b-2 border-black pb-3">
         <h1 className="text-2xl font-bold uppercase mb-2">{data.personalInfo.name || "YOUR NAME"}</h1>
         <div className="text-sm space-x-3">
-          {data.personalInfo.email && <span>{data.personalInfo.email}</span>}
-          {data.personalInfo.phone && <span>| {data.personalInfo.phone}</span>}
+          {data.personalInfo.email ? <span>{data.personalInfo.email}</span> : <span className="text-gray-400">email@example.com</span>}
+          {data.personalInfo.phone ? <span>| {data.personalInfo.phone}</span> : <span className="text-gray-400">| +91 9876543210</span>}
           {data.personalInfo.address && <span>| {data.personalInfo.address}</span>}
         </div>
       </div>
 
-      {data.objective && (
-        <div>
-          <h2 className="text-base font-bold uppercase border-b border-gray-400 pb-1 mb-2">OBJECTIVE</h2>
+      <div>
+        <h2 className="text-base font-bold uppercase border-b border-gray-400 pb-1 mb-2">OBJECTIVE</h2>
+        {data.objective ? (
           <p className="text-sm">{data.objective}</p>
-        </div>
-      )}
+        ) : (
+          <p className="text-sm text-gray-400 italic">Add your career objective...</p>
+        )}
+      </div>
 
-      {data.education.length > 0 && (
-        <div>
-          <h2 className="text-base font-bold uppercase border-b border-gray-400 pb-1 mb-2">EDUCATION</h2>
-          {data.education.map((edu) => (
+      <div>
+        <h2 className="text-base font-bold uppercase border-b border-gray-400 pb-1 mb-2">EDUCATION</h2>
+        {data.education.length > 0 ? (
+          data.education.map((edu) => (
             <div key={edu.id} className="mb-2">
               <div className="flex justify-between">
-                <span className="font-semibold">{edu.degree}</span>
-                <span className="text-sm">{edu.year}</span>
+                <span className="font-semibold">{edu.degree || "Degree"}</span>
+                <span className="text-sm">{edu.year || "Year"}</span>
               </div>
-              <p className="text-sm">{edu.institution} {edu.cgpa && `• CGPA: ${edu.cgpa}`}</p>
+              <p className="text-sm">{edu.institution || "Institution"} {edu.cgpa && `• CGPA: ${edu.cgpa}`}</p>
             </div>
-          ))}
-        </div>
-      )}
+          ))
+        ) : (
+          <p className="text-sm text-gray-400 italic">Add education...</p>
+        )}
+      </div>
 
-      {data.experience.length > 0 && (
-        <div>
-          <h2 className="text-base font-bold uppercase border-b border-gray-400 pb-1 mb-2">EXPERIENCE</h2>
-          {data.experience.map((exp) => (
+      <div>
+        <h2 className="text-base font-bold uppercase border-b border-gray-400 pb-1 mb-2">EXPERIENCE</h2>
+        {data.experience.length > 0 ? (
+          data.experience.map((exp) => (
             <div key={exp.id} className="mb-2">
               <div className="flex justify-between">
-                <span className="font-semibold">{exp.title}</span>
-                <span className="text-sm">{exp.duration}</span>
+                <span className="font-semibold">{exp.title || "Job Title"}</span>
+                <span className="text-sm">{exp.duration || "Duration"}</span>
               </div>
-              <p className="text-sm italic">{exp.company}</p>
+              <p className="text-sm italic">{exp.company || "Company"}</p>
               {exp.description && <p className="text-sm mt-1">{exp.description}</p>}
             </div>
-          ))}
-        </div>
-      )}
+          ))
+        ) : (
+          <p className="text-sm text-gray-400 italic">Add experience...</p>
+        )}
+      </div>
 
-      {data.projects.length > 0 && (
-        <div>
-          <h2 className="text-base font-bold uppercase border-b border-gray-400 pb-1 mb-2">PROJECTS</h2>
-          {data.projects.map((proj) => (
+      <div>
+        <h2 className="text-base font-bold uppercase border-b border-gray-400 pb-1 mb-2">PROJECTS</h2>
+        {data.projects.length > 0 ? (
+          data.projects.map((proj) => (
             <div key={proj.id} className="mb-2">
-              <p className="font-semibold">{proj.name}</p>
+              <p className="font-semibold">{proj.name || "Project Name"}</p>
               {proj.description && <p className="text-sm">{proj.description}</p>}
             </div>
-          ))}
-        </div>
-      )}
+          ))
+        ) : (
+          <p className="text-sm text-gray-400 italic">Add projects...</p>
+        )}
+      </div>
 
-      {data.skills.length > 0 && (
-        <div>
-          <h2 className="text-base font-bold uppercase border-b border-gray-400 pb-1 mb-2">SKILLS</h2>
+      <div>
+        <h2 className="text-base font-bold uppercase border-b border-gray-400 pb-1 mb-2">SKILLS</h2>
+        {data.skills.length > 0 ? (
           <p className="text-sm">{data.skills.join(" • ")}</p>
-        </div>
-      )}
+        ) : (
+          <p className="text-sm text-gray-400 italic">Add skills...</p>
+        )}
+      </div>
 
-      {data.certifications.length > 0 && (
-        <div>
-          <h2 className="text-base font-bold uppercase border-b border-gray-400 pb-1 mb-2">CERTIFICATIONS</h2>
-          {data.certifications.map((cert) => (
-            <p key={cert.id} className="text-sm">{cert.name} - {cert.issuer} {cert.date && `(${cert.date})`}</p>
-          ))}
-        </div>
-      )}
+      <div>
+        <h2 className="text-base font-bold uppercase border-b border-gray-400 pb-1 mb-2">CERTIFICATIONS</h2>
+        {data.certifications.length > 0 ? (
+          data.certifications.map((cert) => (
+            <p key={cert.id} className="text-sm">{cert.name || "Certification"} - {cert.issuer || "Issuer"} {cert.date && `(${cert.date})`}</p>
+          ))
+        ) : (
+          <p className="text-sm text-gray-400 italic">Add certifications...</p>
+        )}
+      </div>
     </div>
   )
 
@@ -1608,7 +1654,7 @@ export default function ResumeBuilderPage() {
 
           {/* Preview Panel */}
           {showPreview && (
-            <div className="lg:col-span-2 space-y-4 sticky top-4" style={{ maxHeight: 'calc(100vh - 2rem)' }}>
+            <div className="lg:col-span-2 space-y-4">
               <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-4 shadow-sm">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="font-semibold flex items-center gap-2">
@@ -1619,7 +1665,7 @@ export default function ResumeBuilderPage() {
                     {resumeTemplates.find(t => t.id === selectedTemplate)?.name || "Template"}
                   </Badge>
                 </div>
-                <div className="border border-gray-300 rounded-lg overflow-hidden shadow-lg bg-white" style={{ maxHeight: '800px', overflowY: 'auto' }}>
+                <div className="border-2 border-gray-300 rounded-lg overflow-hidden shadow-lg bg-white" style={{ minHeight: '600px', maxHeight: '800px', overflowY: 'auto' }}>
                   <ResumePreview data={resumeData} templateId={selectedTemplate} />
                 </div>
                 <p className="text-xs text-muted-foreground mt-2 text-center">
