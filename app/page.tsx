@@ -1,12 +1,13 @@
 
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Briefcase, Users, BarChart3, BookOpen, Rocket, Star } from "lucide-react"
+import { ArrowRight, Briefcase, Users, BarChart3, BookOpen, Rocket, Star, TrendingUp } from "lucide-react"
 import { Link } from "react-router-dom"
 import { AnimatedCard } from "@/components/animated-card"
 import { InteractiveStats } from "@/components/interactive-stats"
 import { ScrollReveal } from "@/components/scroll-reveal"
 import { AnimatedLogo2D } from "@/components/animated-logo"
+import { StudentSteppingUp } from "@/components/student-stepping-up"
 
 const features = [
   {
@@ -65,10 +66,50 @@ const testimonials = [
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-slate-100">
-      {/* Hero Section with 3D Logo */}
+    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 relative overflow-hidden">
+      {/* Animated background particles */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-white/20 rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -100, 0],
+              opacity: [0, 1, 0],
+              scale: [0, 1, 0],
+            }}
+            transition={{
+              duration: 3 + Math.random() * 2,
+              repeat: Number.POSITIVE_INFINITY,
+              delay: Math.random() * 2,
+              ease: "easeInOut"
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Hero Section with Student Stepping Up Animation */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 animated-gradient opacity-20" />
+        {/* Animated gradient background */}
+        <motion.div
+          className="absolute inset-0"
+          animate={{
+            background: [
+              "radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.3) 0%, transparent 50%)",
+              "radial-gradient(circle at 80% 50%, rgba(59, 130, 246, 0.3) 0%, transparent 50%), radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.3) 0%, transparent 50%)",
+              "radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.3) 0%, transparent 50%)",
+            ]
+          }}
+          transition={{
+            duration: 8,
+            repeat: Number.POSITIVE_INFINITY,
+            ease: "easeInOut"
+          }}
+        />
         
         <div className="container mx-auto px-4 py-20 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -79,65 +120,149 @@ export default function Home() {
               transition={{ duration: 0.8 }}
               className="space-y-8"
             >
-              <div className="inline-flex items-center gap-2 bg-accent/10 text-accent px-4 py-2 rounded-full text-sm font-medium">
-                <Star className="w-4 h-4" />
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-yellow-400/20 to-orange-400/20 backdrop-blur-sm border border-yellow-400/30 text-yellow-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg"
+              >
+                <motion.div
+                  animate={{ rotate: [0, 360] }}
+                  transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                >
+                  <Star className="w-4 h-4 fill-yellow-400" />
+                </motion.div>
                 <span>India's Leading College Placement Portal</span>
-              </div>
+              </motion.div>
               
-              <h1 className="text-5xl md:text-7xl font-bold leading-tight">
-                Welcome to{" "}
-                <span className="gradient-text">RCE Career Hub</span>
-              </h1>
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="text-5xl md:text-7xl font-bold leading-tight"
+              >
+                <span className="text-white">Reach the </span>
+                <motion.span
+                  className="bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 bg-clip-text text-transparent"
+                  animate={{
+                    backgroundPosition: ["0%", "100%", "0%"],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Number.POSITIVE_INFINITY,
+                    ease: "linear"
+                  }}
+                  style={{
+                    backgroundSize: "200% auto"
+                  }}
+                >
+                  TOP
+                </motion.span>
+                <br />
+                <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                  of Your Life
+                </span>
+              </motion.h1>
               
-              <p className="text-xl text-muted-foreground max-w-xl">
-                Your comprehensive platform for placement drives, career preparation, and professional growth. 
-                Connect with top companies and launch your dream career.
-              </p>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="space-y-4"
+              >
+                <div className="flex items-center gap-3 text-xl md:text-2xl font-semibold text-white/90">
+                  <motion.div
+                    animate={{ scale: [1, 1.2, 1], rotate: [0, 180, 360] }}
+                    transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+                  >
+                    <TrendingUp className="w-8 h-8 text-green-400" />
+                  </motion.div>
+                  <span>Use our platform and</span>
+                </div>
+                <p className="text-xl md:text-2xl text-blue-200 font-medium leading-relaxed">
+                  <span className="text-yellow-300">Step Up to Success!</span> Your journey to the top starts here. 
+                  Connect with top companies and achieve your career dreams.
+                </p>
+              </motion.div>
               
-              <div className="flex flex-wrap gap-4">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7 }}
+                className="flex flex-wrap gap-4"
+              >
                 <Link to="/login">
-                  <Button size="lg" className="gap-2 bg-accent text-accent-foreground hover:bg-accent/90 hover-lift">
-                    Get Started <ArrowRight className="w-5 h-5" />
-                  </Button>
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Button size="lg" className="gap-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold hover:from-yellow-500 hover:to-orange-600 shadow-xl shadow-yellow-500/50">
+                      Get Started <ArrowRight className="w-5 h-5" />
+                    </Button>
+                  </motion.div>
                 </Link>
                 <Link to="#features">
-                  <Button size="lg" variant="outline" className="gap-2 bg-transparent hover-lift">
-                    Learn More
-                  </Button>
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Button size="lg" variant="outline" className="gap-2 bg-transparent border-2 border-white/30 text-white hover:bg-white/10 backdrop-blur-sm">
+                      Learn More
+                    </Button>
+                  </motion.div>
                 </Link>
-              </div>
+              </motion.div>
             </motion.div>
 
-            {/* Right: 3D Logo */}
+            {/* Right: Student Stepping Up Animation */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative h-[400px] lg:h-[500px]"
+              className="relative h-[500px] lg:h-[600px] flex items-center justify-center"
             >
-              <AnimatedLogo2D className="w-full h-full" />
+              {/* 3D depth effect */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-3xl blur-3xl"
+                animate={{
+                  scale: [1, 1.1, 1],
+                  opacity: [0.5, 0.7, 0.5]
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "easeInOut"
+                }}
+              />
+              
+              <div className="relative z-10 w-full h-full">
+                <StudentSteppingUp />
+              </div>
             </motion.div>
           </div>
         </div>
 
-        {/* Scroll indicator */}
+        {/* Scroll indicator with upward arrow */}
         <motion.div
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20"
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
         >
-          <div className="w-6 h-10 border-2 border-accent rounded-full flex items-start justify-center p-2">
+          <motion.div
+            className="w-6 h-10 border-2 border-yellow-400 rounded-full flex items-start justify-center p-2 backdrop-blur-sm bg-white/10"
+            whileHover={{ scale: 1.1 }}
+          >
             <motion.div
-              className="w-1.5 h-1.5 bg-accent rounded-full"
+              className="w-1.5 h-1.5 bg-yellow-400 rounded-full"
               animate={{ y: [0, 20, 0] }}
               transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
             />
-          </div>
+          </motion.div>
         </motion.div>
       </section>
 
       {/* Stats Section */}
-      <section className="relative py-20 px-4 md:px-8 bg-gradient-to-b from-background to-primary/5 dark:to-primary/3">
+      <section className="relative py-20 px-4 md:px-8 bg-gradient-to-b from-indigo-900 via-purple-900 to-blue-900">
         <div className="container mx-auto">
           <ScrollReveal direction="up">
             <div className="text-center mb-12">
@@ -153,7 +278,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 px-4 md:px-8 bg-gradient-to-b from-primary/5 to-background dark:from-primary/3">
+      <section id="features" className="py-20 px-4 md:px-8 bg-gradient-to-b from-blue-900 via-indigo-900 to-purple-900">
         <div className="container mx-auto">
           <ScrollReveal direction="up" delay={0.1}>
             <div className="text-center mb-16">
@@ -189,7 +314,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 px-4 md:px-8 bg-gradient-to-b from-background to-secondary/5 dark:to-secondary/3">
+      <section className="py-20 px-4 md:px-8 bg-gradient-to-b from-purple-900 via-blue-900 to-indigo-900">
         <div className="container mx-auto">
           <ScrollReveal direction="up">
             <div className="text-center mb-16">
