@@ -8,6 +8,8 @@ import { InteractiveStats } from "@/components/interactive-stats"
 import { ScrollReveal } from "@/components/scroll-reveal"
 import { AnimatedLogo2D } from "@/components/animated-logo"
 import { StudentSteppingUp } from "@/components/student-stepping-up"
+import { CustomCursor } from "@/components/custom-cursor"
+import { Mesh3DBackground } from "@/components/3d-mesh-background"
 
 const features = [
   {
@@ -66,50 +68,34 @@ const testimonials = [
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 relative overflow-hidden">
-      {/* Animated background particles */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 bg-white/20 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -100, 0],
-              opacity: [0, 1, 0],
-              scale: [0, 1, 0],
-            }}
-            transition={{
-              duration: 3 + Math.random() * 2,
-              repeat: Number.POSITIVE_INFINITY,
-              delay: Math.random() * 2,
-              ease: "easeInOut"
-            }}
-          />
-        ))}
-      </div>
+    <div className="min-h-screen bg-[#0a0a0a] relative overflow-hidden cursor-none">
+      {/* Custom Cursor */}
+      <CustomCursor />
 
-      {/* Hero Section with Student Stepping Up Animation */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Animated gradient background */}
+      {/* 3D Mesh Background */}
+      <Mesh3DBackground />
+
+      {/* Animated gradient overlays - rock8.io style */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
           className="absolute inset-0"
           animate={{
             background: [
-              "radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.3) 0%, transparent 50%)",
-              "radial-gradient(circle at 80% 50%, rgba(59, 130, 246, 0.3) 0%, transparent 50%), radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.3) 0%, transparent 50%)",
-              "radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.3) 0%, transparent 50%)",
+              "radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.15) 0%, transparent 50%), radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.1) 0%, transparent 50%)",
+              "radial-gradient(circle at 80% 30%, rgba(139, 92, 246, 0.15) 0%, transparent 50%), radial-gradient(circle at 20% 70%, rgba(16, 185, 129, 0.15) 0%, transparent 50%), radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%)",
+              "radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.15) 0%, transparent 50%), radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.1) 0%, transparent 50%)",
             ]
           }}
           transition={{
-            duration: 8,
+            duration: 20,
             repeat: Number.POSITIVE_INFINITY,
             ease: "easeInOut"
           }}
         />
+      </div>
+
+      {/* Hero Section with Student Stepping Up Animation */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         
         <div className="container mx-auto px-4 py-20 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -124,13 +110,13 @@ export default function Home() {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-yellow-400/20 to-orange-400/20 backdrop-blur-sm border border-yellow-400/30 text-yellow-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-sm border border-blue-400/30 text-blue-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg"
               >
                 <motion.div
                   animate={{ rotate: [0, 360] }}
                   transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
                 >
-                  <Star className="w-4 h-4 fill-yellow-400" />
+                  <Star className="w-4 h-4 fill-blue-400" />
                 </motion.div>
                 <span>India's Leading College Placement Portal</span>
               </motion.div>
@@ -143,7 +129,7 @@ export default function Home() {
               >
                 <span className="text-white">Reach the </span>
                 <motion.span
-                  className="bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 bg-clip-text text-transparent"
+                  className="bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent"
                   animate={{
                     backgroundPosition: ["0%", "100%", "0%"],
                   }}
@@ -159,7 +145,7 @@ export default function Home() {
                   TOP
                 </motion.span>
                 <br />
-                <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
                   of Your Life
                 </span>
               </motion.h1>
@@ -175,12 +161,12 @@ export default function Home() {
                     animate={{ scale: [1, 1.2, 1], rotate: [0, 180, 360] }}
                     transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
                   >
-                    <TrendingUp className="w-8 h-8 text-green-400" />
+                    <TrendingUp className="w-8 h-8 text-cyan-400" />
                   </motion.div>
                   <span>Use our platform and</span>
                 </div>
-                <p className="text-xl md:text-2xl text-blue-200 font-medium leading-relaxed">
-                  <span className="text-yellow-300">Step Up to Success!</span> Your journey to the top starts here. 
+                <p className="text-xl md:text-2xl text-gray-300 font-medium leading-relaxed">
+                  <span className="text-cyan-400">Step Up to Success!</span> Your journey to the top starts here. 
                   Connect with top companies and achieve your career dreams.
                 </p>
               </motion.div>
@@ -196,7 +182,7 @@ export default function Home() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <Button size="lg" className="gap-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold hover:from-yellow-500 hover:to-orange-600 shadow-xl shadow-yellow-500/50">
+                    <Button size="lg" className="gap-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold hover:from-blue-600 hover:to-cyan-600 shadow-xl shadow-blue-500/50">
                       Get Started <ArrowRight className="w-5 h-5" />
                     </Button>
                   </motion.div>
@@ -249,11 +235,11 @@ export default function Home() {
           transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
         >
           <motion.div
-            className="w-6 h-10 border-2 border-yellow-400 rounded-full flex items-start justify-center p-2 backdrop-blur-sm bg-white/10"
+            className="w-6 h-10 border-2 border-blue-400 rounded-full flex items-start justify-center p-2 backdrop-blur-sm bg-white/5"
             whileHover={{ scale: 1.1 }}
           >
             <motion.div
-              className="w-1.5 h-1.5 bg-yellow-400 rounded-full"
+              className="w-1.5 h-1.5 bg-blue-400 rounded-full"
               animate={{ y: [0, 20, 0] }}
               transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
             />
@@ -262,7 +248,7 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="relative py-20 px-4 md:px-8 bg-gradient-to-b from-indigo-900 via-purple-900 to-blue-900">
+      <section className="relative py-20 px-4 md:px-8 bg-[#0a0a0a]">
         <div className="container mx-auto">
           <ScrollReveal direction="up">
             <div className="text-center mb-12">
@@ -278,7 +264,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 px-4 md:px-8 bg-gradient-to-b from-blue-900 via-indigo-900 to-purple-900">
+      <section id="features" className="relative py-20 px-4 md:px-8 bg-[#0a0a0a]">
         <div className="container mx-auto">
           <ScrollReveal direction="up" delay={0.1}>
             <div className="text-center mb-16">
@@ -314,7 +300,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 px-4 md:px-8 bg-gradient-to-b from-purple-900 via-blue-900 to-indigo-900">
+      <section className="relative py-20 px-4 md:px-8 bg-[#0a0a0a]">
         <div className="container mx-auto">
           <ScrollReveal direction="up">
             <div className="text-center mb-16">
