@@ -7,8 +7,6 @@ import { AnimatedCard } from "@/components/animated-card"
 import { InteractiveStats } from "@/components/interactive-stats"
 import { ScrollReveal } from "@/components/scroll-reveal"
 import { AnimatedLogo2D } from "@/components/animated-logo"
-import { StudentSteppingUp } from "@/components/student-stepping-up"
-import { CustomCursor } from "@/components/custom-cursor"
 import { Mesh3DBackground } from "@/components/3d-mesh-background"
 
 const features = [
@@ -68,9 +66,7 @@ const testimonials = [
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#0a0a0a] relative overflow-hidden cursor-none">
-      {/* Custom Cursor */}
-      <CustomCursor />
+    <div className="min-h-screen bg-[#0a0a0a] relative overflow-hidden">
 
       {/* 3D Mesh Background */}
       <Mesh3DBackground />
@@ -98,13 +94,13 @@ export default function Home() {
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         
         <div className="container mx-auto px-4 py-20 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left: Content */}
+          <div className="max-w-4xl mx-auto">
+            {/* Content */}
             <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="space-y-8"
+              className="space-y-8 text-center"
             >
               <motion.div
                 initial={{ opacity: 0, y: -20 }}
@@ -118,7 +114,7 @@ export default function Home() {
                 >
                   <Star className="w-4 h-4 fill-blue-400" />
                 </motion.div>
-                <span>India's Leading College Placement Portal</span>
+                <span className="text-blue-200 drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]">India's Leading College Placement Portal</span>
               </motion.div>
               
               <motion.h1
@@ -127,9 +123,9 @@ export default function Home() {
                 transition={{ delay: 0.3 }}
                 className="text-5xl md:text-7xl font-bold leading-tight"
               >
-                <span className="text-white">Reach the </span>
+                <span className="text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">Reach the </span>
                 <motion.span
-                  className="bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent"
+                  className="bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-300 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(59,130,246,0.9)]"
                   animate={{
                     backgroundPosition: ["0%", "100%", "0%"],
                   }}
@@ -145,7 +141,7 @@ export default function Home() {
                   TOP
                 </motion.span>
                 <br />
-                <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-300 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(139,92,246,0.9)]">
                   of Your Life
                 </span>
               </motion.h1>
@@ -156,17 +152,17 @@ export default function Home() {
                 transition={{ delay: 0.5 }}
                 className="space-y-4"
               >
-                <div className="flex items-center gap-3 text-xl md:text-2xl font-semibold text-white/90">
+                <div className="flex items-center justify-center gap-3 text-xl md:text-2xl font-semibold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.6)]">
                   <motion.div
                     animate={{ scale: [1, 1.2, 1], rotate: [0, 180, 360] }}
                     transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
                   >
-                    <TrendingUp className="w-8 h-8 text-cyan-400" />
+                    <TrendingUp className="w-8 h-8 text-cyan-300 drop-shadow-[0_0_10px_rgba(34,211,238,0.8)]" />
                   </motion.div>
                   <span>Use our platform and</span>
                 </div>
-                <p className="text-xl md:text-2xl text-gray-300 font-medium leading-relaxed">
-                  <span className="text-cyan-400">Step Up to Success!</span> Your journey to the top starts here. 
+                <p className="text-xl md:text-2xl text-gray-100 font-medium leading-relaxed drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">
+                  <span className="text-cyan-300 font-bold drop-shadow-[0_0_12px_rgba(34,211,238,0.9)]">Step Up to Success!</span> Your journey to the top starts here. 
                   Connect with top companies and achieve your career dreams.
                 </p>
               </motion.div>
@@ -200,31 +196,6 @@ export default function Home() {
               </motion.div>
             </motion.div>
 
-            {/* Right: Student Stepping Up Animation */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative h-[500px] lg:h-[600px] flex items-center justify-center"
-            >
-              {/* 3D depth effect */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-3xl blur-3xl"
-                animate={{
-                  scale: [1, 1.1, 1],
-                  opacity: [0.5, 0.7, 0.5]
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Number.POSITIVE_INFINITY,
-                  ease: "easeInOut"
-                }}
-              />
-              
-              <div className="relative z-10 w-full h-full">
-                <StudentSteppingUp />
-              </div>
-            </motion.div>
           </div>
         </div>
 
@@ -252,10 +223,10 @@ export default function Home() {
         <div className="container mx-auto">
           <ScrollReveal direction="up">
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-bold mb-4 gradient-text">
-                By the Numbers
+              <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]">
+                By the <span className="bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-300 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(59,130,246,0.9)]">Numbers</span>
               </h2>
-              <p className="text-lg text-muted-foreground">Join thousands of successful graduates</p>
+              <p className="text-lg text-gray-200 drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">Join thousands of successful graduates</p>
             </div>
           </ScrollReveal>
 
@@ -268,11 +239,11 @@ export default function Home() {
         <div className="container mx-auto">
           <ScrollReveal direction="up" delay={0.1}>
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]">
                 Comprehensive{" "}
-                <span className="gradient-text">Solutions</span>
+                <span className="bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-300 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(139,92,246,0.9)]">Solutions</span>
               </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-lg text-gray-200 max-w-2xl mx-auto drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">
                 Everything you need for career success in one platform
               </p>
             </div>
@@ -304,10 +275,10 @@ export default function Home() {
         <div className="container mx-auto">
           <ScrollReveal direction="up">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                Success <span className="gradient-text">Stories</span>
+              <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]">
+                Success <span className="bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-300 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(34,211,238,0.9)]">Stories</span>
               </h2>
-              <p className="text-lg text-muted-foreground">Hear from our placed students</p>
+              <p className="text-lg text-gray-200 drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">Hear from our placed students</p>
             </div>
           </ScrollReveal>
 
@@ -323,10 +294,10 @@ export default function Home() {
                       <Star key={i} className="w-4 h-4 fill-accent text-accent" />
                     ))}
                   </div>
-                  <p className="text-muted-foreground mb-4 italic">"{testimonial.content}"</p>
+                  <p className="text-gray-200 mb-4 italic drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">"{testimonial.content}"</p>
                   <div>
-                    <p className="font-semibold">{testimonial.name}</p>
-                    <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                    <p className="font-semibold text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">{testimonial.name}</p>
+                    <p className="text-sm text-gray-300 drop-shadow-[0_0_6px_rgba(255,255,255,0.3)]">{testimonial.role}</p>
                   </div>
                 </motion.div>
               </ScrollReveal>
@@ -352,8 +323,8 @@ export default function Home() {
             >
               <Rocket className="w-12 h-12 text-accent" />
             </motion.div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Launch Your Career?</h2>
-            <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]">Ready to Launch Your Career?</h2>
+            <p className="text-lg text-gray-200 mb-8 max-w-2xl mx-auto drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">
               Join RCE Career Hub today and connect with top companies seeking talent like yours
             </p>
             <Link to="/login">

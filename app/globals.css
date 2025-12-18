@@ -56,11 +56,6 @@
     color: hsl(var(--foreground));
     font-feature-settings: "rlig" 1, "calt" 1;
   }
-  
-  /* Custom cursor only for homepage */
-  body:has(.cursor-none) {
-    cursor: none;
-  }
 }
 
 @layer utilities {
