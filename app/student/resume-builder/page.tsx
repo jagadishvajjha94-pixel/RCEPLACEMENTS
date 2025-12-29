@@ -1016,8 +1016,8 @@ export default function ResumeBuilderPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-background to-primary/10 dark:to-primary/5 p-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-b from-background via-background to-primary/10 dark:to-primary/5 p-4 md:p-8 overflow-x-hidden">
+      <div className="max-w-7xl mx-auto w-full">
         {/* Header */}
         <motion.div className="mb-8" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
           <Link to="/student/dashboard" className="text-blue-600 hover:underline mb-4 inline-flex items-center gap-1">

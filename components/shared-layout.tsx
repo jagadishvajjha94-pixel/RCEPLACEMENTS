@@ -11,12 +11,14 @@ interface SharedLayoutProps {
 
 export function SharedLayout({ children, sidebar, header, className = "" }: SharedLayoutProps) {
   return (
-    <div className={`flex h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-slate-100 ${className}`}>
+    <div className={`flex h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-slate-100 overflow-hidden ${className}`}>
       {sidebar}
-      <div className="flex-1 flex flex-col ml-72">
+      <div className="flex-1 flex flex-col overflow-hidden">
         {header}
-        <main className="flex-1 overflow-y-auto pt-16">
-          {children}
+        <main className="flex-1 overflow-y-auto overflow-x-hidden pt-16">
+          <div className="w-full max-w-full">
+            {children}
+          </div>
         </main>
       </div>
     </div>

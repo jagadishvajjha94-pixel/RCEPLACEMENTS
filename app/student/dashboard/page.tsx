@@ -50,7 +50,7 @@ import { Link } from "react-router-dom"
 import { AuthService } from "@/lib/auth-service"
 import { PlacementDriveService, RegistrationService, type PlacementDrive, type StudentRegistration } from "@/lib/placement-service"
 import { initializeAllMockData } from "@/lib/mock-data-initializer"
-import { mockToppers, mockNewsFeed, type Topper, type NewsFeed, type FacultyFeedback } from "@/lib/mock-data"
+import { mockToppers, type Topper, type FacultyFeedback } from "@/lib/mock-data"
 import { FacultyFeedbackService } from "@/lib/db-service"
 import type { User as AuthUser } from "@/lib/auth-service"
 
@@ -349,7 +349,7 @@ export default function StudentDashboard() {
   }
 
   return (
-    <div className="p-8 space-y-8">
+    <div className="w-full max-w-full p-4 md:p-6 space-y-4 md:space-y-6">
         {/* Welcome Section */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -357,10 +357,10 @@ export default function StudentDashboard() {
           className="flex items-center justify-between"
         >
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            <h1 className="text-2xl font-bold text-gray-900 mb-1">
               Welcome back, {user?.name || "Student"}! 👋
             </h1>
-            <p className="text-gray-600">Track your placement journey and manage applications</p>
+            <p className="text-sm text-gray-600">Track your placement journey and manage applications</p>
           </div>
           <div className="flex gap-3">
             <Link to="/student/profile">
@@ -373,22 +373,22 @@ export default function StudentDashboard() {
         </motion.div>
 
         {/* Key Metrics Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
           <motion.div
             whileHover={{ y: -4 }}
             className="cursor-pointer"
           >
             <Card className="bg-gradient-to-br from-blue-500 to-blue-600 border-0 text-white overflow-hidden relative">
-              <div className="p-6 relative z-10">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
-                    <Briefcase className="w-6 h-6" />
+              <div className="p-3 relative z-10">
+                <div className="flex items-start justify-between mb-2">
+                  <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                    <Briefcase className="w-4 h-4" />
                   </div>
                 </div>
-                <h3 className="text-3xl font-bold mb-1">{studentStats.appliedDrives}</h3>
-                <p className="text-white/90 text-sm font-medium">Applications</p>
+                <h3 className="text-xl font-bold mb-1">{studentStats.appliedDrives}</h3>
+                <p className="text-white/90 text-xs font-medium">Applications</p>
               </div>
-              <div className="absolute bottom-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mb-16"></div>
+              <div className="absolute bottom-0 right-0 w-16 h-16 bg-white/10 rounded-full -mr-8 -mb-8"></div>
             </Card>
           </motion.div>
 
@@ -397,16 +397,16 @@ export default function StudentDashboard() {
             className="cursor-pointer"
           >
             <Card className="bg-gradient-to-br from-green-500 to-emerald-600 border-0 text-white overflow-hidden relative">
-              <div className="p-6 relative z-10">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
-                    <CheckCircle className="w-6 h-6" />
+              <div className="p-3 relative z-10">
+                <div className="flex items-start justify-between mb-2">
+                  <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                    <CheckCircle className="w-4 h-4" />
                   </div>
                 </div>
-                <h3 className="text-3xl font-bold mb-1">{studentStats.selectedDrives}</h3>
-                <p className="text-white/90 text-sm font-medium">Offers Received</p>
+                <h3 className="text-xl font-bold mb-1">{studentStats.selectedDrives}</h3>
+                <p className="text-white/90 text-xs font-medium">Offers Received</p>
               </div>
-              <div className="absolute bottom-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mb-16"></div>
+              <div className="absolute bottom-0 right-0 w-16 h-16 bg-white/10 rounded-full -mr-8 -mb-8"></div>
             </Card>
           </motion.div>
 
@@ -415,16 +415,16 @@ export default function StudentDashboard() {
             className="cursor-pointer"
           >
             <Card className="bg-gradient-to-br from-purple-500 to-purple-600 border-0 text-white overflow-hidden relative">
-              <div className="p-6 relative z-10">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
-                    <GraduationCap className="w-6 h-6" />
+              <div className="p-3 relative z-10">
+                <div className="flex items-start justify-between mb-2">
+                  <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                    <GraduationCap className="w-4 h-4" />
                   </div>
                 </div>
-                <h3 className="text-3xl font-bold mb-1">{studentStats.cgpa}</h3>
-                <p className="text-white/90 text-sm font-medium">CGPA</p>
+                <h3 className="text-xl font-bold mb-1">{studentStats.cgpa}</h3>
+                <p className="text-white/90 text-xs font-medium">CGPA</p>
               </div>
-              <div className="absolute bottom-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mb-16"></div>
+              <div className="absolute bottom-0 right-0 w-16 h-16 bg-white/10 rounded-full -mr-8 -mb-8"></div>
             </Card>
           </motion.div>
 
@@ -433,16 +433,16 @@ export default function StudentDashboard() {
             className="cursor-pointer"
           >
             <Card className="bg-gradient-to-br from-orange-500 to-red-500 border-0 text-white overflow-hidden relative">
-              <div className="p-6 relative z-10">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
-                    <Award className="w-6 h-6" />
+              <div className="p-3 relative z-10">
+                <div className="flex items-start justify-between mb-2">
+                  <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                    <Award className="w-4 h-4" />
                   </div>
                 </div>
-                <h3 className="text-3xl font-bold mb-1">#{studentStats.rank}</h3>
-                <p className="text-white/90 text-sm font-medium">Class Rank</p>
+                <h3 className="text-xl font-bold mb-1">#{studentStats.rank}</h3>
+                <p className="text-white/90 text-xs font-medium">Class Rank</p>
               </div>
-              <div className="absolute bottom-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mb-16"></div>
+              <div className="absolute bottom-0 right-0 w-16 h-16 bg-white/10 rounded-full -mr-8 -mb-8"></div>
             </Card>
           </motion.div>
         </div>
@@ -454,27 +454,27 @@ export default function StudentDashboard() {
           className="space-y-6"
         >
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold">Top Performers</h2>
+            <h2 className="text-xl font-bold">Top Performers</h2>
           </div>
           
           {/* College-wide Toppers */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-muted-foreground">College-wide Top Performers</h3>
-            <div className="grid md:grid-cols-3 gap-6">
+            <h3 className="text-sm font-semibold mb-3 text-muted-foreground">College-wide Top Performers</h3>
+            <div className="grid md:grid-cols-3 gap-3">
               {/* Training Toppers */}
-              <Card className="bg-white p-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <Trophy className="w-5 h-5 text-yellow-500" />
-                  <h3 className="text-lg font-bold">Training Toppers</h3>
+              <Card className="bg-white p-3">
+                <div className="flex items-center gap-2 mb-2">
+                  <Trophy className="w-4 h-4 text-yellow-500" />
+                  <h3 className="text-sm font-bold">Training Toppers</h3>
                 </div>
-                <div className="space-y-3">
+                <div className="space-y-2">
                   {collegeTrainingToppers.map((topper, index) => (
                     <motion.div
                       key={topper.id}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                      className="flex items-center gap-2 p-1.5 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
                       onClick={() => {
                         setSelectedTopper(topper)
                         setShowResumeModal(true)
@@ -483,32 +483,32 @@ export default function StudentDashboard() {
                       <img
                         src={topper.picture}
                         alt={topper.name}
-                        className="w-12 h-12 rounded-full border-2 border-primary object-cover"
+                        className="w-8 h-8 rounded-full border-2 border-primary object-cover"
                       />
                       <div className="flex-1">
-                        <p className="font-semibold text-sm">{topper.name}</p>
-                        <p className="text-xs text-muted-foreground">{topper.branch} • Rank #{topper.rank}</p>
+                        <p className="font-semibold text-xs">{topper.name}</p>
+                        <p className="text-[10px] text-muted-foreground">{topper.branch} • Rank #{topper.rank}</p>
                       </div>
-                      <Badge className="bg-yellow-500">{topper.score}%</Badge>
+                      <Badge className="bg-yellow-500 text-[10px] px-1.5 py-0">{topper.score}%</Badge>
                     </motion.div>
                   ))}
                 </div>
               </Card>
 
               {/* Academic Toppers */}
-              <Card className="bg-white p-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <GraduationCapIcon className="w-5 h-5 text-blue-500" />
-                  <h3 className="text-lg font-bold">Academic Toppers</h3>
+              <Card className="bg-white p-3">
+                <div className="flex items-center gap-2 mb-2">
+                  <GraduationCapIcon className="w-4 h-4 text-blue-500" />
+                  <h3 className="text-sm font-bold">Academic Toppers</h3>
                 </div>
-                <div className="space-y-3">
+                <div className="space-y-2">
                   {collegeAcademicToppers.map((topper, index) => (
                     <motion.div
                       key={topper.id}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                      className="flex items-center gap-2 p-1.5 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
                       onClick={() => {
                         setSelectedTopper(topper)
                         setShowResumeModal(true)
@@ -517,32 +517,32 @@ export default function StudentDashboard() {
                       <img
                         src={topper.picture}
                         alt={topper.name}
-                        className="w-12 h-12 rounded-full border-2 border-blue-500 object-cover"
+                        className="w-8 h-8 rounded-full border-2 border-blue-500 object-cover"
                       />
                       <div className="flex-1">
-                        <p className="font-semibold text-sm">{topper.name}</p>
-                        <p className="text-xs text-muted-foreground">{topper.branch} • Rank #{topper.rank}</p>
+                        <p className="font-semibold text-xs">{topper.name}</p>
+                        <p className="text-[10px] text-muted-foreground">{topper.branch} • Rank #{topper.rank}</p>
                       </div>
-                      <Badge className="bg-blue-500">CGPA {topper.cgpa}</Badge>
+                      <Badge className="bg-blue-500 text-[10px] px-1.5 py-0">CGPA {topper.cgpa}</Badge>
                     </motion.div>
                   ))}
                 </div>
               </Card>
 
               {/* Placed Students */}
-              <Card className="bg-white p-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <BriefcaseIcon className="w-5 h-5 text-green-500" />
-                  <h3 className="text-lg font-bold">Placed Students</h3>
+              <Card className="bg-white p-3">
+                <div className="flex items-center gap-2 mb-2">
+                  <BriefcaseIcon className="w-4 h-4 text-green-500" />
+                  <h3 className="text-sm font-bold">Placed Students</h3>
                 </div>
-                <div className="space-y-3">
+                <div className="space-y-2">
                   {collegePlacedStudents.map((topper, index) => (
                     <motion.div
                       key={topper.id}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                      className="flex items-center gap-2 p-1.5 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
                       onClick={() => {
                         setSelectedTopper(topper)
                         setShowResumeModal(true)
@@ -551,13 +551,13 @@ export default function StudentDashboard() {
                       <img
                         src={topper.picture}
                         alt={topper.name}
-                        className="w-12 h-12 rounded-full border-2 border-green-500 object-cover"
+                        className="w-8 h-8 rounded-full border-2 border-green-500 object-cover"
                       />
                       <div className="flex-1">
-                        <p className="font-semibold text-sm">{topper.name}</p>
-                        <p className="text-xs text-muted-foreground">{topper.company} • {topper.package}</p>
+                        <p className="font-semibold text-xs">{topper.name}</p>
+                        <p className="text-[10px] text-muted-foreground">{topper.company} • {topper.package}</p>
                       </div>
-                      <Badge className="bg-green-500">Placed</Badge>
+                      <Badge className="bg-green-500 text-[10px] px-1.5 py-0">Placed</Badge>
                     </motion.div>
                   ))}
                 </div>
@@ -567,18 +567,18 @@ export default function StudentDashboard() {
 
           {/* Branch-wise Toppers */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-muted-foreground">
+            <h3 className="text-sm font-semibold mb-3 text-muted-foreground">
               {userBranch} Branch Top Performers
             </h3>
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-3 gap-3">
               {/* Branch Training Toppers */}
-              <Card className="bg-white p-6 border-2 border-primary/20">
-                <div className="flex items-center gap-2 mb-4">
-                  <Trophy className="w-5 h-5 text-yellow-500" />
-                  <h3 className="text-lg font-bold">Training Toppers</h3>
-                  <Badge variant="outline" className="ml-auto">{userBranch}</Badge>
+              <Card className="bg-white p-3 border-2 border-primary/20">
+                <div className="flex items-center gap-2 mb-2">
+                  <Trophy className="w-4 h-4 text-yellow-500" />
+                  <h3 className="text-sm font-bold">Training Toppers</h3>
+                  <Badge variant="outline" className="ml-auto text-[10px] px-1.5 py-0">{userBranch}</Badge>
                 </div>
-                <div className="space-y-3">
+                <div className="space-y-2">
                   {branchTrainingToppers.length > 0 ? (
                     branchTrainingToppers.map((topper, index) => (
                       <motion.div
@@ -586,7 +586,7 @@ export default function StudentDashboard() {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: index * 0.1 }}
-                        className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                        className="flex items-center gap-2 p-1.5 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
                         onClick={() => {
                           setSelectedTopper(topper)
                           setShowResumeModal(true)
@@ -595,29 +595,29 @@ export default function StudentDashboard() {
                         <img
                           src={topper.picture}
                           alt={topper.name}
-                          className="w-12 h-12 rounded-full border-2 border-primary object-cover"
+                          className="w-8 h-8 rounded-full border-2 border-primary object-cover"
                         />
                         <div className="flex-1">
-                          <p className="font-semibold text-sm">{topper.name}</p>
-                          <p className="text-xs text-muted-foreground">Rank #{topper.rank}</p>
+                          <p className="font-semibold text-xs">{topper.name}</p>
+                          <p className="text-[10px] text-muted-foreground">Rank #{topper.rank}</p>
                         </div>
-                        <Badge className="bg-yellow-500">{topper.score}%</Badge>
+                        <Badge className="bg-yellow-500 text-[10px] px-1.5 py-0">{topper.score}%</Badge>
                       </motion.div>
                     ))
                   ) : (
-                    <p className="text-sm text-muted-foreground text-center py-4">No toppers available</p>
+                    <p className="text-xs text-muted-foreground text-center py-2">No toppers available</p>
                   )}
                 </div>
               </Card>
 
               {/* Branch Academic Toppers */}
-              <Card className="bg-white p-6 border-2 border-primary/20">
-                <div className="flex items-center gap-2 mb-4">
-                  <GraduationCapIcon className="w-5 h-5 text-blue-500" />
-                  <h3 className="text-lg font-bold">Academic Toppers</h3>
-                  <Badge variant="outline" className="ml-auto">{userBranch}</Badge>
+              <Card className="bg-white p-3 border-2 border-primary/20">
+                <div className="flex items-center gap-2 mb-2">
+                  <GraduationCapIcon className="w-4 h-4 text-blue-500" />
+                  <h3 className="text-sm font-bold">Academic Toppers</h3>
+                  <Badge variant="outline" className="ml-auto text-[10px] px-1.5 py-0">{userBranch}</Badge>
                 </div>
-                <div className="space-y-3">
+                <div className="space-y-2">
                   {branchAcademicToppers.length > 0 ? (
                     branchAcademicToppers.map((topper, index) => (
                       <motion.div
@@ -625,7 +625,7 @@ export default function StudentDashboard() {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: index * 0.1 }}
-                        className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                        className="flex items-center gap-2 p-1.5 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
                         onClick={() => {
                           setSelectedTopper(topper)
                           setShowResumeModal(true)
@@ -634,29 +634,29 @@ export default function StudentDashboard() {
                         <img
                           src={topper.picture}
                           alt={topper.name}
-                          className="w-12 h-12 rounded-full border-2 border-blue-500 object-cover"
+                          className="w-8 h-8 rounded-full border-2 border-blue-500 object-cover"
                         />
                         <div className="flex-1">
-                          <p className="font-semibold text-sm">{topper.name}</p>
-                          <p className="text-xs text-muted-foreground">Rank #{topper.rank}</p>
+                          <p className="font-semibold text-xs">{topper.name}</p>
+                          <p className="text-[10px] text-muted-foreground">Rank #{topper.rank}</p>
                         </div>
-                        <Badge className="bg-blue-500">CGPA {topper.cgpa}</Badge>
+                        <Badge className="bg-blue-500 text-[10px] px-1.5 py-0">CGPA {topper.cgpa}</Badge>
                       </motion.div>
                     ))
                   ) : (
-                    <p className="text-sm text-muted-foreground text-center py-4">No toppers available</p>
+                    <p className="text-xs text-muted-foreground text-center py-2">No toppers available</p>
                   )}
                 </div>
               </Card>
 
               {/* Branch Placed Students */}
-              <Card className="bg-white p-6 border-2 border-primary/20">
-                <div className="flex items-center gap-2 mb-4">
-                  <BriefcaseIcon className="w-5 h-5 text-green-500" />
-                  <h3 className="text-lg font-bold">Placed Students</h3>
-                  <Badge variant="outline" className="ml-auto">{userBranch}</Badge>
+              <Card className="bg-white p-3 border-2 border-primary/20">
+                <div className="flex items-center gap-2 mb-2">
+                  <BriefcaseIcon className="w-4 h-4 text-green-500" />
+                  <h3 className="text-sm font-bold">Placed Students</h3>
+                  <Badge variant="outline" className="ml-auto text-[10px] px-1.5 py-0">{userBranch}</Badge>
                 </div>
-                <div className="space-y-3">
+                <div className="space-y-2">
                   {branchPlacedStudents.length > 0 ? (
                     branchPlacedStudents.map((topper, index) => (
                       <motion.div
@@ -664,7 +664,7 @@ export default function StudentDashboard() {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: index * 0.1 }}
-                        className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                        className="flex items-center gap-2 p-1.5 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
                         onClick={() => {
                           setSelectedTopper(topper)
                           setShowResumeModal(true)
@@ -673,17 +673,17 @@ export default function StudentDashboard() {
                         <img
                           src={topper.picture}
                           alt={topper.name}
-                          className="w-12 h-12 rounded-full border-2 border-green-500 object-cover"
+                          className="w-8 h-8 rounded-full border-2 border-green-500 object-cover"
                         />
                         <div className="flex-1">
-                          <p className="font-semibold text-sm">{topper.name}</p>
-                          <p className="text-xs text-muted-foreground">{topper.company} • {topper.package}</p>
+                          <p className="font-semibold text-xs">{topper.name}</p>
+                          <p className="text-[10px] text-muted-foreground">{topper.company} • {topper.package}</p>
                         </div>
-                        <Badge className="bg-green-500">Placed</Badge>
+                        <Badge className="bg-green-500 text-[10px] px-1.5 py-0">Placed</Badge>
                       </motion.div>
                     ))
                   ) : (
-                    <p className="text-sm text-muted-foreground text-center py-4">No placements yet</p>
+                    <p className="text-xs text-muted-foreground text-center py-2">No placements yet</p>
                   )}
                 </div>
               </Card>
@@ -691,82 +691,6 @@ export default function StudentDashboard() {
           </div>
         </motion.div>
 
-        {/* News Feed Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="space-y-6"
-        >
-          <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold">College News Feed</h2>
-          </div>
-          
-          <div className="space-y-4">
-            {mockNewsFeed.map((news, index) => (
-              <motion.div
-                key={news.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <Card className="bg-white p-6">
-                  <div className="flex items-start gap-4 mb-4">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold">
-                      {news.uploadedBy.split(' ').map(n => n[0]).join('')}
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <p className="font-semibold">{news.uploadedBy}</p>
-                        <Badge variant="outline" className="text-xs">
-                          {news.type}
-                        </Badge>
-                      </div>
-                      <p className="text-xs text-muted-foreground">
-                        {new Date(news.uploadedAt).toLocaleDateString()} • {new Date(news.uploadedAt).toLocaleTimeString()}
-                      </p>
-                    </div>
-                  </div>
-                  
-                  <h3 className="text-lg font-bold mb-2">{news.title}</h3>
-                  <p className="text-muted-foreground mb-4">{news.description}</p>
-                  
-                  {news.image && (
-                    <img
-                      src={news.image}
-                      alt={news.title}
-                      className="w-full rounded-lg mb-4 max-h-96 object-cover"
-                    />
-                  )}
-                  
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                    <button className="flex items-center gap-1 hover:text-red-500 transition-colors">
-                      <Heart className="w-4 h-4" />
-                      {news.likes}
-                    </button>
-                    <button className="flex items-center gap-1 hover:text-blue-500 transition-colors">
-                      <MessageCircle className="w-4 h-4" />
-                      {news.comments}
-                    </button>
-                    <button className="flex items-center gap-1 hover:text-green-500 transition-colors">
-                      <Share2 className="w-4 h-4" />
-                      Share
-                    </button>
-                  </div>
-                  
-                  {news.tags.length > 0 && (
-                    <div className="flex gap-2 mt-4 flex-wrap">
-                      {news.tags.map((tag) => (
-                        <Badge key={tag} variant="outline" className="text-xs">
-                          #{tag}
-                        </Badge>
-                      ))}
-                    </div>
-                  )}
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
 
         {/* Faculty Feedback Section */}
         {facultyFeedback.length > 0 && (
@@ -776,10 +700,10 @@ export default function StudentDashboard() {
             className="space-y-6"
           >
             <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold">Faculty Feedback</h2>
+              <h2 className="text-xl font-bold">Faculty Feedback</h2>
             </div>
             
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 gap-3">
               {facultyFeedback.map((feedback, index) => (
                 <motion.div
                   key={feedback.id}
@@ -787,41 +711,41 @@ export default function StudentDashboard() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <Card className="bg-white p-6">
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold">
+                  <Card className="bg-white p-3">
+                    <div className="flex items-start justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white text-xs font-bold">
                           {feedback.facultyName.split(' ').map(n => n[0]).join('')}
                         </div>
                         <div>
-                          <p className="font-semibold">{feedback.facultyName}</p>
-                          <p className="text-xs text-muted-foreground">
+                          <p className="font-semibold text-sm">{feedback.facultyName}</p>
+                          <p className="text-[10px] text-muted-foreground">
                             {new Date(feedback.timestamp).toLocaleDateString()}
                           </p>
                         </div>
                       </div>
                       <Badge className={
-                        feedback.category === "academics" ? "bg-blue-500" : "bg-green-500"
+                        feedback.category === "academics" ? "bg-blue-500 text-[10px] px-1.5 py-0" : "bg-green-500 text-[10px] px-1.5 py-0"
                       }>
                         {feedback.category === "academics" ? "Academics" : "Training"}
                       </Badge>
                     </div>
                     
-                    <h3 className="font-bold mb-2">{feedback.subject}</h3>
-                    <p className="text-sm text-muted-foreground mb-4">{feedback.content}</p>
+                    <h3 className="font-bold text-sm mb-1">{feedback.subject}</h3>
+                    <p className="text-xs text-muted-foreground mb-2">{feedback.content}</p>
                     
                     <div className="flex items-center gap-1">
                       {[1, 2, 3, 4, 5].map((star) => (
                         <Award
                           key={star}
-                          className={`w-4 h-4 ${
+                          className={`w-3 h-3 ${
                             star <= feedback.rating
                               ? "fill-yellow-400 text-yellow-400"
                               : "text-gray-300"
                           }`}
                         />
                       ))}
-                      <span className="ml-2 text-sm text-muted-foreground">
+                      <span className="ml-2 text-xs text-muted-foreground">
                         {feedback.rating} / 5
                       </span>
                     </div>

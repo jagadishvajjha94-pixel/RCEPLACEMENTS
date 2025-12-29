@@ -6,8 +6,6 @@ import { Link } from "react-router-dom"
 import { AnimatedCard } from "@/components/animated-card"
 import { InteractiveStats } from "@/components/interactive-stats"
 import { ScrollReveal } from "@/components/scroll-reveal"
-import { AnimatedLogo2D } from "@/components/animated-logo"
-import { Mesh3DBackground } from "@/components/3d-mesh-background"
 
 const features = [
   {
@@ -66,35 +64,13 @@ const testimonials = [
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#0a0a0a] relative overflow-hidden">
+    <div className="min-h-screen relative overflow-x-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-950">
 
-      {/* 3D Mesh Background */}
-      <Mesh3DBackground />
-
-      {/* Animated gradient overlays - rock8.io style */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute inset-0"
-          animate={{
-            background: [
-              "radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.15) 0%, transparent 50%), radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.1) 0%, transparent 50%)",
-              "radial-gradient(circle at 80% 30%, rgba(139, 92, 246, 0.15) 0%, transparent 50%), radial-gradient(circle at 20% 70%, rgba(16, 185, 129, 0.15) 0%, transparent 50%), radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%)",
-              "radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.15) 0%, transparent 50%), radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.1) 0%, transparent 50%)",
-            ]
-          }}
-          transition={{
-            duration: 20,
-            repeat: Number.POSITIVE_INFINITY,
-            ease: "easeInOut"
-          }}
-        />
-      </div>
-
-      {/* Hero Section with Student Stepping Up Animation */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-x-hidden">
         
-        <div className="container mx-auto px-4 py-20 relative z-10">
-          <div className="max-w-4xl mx-auto">
+        <div className="container mx-auto px-4 py-20 relative z-10 max-w-7xl">
+          <div className="max-w-4xl mx-auto w-full">
             {/* Content */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -219,8 +195,8 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="relative py-20 px-4 md:px-8 bg-[#0a0a0a]">
-        <div className="container mx-auto">
+      <section className="relative py-20 px-4 md:px-8 overflow-x-hidden">
+        <div className="container mx-auto max-w-7xl">
           <ScrollReveal direction="up">
             <div className="text-center mb-12">
               <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]">
@@ -235,8 +211,8 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="relative py-20 px-4 md:px-8 bg-[#0a0a0a]">
-        <div className="container mx-auto">
+      <section id="features" className="relative py-20 px-4 md:px-8 overflow-x-hidden">
+        <div className="container mx-auto max-w-7xl">
           <ScrollReveal direction="up" delay={0.1}>
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]">
@@ -259,7 +235,7 @@ export default function Home() {
                     description={feature.description}
                     delay={index * 0.1}
                   >
-                    <div className="text-accent text-sm font-medium group-hover:translate-x-1 transition-transform">
+                    <div className="text-cyan-300 text-sm font-medium group-hover:translate-x-1 transition-transform">
                       Get Started →
                     </div>
                   </AnimatedCard>
@@ -271,8 +247,8 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="relative py-20 px-4 md:px-8 bg-[#0a0a0a]">
-        <div className="container mx-auto">
+      <section className="relative py-20 px-4 md:px-8 overflow-x-hidden">
+        <div className="container mx-auto max-w-7xl">
           <ScrollReveal direction="up">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]">
@@ -294,10 +270,10 @@ export default function Home() {
                       <Star key={i} className="w-4 h-4 fill-accent text-accent" />
                     ))}
                   </div>
-                  <p className="text-gray-200 mb-4 italic drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">"{testimonial.content}"</p>
+                  <p className="text-gray-100 mb-4 italic drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">"{testimonial.content}"</p>
                   <div>
-                    <p className="font-semibold text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">{testimonial.name}</p>
-                    <p className="text-sm text-gray-300 drop-shadow-[0_0_6px_rgba(255,255,255,0.3)]">{testimonial.role}</p>
+                    <p className="font-semibold text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]">{testimonial.name}</p>
+                    <p className="text-sm text-gray-200 drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]">{testimonial.role}</p>
                   </div>
                 </motion.div>
               </ScrollReveal>
@@ -307,8 +283,8 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 md:px-8 bg-gradient-to-r from-accent/10 via-primary/10 to-secondary/10">
-        <div className="container mx-auto">
+      <section className="py-20 px-4 md:px-8 overflow-x-hidden">
+        <div className="container mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

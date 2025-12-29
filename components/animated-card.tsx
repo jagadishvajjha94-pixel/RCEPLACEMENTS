@@ -63,7 +63,7 @@ export function AnimatedCard({ children, delay = 0, icon, title, description }: 
           whileInView={{ opacity: 1 }}
           transition={{ delay: delay + 0.3 }}
           viewport={{ once: true }}
-          className="text-xl font-bold mb-2"
+          className="text-xl font-bold mb-2 text-white"
         >
           {title}
         </motion.h3>
@@ -74,7 +74,7 @@ export function AnimatedCard({ children, delay = 0, icon, title, description }: 
           whileInView={{ opacity: 1 }}
           transition={{ delay: delay + 0.4 }}
           viewport={{ once: true }}
-          className="text-muted-foreground mb-4"
+          className="text-gray-100 mb-4"
         >
           {description}
         </motion.p>

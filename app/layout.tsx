@@ -7,7 +7,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <div className="font-sans antialiased" style={{ fontFamily: 'var(--font-geist)' }}>
+    <div className="font-sans antialiased overflow-x-hidden w-full" style={{ fontFamily: 'var(--font-geist)' }}>
       {children}
     </div>
   )
