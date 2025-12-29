@@ -13,15 +13,15 @@ export default function StudentLayout({
       <StudentSidebar />
       <div className="flex-1 flex flex-col overflow-hidden">
         <StudentHeader />
-        <div className="flex-1 flex overflow-hidden pt-16">
+        <div className="pt-16 px-4 pb-2">
+          <StudentNewsFeed />
+        </div>
+        <div className="flex-1 flex overflow-hidden">
           <main className="flex-1 overflow-y-auto overflow-x-hidden">
             <div className="w-full max-w-full">
               {children}
             </div>
           </main>
-          <aside className="hidden xl:block p-4 overflow-y-auto">
-            <StudentNewsFeed />
-          </aside>
         </div>
       </div>
     </div>

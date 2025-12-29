@@ -373,22 +373,22 @@ export default function StudentDashboard() {
         </motion.div>
 
         {/* Key Metrics Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
           <motion.div
             whileHover={{ y: -4 }}
             className="cursor-pointer"
           >
             <Card className="bg-gradient-to-br from-blue-500 to-blue-600 border-0 text-white overflow-hidden relative">
-              <div className="p-3 relative z-10">
-                <div className="flex items-start justify-between mb-2">
-                  <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+              <div className="p-2 relative z-10">
+                <div className="flex items-start justify-between mb-1">
+                  <div className="p-1.5 bg-white/20 rounded-md backdrop-blur-sm">
                     <Briefcase className="w-4 h-4" />
                   </div>
                 </div>
                 <h3 className="text-xl font-bold mb-1">{studentStats.appliedDrives}</h3>
                 <p className="text-white/90 text-xs font-medium">Applications</p>
               </div>
-              <div className="absolute bottom-0 right-0 w-16 h-16 bg-white/10 rounded-full -mr-8 -mb-8"></div>
+              <div className="absolute bottom-0 right-0 w-12 h-12 bg-white/10 rounded-full -mr-6 -mb-6"></div>
             </Card>
           </motion.div>
 
@@ -397,16 +397,16 @@ export default function StudentDashboard() {
             className="cursor-pointer"
           >
             <Card className="bg-gradient-to-br from-green-500 to-emerald-600 border-0 text-white overflow-hidden relative">
-              <div className="p-3 relative z-10">
-                <div className="flex items-start justify-between mb-2">
-                  <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+              <div className="p-2 relative z-10">
+                <div className="flex items-start justify-between mb-1">
+                  <div className="p-1.5 bg-white/20 rounded-md backdrop-blur-sm">
                     <CheckCircle className="w-4 h-4" />
                   </div>
                 </div>
                 <h3 className="text-xl font-bold mb-1">{studentStats.selectedDrives}</h3>
                 <p className="text-white/90 text-xs font-medium">Offers Received</p>
               </div>
-              <div className="absolute bottom-0 right-0 w-16 h-16 bg-white/10 rounded-full -mr-8 -mb-8"></div>
+              <div className="absolute bottom-0 right-0 w-12 h-12 bg-white/10 rounded-full -mr-6 -mb-6"></div>
             </Card>
           </motion.div>
 
@@ -415,16 +415,16 @@ export default function StudentDashboard() {
             className="cursor-pointer"
           >
             <Card className="bg-gradient-to-br from-purple-500 to-purple-600 border-0 text-white overflow-hidden relative">
-              <div className="p-3 relative z-10">
-                <div className="flex items-start justify-between mb-2">
-                  <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+              <div className="p-2 relative z-10">
+                <div className="flex items-start justify-between mb-1">
+                  <div className="p-1.5 bg-white/20 rounded-md backdrop-blur-sm">
                     <GraduationCap className="w-4 h-4" />
                   </div>
                 </div>
                 <h3 className="text-xl font-bold mb-1">{studentStats.cgpa}</h3>
                 <p className="text-white/90 text-xs font-medium">CGPA</p>
               </div>
-              <div className="absolute bottom-0 right-0 w-16 h-16 bg-white/10 rounded-full -mr-8 -mb-8"></div>
+              <div className="absolute bottom-0 right-0 w-12 h-12 bg-white/10 rounded-full -mr-6 -mb-6"></div>
             </Card>
           </motion.div>
 
@@ -433,16 +433,16 @@ export default function StudentDashboard() {
             className="cursor-pointer"
           >
             <Card className="bg-gradient-to-br from-orange-500 to-red-500 border-0 text-white overflow-hidden relative">
-              <div className="p-3 relative z-10">
-                <div className="flex items-start justify-between mb-2">
-                  <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+              <div className="p-2 relative z-10">
+                <div className="flex items-start justify-between mb-1">
+                  <div className="p-1.5 bg-white/20 rounded-md backdrop-blur-sm">
                     <Award className="w-4 h-4" />
                   </div>
                 </div>
                 <h3 className="text-xl font-bold mb-1">#{studentStats.rank}</h3>
                 <p className="text-white/90 text-xs font-medium">Class Rank</p>
               </div>
-              <div className="absolute bottom-0 right-0 w-16 h-16 bg-white/10 rounded-full -mr-8 -mb-8"></div>
+              <div className="absolute bottom-0 right-0 w-12 h-12 bg-white/10 rounded-full -mr-6 -mb-6"></div>
             </Card>
           </motion.div>
         </div>
