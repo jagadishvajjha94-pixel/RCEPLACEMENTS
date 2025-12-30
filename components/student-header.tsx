@@ -17,6 +17,7 @@ export function StudentHeader() {
   const [mounted, setMounted] = useState(false)
   const [userName, setUserName] = useState("Student")
   const [userInitials, setUserInitials] = useState("ST")
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   useEffect(() => {
     setMounted(true)
@@ -26,6 +27,14 @@ export function StudentHeader() {
       setUserName(name)
       setUserInitials(name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2))
     }
+  }, [])
+
+  useEffect(() => {
+    const handleSidebarToggle = (event: CustomEvent) => {
+      setSidebarOpen(event.detail.isOpen)
+    }
+    window.addEventListener('sidebar-toggle', handleSidebarToggle as EventListener)
+    return () => window.removeEventListener('sidebar-toggle', handleSidebarToggle as EventListener)
   }, [])
 
   useEffect(() => {
@@ -68,9 +77,9 @@ export function StudentHeader() {
   }
 
   return (
-    <header className="h-16 bg-[#1e3a5f] dark:bg-[#1e3a5f] border-b border-[#2a4a6f] flex items-center justify-between px-6 fixed top-0 left-72 right-0 z-20 shadow-sm">
+    <header className={`h-16 bg-[#1e3a5f] dark:bg-[#1e3a5f] border-b border-[#2a4a6f] flex items-center justify-between px-6 fixed top-0 right-0 z-20 shadow-sm transition-all duration-300 ${sidebarOpen ? 'left-72' : 'left-0'}`}>
       {/* Left side - Title */}
-      <div className="flex items-center gap-6">
+      <div className={`flex items-center gap-6 transition-all duration-300 ${sidebarOpen ? 'ml-4' : 'ml-16'}`}>
         <h2 className="text-white font-semibold text-lg">Student Portal</h2>
       </div>
 

@@ -31,12 +31,12 @@ export default function AdminRegistrationsPage() {
   }
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-slate-100">
+    <div className="flex h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       <AdminSidebar />
       <div className="flex-1 flex flex-col ml-72">
         <AdminHeader />
         <main className="flex-1 overflow-y-auto pt-16">
-        <div className="min-h-screen bg-gradient-to-b from-background via-background to-accent/10 dark:to-accent/5">
+        <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
           <div className="p-4 md:p-8">
             {/* Header */}
             <motion.div

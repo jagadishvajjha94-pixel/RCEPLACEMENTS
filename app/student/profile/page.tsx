@@ -113,7 +113,7 @@ export default function StudentProfile() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950 overflow-x-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-x-hidden">
       <div className="container mx-auto px-4 py-8 max-w-4xl w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

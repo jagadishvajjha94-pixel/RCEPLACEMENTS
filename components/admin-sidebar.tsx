@@ -2,7 +2,7 @@
 
 import { Link, useNavigate, useLocation } from "react-router-dom"
 import { motion } from "framer-motion"
-import { LayoutGrid, Briefcase, Users, BarChart3, Settings, LogOut, Menu, X, TrendingUp, FileText, FileSpreadsheet, Award, UserCheck, Building2, GraduationCap, Phone, BookOpen, HelpCircle, Link2, MessageSquare, BookCheck, Zap, Code, Image, Database } from "lucide-react"
+import { LayoutGrid, Briefcase, Users, Settings, LogOut, Menu, X, TrendingUp, GraduationCap, BookCheck, Zap, Code, Image, Database, Bot } from "lucide-react"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { AuthService } from "@/lib/auth-service"
@@ -10,19 +10,9 @@ import { AuthService } from "@/lib/auth-service"
 const navItems = [
   { icon: LayoutGrid, label: "Dashboard", href: "/admin/dashboard" },
   { icon: TrendingUp, label: "Analytics", href: "/admin/analytics" },
+  { icon: Bot, label: "AI Automation", href: "/admin/ai-automation" },
   { icon: Briefcase, label: "Placement Drives", href: "/admin/placements" },
-  { icon: UserCheck, label: "Registration Management", href: "/admin/registrations" },
-  { icon: FileSpreadsheet, label: "Consolidated Sheet", href: "/admin/consolidated-sheet" },
-  { icon: Award, label: "Offer Statement", href: "/admin/offer-statement" },
-  { icon: FileText, label: "Reports", href: "/admin/reports" },
-  { icon: Briefcase, label: "Placement A to Z", href: "/admin/placement-a-to-z" },
-  { icon: Building2, label: "Industry Institute Interaction", href: "/admin/industry-institute-interaction" },
-  { icon: GraduationCap, label: "Career Guidance", href: "/admin/career-guidance" },
-  { icon: Phone, label: "Consultant & HR Data", href: "/admin/consultant-hr-data" },
-  { icon: BookOpen, label: "ServiceNow Modules", href: "/admin/servicenow-modules" },
-  { icon: HelpCircle, label: "T&P Help Desk", href: "/admin/help-desk" },
-  { icon: MessageSquare, label: "Career Connect", href: "/admin/career-connect" },
-  { icon: Link2, label: "LinkedIn & Soft Skills", href: "/admin/linkedin-softskills" },
+  { icon: Users, label: "Students", href: "/admin/students" },
   { icon: BookCheck, label: "Training & Assessments", href: "/admin/training-assessments" },
   { icon: Zap, label: "Boot Camps & Infosys", href: "/admin/bootcamp-infosys" },
   { icon: Code, label: "Interview Prep", href: "/admin/interview-prep" },
@@ -64,7 +54,7 @@ export function AdminSidebar() {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="lg:hidden fixed top-4 left-4 z-40 p-2 rounded-lg bg-[#1e3a5f] text-white border border-[#2a4a6f]"
+        className="lg:hidden fixed top-4 left-4 z-40 p-2 rounded-lg bg-[#CC5500] hover:bg-[#B84E00] text-white border border-[#A34700]"
       >
         {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
       </button>
@@ -76,9 +66,9 @@ export function AdminSidebar() {
           x: isDesktop ? 0 : (isOpen ? 0 : -280)
         }}
         transition={{ duration: 0.3 }}
-        className="fixed left-0 top-0 h-screen w-72 bg-[#1e3a5f] dark:bg-[#1e3a5f] border-r border-[#2a4a6f] z-30 flex flex-col overflow-y-auto"
+        className="fixed left-0 top-0 h-screen w-72 bg-[#CC5500] dark:bg-[#CC5500] border-r border-[#A34700] z-30 flex flex-col overflow-y-auto"
       >
-        <div className="p-6 border-b border-[#2a4a6f]">
+        <div className="p-6 border-b border-[#A34700]">
           <h1 className="text-2xl font-bold text-white">
             RCE Hub
           </h1>
@@ -107,7 +97,7 @@ export function AdminSidebar() {
           })}
         </nav>
 
-        <div className="p-6 border-t border-[#2a4a6f] space-y-2">
+        <div className="p-6 border-t border-[#A34700] space-y-2">
           <Link to="/admin/settings">
             <motion.div
               whileHover={{ x: 5 }}

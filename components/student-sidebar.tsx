@@ -38,15 +38,19 @@ export function StudentSidebar() {
   const location = useLocation()
   const pathname = location.pathname
 
+  // Expose isOpen state to parent components via custom event
+  useEffect(() => {
+    const event = new CustomEvent('sidebar-toggle', { detail: { isOpen } })
+    window.dispatchEvent(event)
+  }, [isOpen])
+
   useEffect(() => {
     if (typeof window === 'undefined') return
     
     const checkDesktop = () => {
       const width = window.innerWidth
       setIsDesktop(width >= 1024)
-      if (width >= 1024) {
-        setIsOpen(true) // Always open on desktop
-      }
+      // Sidebar closed by default on all screen sizes
     }
     
     checkDesktop()
@@ -61,10 +65,10 @@ export function StudentSidebar() {
 
   return (
     <>
-      {/* Mobile Menu Button */}
+      {/* Menu Button - Show on all screen sizes */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="lg:hidden fixed top-4 left-4 z-40 p-2 rounded-lg bg-[#1e3a5f] text-white border border-[#2a4a6f]"
+        className={`fixed top-4 z-40 p-2 rounded-lg bg-[#CC5500] hover:bg-[#B84E00] text-white border border-[#A34700] shadow-lg transition-all duration-300 ${isOpen ? 'left-[280px]' : 'left-4'}`}
       >
         {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
       </button>
@@ -73,12 +77,12 @@ export function StudentSidebar() {
       <motion.aside
         initial={false}
         animate={{ 
-          x: isDesktop ? 0 : (isOpen ? 0 : -280)
+          x: isOpen ? 0 : -280
         }}
         transition={{ duration: 0.3 }}
-        className="fixed left-0 top-0 h-screen w-72 bg-[#1e3a5f] dark:bg-[#1e3a5f] border-r border-[#2a4a6f] z-30 flex flex-col overflow-y-auto"
+        className="fixed left-0 top-0 h-screen w-72 bg-[#CC5500] dark:bg-[#CC5500] border-r border-[#A34700] z-30 flex flex-col overflow-y-auto"
       >
-        <div className="p-6 border-b border-[#2a4a6f]">
+        <div className="p-6 border-b border-[#A34700]">
           <h1 className="text-2xl font-bold text-white">
             RCE Hub
           </h1>
@@ -107,7 +111,7 @@ export function StudentSidebar() {
           })}
         </nav>
 
-        <div className="p-6 border-t border-[#2a4a6f]">
+        <div className="p-6 border-t border-[#A34700]">
           <Button onClick={handleSignOut} className="w-full gap-2 bg-white/10 text-white hover:bg-white/20 border border-white/20">
             <LogOut className="w-4 h-4" />
             Sign Out
@@ -116,7 +120,7 @@ export function StudentSidebar() {
       </motion.aside>
 
       {/* Overlay */}
-      {isOpen && <div className="fixed inset-0 bg-black/50 z-20 lg:hidden" onClick={() => setIsOpen(false)} />}
+      {isOpen && <div className="fixed inset-0 bg-black/50 z-20" onClick={() => setIsOpen(false)} />}
     </>
   )
 }

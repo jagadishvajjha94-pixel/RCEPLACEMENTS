@@ -49,7 +49,7 @@ export function FacultySidebar() {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="lg:hidden fixed top-4 left-4 z-40 p-2 rounded-lg bg-[#1e3a5f] text-white border border-[#2a4a6f]"
+        className="lg:hidden fixed top-4 left-4 z-40 p-2 rounded-lg bg-[#CC5500] hover:bg-[#B84E00] text-white border border-[#A34700]"
       >
         {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
       </button>
@@ -61,9 +61,9 @@ export function FacultySidebar() {
           x: isDesktop ? 0 : (isOpen ? 0 : -280)
         }}
         transition={{ duration: 0.3 }}
-        className="fixed left-0 top-0 h-screen w-72 bg-[#1e3a5f] dark:bg-[#1e3a5f] border-r border-[#2a4a6f] z-30 flex flex-col overflow-y-auto"
+        className="fixed left-0 top-0 h-screen w-72 bg-[#CC5500] dark:bg-[#CC5500] border-r border-[#A34700] z-30 flex flex-col overflow-y-auto"
       >
-        <div className="p-6 border-b border-[#2a4a6f]">
+        <div className="p-6 border-b border-[#A34700]">
           <h1 className="text-2xl font-bold text-white">
             RCE Hub
           </h1>
@@ -92,7 +92,7 @@ export function FacultySidebar() {
           })}
         </nav>
 
-        <div className="p-6 border-t border-[#2a4a6f] space-y-2">
+        <div className="p-6 border-t border-[#A34700] space-y-2">
           <Link to="/faculty/settings">
             <motion.div
               whileHover={{ x: 5 }}

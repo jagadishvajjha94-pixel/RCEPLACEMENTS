@@ -16,7 +16,7 @@ import { AdminHeader } from "@/components/admin-header"
 
 export default function ActivitiesPostersPage() {
   return (
-    <div className="flex h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-slate-100">
+    <div className="flex h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       <AdminSidebar />
       <div className="flex-1 flex flex-col ml-72">
         <AdminHeader />

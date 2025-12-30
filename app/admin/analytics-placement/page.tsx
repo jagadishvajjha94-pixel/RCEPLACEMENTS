@@ -84,7 +84,7 @@ export default function AnalyticsPlacementPage() {
       <AdminSidebar />
 
       <main className="flex-1 lg:ml-72 overflow-y-auto">
-        <div className="min-h-screen bg-gradient-to-b from-background via-background to-accent/10 dark:to-accent/5">
+        <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
           <div className="p-4 md:p-8">
             {/* Header */}
             <motion.div

@@ -156,20 +156,12 @@ export default function LoginPage() {
   }
 
   const getRoleColor = (role: string) => {
-    switch (role) {
-      case "student":
-        return "from-blue-600 to-indigo-600"
-      case "faculty":
-        return "from-emerald-600 to-teal-600"
-      case "admin":
-        return "from-purple-600 to-pink-600"
-      default:
-        return "from-gray-600 to-gray-800"
-    }
+    // Unified blue to purple gradient for all roles
+    return "from-blue-600 to-purple-600"
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-950 flex items-center justify-center p-4">
       <motion.div
         className="w-full max-w-md"
         initial={{ opacity: 0, y: 20 }}
@@ -177,15 +169,15 @@ export default function LoginPage() {
         transition={{ duration: 0.5 }}
       >
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-300 bg-clip-text text-transparent mb-2">
             RCE Career Hub
           </h1>
           <p className="text-muted-foreground">Your gateway to career success</p>
         </div>
 
-        <Card className="border-2 border-gray-200 dark:border-gray-700 shadow-2xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm p-8">
+        <Card className="border-2 border-[#5A4636] shadow-2xl bg-[#2B2222]/90 backdrop-blur-sm p-8">
           <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as RoleType)} className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-6">
+            <TabsList className="grid w-full grid-cols-3 mb-6 bg-transparent">
               <TabsTrigger value="student">Student</TabsTrigger>
               <TabsTrigger value="faculty">Faculty</TabsTrigger>
               <TabsTrigger value="admin">Admin</TabsTrigger>
@@ -194,7 +186,7 @@ export default function LoginPage() {
             {(["student", "faculty", "admin"] as RoleType[]).map((role) => (
               <TabsContent key={role} value={role}>
                 <div className="text-center mb-6">
-                  <div className={`w-16 h-16 rounded-full bg-gradient-to-r ${getRoleColor(role)} flex items-center justify-center mx-auto mb-3`}>
+                  <div className={`w-16 h-16 rounded-full ring-2 ring-[#CC5500]/40 bg-gradient-to-r ${getRoleColor(role)} flex items-center justify-center mx-auto mb-3`}>
                     {getRoleIcon(role)}
                   </div>
                   <h2 className="text-2xl font-bold mb-1">
@@ -228,7 +220,7 @@ export default function LoginPage() {
                         <div className="w-full border-t border-border" />
                       </div>
                       <div className="relative flex justify-center text-sm">
-                        <span className="px-2 bg-card text-muted-foreground">Or continue with email</span>
+                        <span className="px-2 bg-[#2B2222] text-[#C9B7A6]">Or continue with email</span>
                       </div>
                     </div>
                   </>
@@ -245,7 +237,7 @@ export default function LoginPage() {
                           placeholder={role === "admin" ? "admin@rce.edu" : "your.email@gmail.com"}
                           value={loginData.email}
                           onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
-                          className="pl-10"
+                          className="pl-10 bg-[#2E2424] border-[#5A4636] text-[#F5EDE6] placeholder:text-[#C9B7A6] focus-visible:ring-[#CC5500]"
                           required
                         />
                       </div>
@@ -260,7 +252,7 @@ export default function LoginPage() {
                           placeholder="••••••••"
                           value={loginData.password}
                           onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
-                          className="pl-10"
+                          className="pl-10 bg-[#2E2424] border-[#5A4636] text-[#F5EDE6] placeholder:text-[#C9B7A6] focus-visible:ring-[#CC5500]"
                           required
                         />
                       </div>
@@ -309,7 +301,7 @@ export default function LoginPage() {
                           placeholder="your.email@gmail.com"
                           value={registerData.email}
                           onChange={(e) => setRegisterData({ ...registerData, email: e.target.value })}
-                          className="pl-10"
+                          className="pl-10 bg-[#2E2424] border-[#5A4636] text-[#F5EDE6] placeholder:text-[#C9B7A6] focus-visible:ring-[#CC5500]"
                           required
                         />
                       </div>
@@ -384,7 +376,7 @@ export default function LoginPage() {
                           placeholder="••••••••"
                           value={registerData.password}
                           onChange={(e) => setRegisterData({ ...registerData, password: e.target.value })}
-                          className="pl-10"
+                          className="pl-10 bg-[#2E2424] border-[#5A4636] text-[#F5EDE6] placeholder:text-[#C9B7A6] focus-visible:ring-[#CC5500]"
                           required
                         />
                       </div>
@@ -399,7 +391,7 @@ export default function LoginPage() {
                           placeholder="••••••••"
                           value={registerData.confirmPassword}
                           onChange={(e) => setRegisterData({ ...registerData, confirmPassword: e.target.value })}
-                          className="pl-10"
+                          className="pl-10 bg-[#2E2424] border-[#5A4636] text-[#F5EDE6] placeholder:text-[#C9B7A6] focus-visible:ring-[#CC5500]"
                           required
                         />
                       </div>
@@ -428,7 +420,7 @@ export default function LoginPage() {
           </Tabs>
         </Card>
 
-        <p className="text-center text-sm text-muted-foreground mt-6">
+        <p className="text-center text-sm text-[#C9B7A6] mt-6">
           © 2025 RCE Career Hub. All rights reserved.
         </p>
       </motion.div>

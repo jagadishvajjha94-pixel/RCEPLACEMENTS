@@ -62,7 +62,7 @@ export default function FeedbackPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-background to-primary/10 dark:to-primary/5 p-4 md:p-8 overflow-x-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 p-4 md:p-8 overflow-x-hidden">
       <div className="max-w-4xl mx-auto w-full">
         {/* Header */}
         <motion.div className="mb-8" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>

@@ -41,7 +41,7 @@ export default function SupportPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-primary/5 p-6">
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 p-6">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <motion.div className="mb-8" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>

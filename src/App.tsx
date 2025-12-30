@@ -35,6 +35,8 @@ import AdminInterviewPrep from '@/app/admin/interview-prep/page';
 import AdminMidMarksSyllabus from '@/app/admin/mid-marks-syllabus/page';
 import AdminActivitiesPosters from '@/app/admin/activities-posters/page';
 import AdminAicteRiseup from '@/app/admin/aicte-riseup/page';
+import AdminAIAutomation from '@/app/admin/ai-automation/page';
+import { AIAutomationService } from '@/lib/ai-automation-service';
 
 // Student Pages
 import StudentDashboard from '@/app/student/dashboard/page';
@@ -59,6 +61,11 @@ import FacultyReports from '@/app/faculty/reports/page';
 
 const queryClient = new QueryClient();
 
+// Initialize AI Automation Service
+if (typeof window !== 'undefined') {
+  AIAutomationService.initialize();
+}
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider>
@@ -75,6 +82,7 @@ const App = () => (
                 <Route path="dashboard" element={<AdminDashboard />} />
                 <Route path="analytics" element={<AdminAnalytics />} />
                 <Route path="analytics-placement" element={<AdminAnalyticsPlacement />} />
+                <Route path="ai-automation" element={<AdminAIAutomation />} />
                 <Route path="placements" element={<AdminPlacements />} />
                 <Route path="registrations" element={<AdminRegistrations />} />
                 <Route path="consolidated-sheet" element={<AdminConsolidatedSheet />} />
