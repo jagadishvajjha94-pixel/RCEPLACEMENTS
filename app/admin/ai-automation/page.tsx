@@ -67,7 +67,7 @@ export default function AIAutomationPage() {
     }
     setUser(currentUser)
     initializeAllMockData()
-    
+
     // Initialize AI automation service
     AIAutomationService.initialize()
     loadReports()
@@ -264,11 +264,10 @@ export default function AIAutomationPage() {
                                       {activity.category}
                                     </Badge>
                                     <Badge
-                                      className={`text-xs ${
-                                        activity.impact === "High"
-                                          ? "bg-red-500/20 text-red-400"
-                                          : "bg-yellow-500/20 text-yellow-400"
-                                      }`}
+                                      className={`text-xs ${activity.impact === "High"
+                                        ? "bg-red-500/20 text-red-400"
+                                        : "bg-yellow-500/20 text-yellow-400"
+                                        }`}
                                     >
                                       {activity.impact} Impact
                                     </Badge>
@@ -293,13 +292,12 @@ export default function AIAutomationPage() {
                                 {latestReport.insights.alerts.map((alert, index) => (
                                   <div
                                     key={index}
-                                    className={`p-3 rounded-lg border ${
-                                      alert.severity === "high"
-                                        ? "bg-red-500/10 border-red-500/30"
-                                        : alert.severity === "medium"
+                                    className={`p-3 rounded-lg border ${alert.severity === "high"
+                                      ? "bg-red-500/10 border-red-500/30"
+                                      : alert.severity === "medium"
                                         ? "bg-yellow-500/10 border-yellow-500/30"
                                         : "bg-blue-500/10 border-blue-500/30"
-                                    }`}
+                                      }`}
                                   >
                                     <p className="text-sm font-medium text-white">{alert.type}</p>
                                     <p className="text-xs text-gray-400 mt-1">{alert.message}</p>
@@ -474,8 +472,8 @@ export default function AIAutomationPage() {
                                         branch.rate >= 70
                                           ? "bg-green-500/20 text-green-400"
                                           : branch.rate >= 50
-                                          ? "bg-yellow-500/20 text-yellow-400"
-                                          : "bg-red-500/20 text-red-400"
+                                            ? "bg-yellow-500/20 text-yellow-400"
+                                            : "bg-red-500/20 text-red-400"
                                       }
                                     >
                                       {branch.rate.toFixed(1)}%

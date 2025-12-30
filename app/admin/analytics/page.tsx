@@ -33,6 +33,7 @@ import { AdminHeader } from "@/components/admin-header"
 import { AuthService } from "@/lib/auth-service"
 import { PlacementAnalyticsService, RegistrationService, PlacementDriveService, ConsolidatedSheetService } from "@/lib/placement-service"
 import { initializeAllMockData } from "@/lib/mock-data-initializer"
+import AICTERiseUpContent from "@/components/aicte-riseup-content"
 import type { User as AuthUser } from "@/lib/auth-service"
 
 const COLORS = ["#FF8C42", "#2E86AB", "#A23B72", "#F18F01", "#06A77D", "#8b5cf6", "#ef4444", "#10b981"]
@@ -41,7 +42,7 @@ const COLORS = ["#FF8C42", "#2E86AB", "#A23B72", "#F18F01", "#06A77D", "#8b5cf6"
 const generateSectionAnalytics = (stats: any, registrations: any[], drives: any[]) => {
   const offerStatement = PlacementAnalyticsService.getOfferStatement()
   const consolidatedData = ConsolidatedSheetService.generate({ academicYear: "2024-25", type: "all" })
-  
+
   return {
     "registration-management": {
       title: "Registration Management",
@@ -345,7 +346,7 @@ export default function AnalyticsPage() {
       const analytics = PlacementAnalyticsService.getStats(filters)
       const registrations = RegistrationService.getAll()
       const drives = PlacementDriveService.getAll()
-      
+
       setStats(analytics)
       const sections = generateSectionAnalytics(analytics, registrations, drives)
       setSectionAnalytics(sections)
@@ -519,7 +520,7 @@ export default function AnalyticsPage() {
                   const section = sectionAnalytics[sectionKey]
                   if (!section) return null
                   const Icon = section.icon
-                  
+
                   return (
                     <Card
                       key={sectionKey}
@@ -588,16 +589,19 @@ export default function AnalyticsPage() {
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-white drop-shadow-[0_0_15px_rgba(59,130,246,0.8)]">{chartDetails?.title}</DialogTitle>
           </DialogHeader>
-          
+
           {chartDetails && (
             <Tabs defaultValue="overview" className="w-full">
-              <TabsList className="grid w-full grid-cols-4 bg-slate-800 border-slate-700">
+              <TabsList className={`grid w-full ${selectedChart === 'servicenow-modules' ? 'grid-cols-5' : 'grid-cols-4'} bg-slate-800 border-slate-700`}>
                 <TabsTrigger value="overview" className="text-gray-300 data-[state=active]:text-white data-[state=active]:bg-slate-700 data-[state=active]:drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]">Overview</TabsTrigger>
                 <TabsTrigger value="data" className="text-gray-300 data-[state=active]:text-white data-[state=active]:bg-slate-700 data-[state=active]:drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]">Data Breakdown</TabsTrigger>
                 <TabsTrigger value="chart" className="text-gray-300 data-[state=active]:text-white data-[state=active]:bg-slate-700 data-[state=active]:drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]">Detailed Chart</TabsTrigger>
+                {selectedChart === 'servicenow-modules' && (
+                  <TabsTrigger value="aicte-riseup" className="text-gray-300 data-[state=active]:text-white data-[state=active]:bg-slate-700 data-[state=active]:drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]">AICTE / RiseUp</TabsTrigger>
+                )}
                 <TabsTrigger value="export" className="text-gray-300 data-[state=active]:text-white data-[state=active]:bg-slate-700 data-[state=active]:drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]">Export</TabsTrigger>
               </TabsList>
-              
+
               <TabsContent value="overview" className="space-y-4">
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {Object.entries(chartDetails.summary || {}).map(([key, value]: [string, any]) => (
@@ -610,12 +614,12 @@ export default function AnalyticsPage() {
                 <Card className="p-4 bg-slate-800/90 border-slate-700/50">
                   <h4 className="font-semibold mb-2 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">Description</h4>
                   <p className="text-sm text-gray-300">
-                    Comprehensive analytics and insights for {chartDetails.title.toLowerCase()}. 
+                    Comprehensive analytics and insights for {chartDetails.title.toLowerCase()}.
                     View detailed breakdowns, trends, and export data for further analysis.
                   </p>
                 </Card>
               </TabsContent>
-              
+
               <TabsContent value="data" className="space-y-4">
                 <Card className="p-4 bg-slate-800/90 border-slate-700/50">
                   <h4 className="font-semibold mb-4 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">Complete Data Table</h4>
@@ -623,7 +627,7 @@ export default function AnalyticsPage() {
                     <table className="w-full text-sm">
                       <thead>
                         <tr className="border-b border-slate-700">
-                          {chartDetails.chartData && chartDetails.chartData.length > 0 && 
+                          {chartDetails.chartData && chartDetails.chartData.length > 0 &&
                             Object.keys(chartDetails.chartData[0]).map((key) => (
                               <th key={key} className="text-left p-2 capitalize text-gray-300">{key}</th>
                             ))
@@ -643,7 +647,7 @@ export default function AnalyticsPage() {
                   </div>
                 </Card>
               </TabsContent>
-              
+
               <TabsContent value="chart" className="space-y-4">
                 <Card className="p-4 bg-slate-800/90 border-slate-700/50">
                   <h4 className="font-semibold mb-4 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">Interactive Chart</h4>
@@ -689,12 +693,21 @@ export default function AnalyticsPage() {
                   </ResponsiveContainer>
                 </Card>
               </TabsContent>
-              
+
+              {selectedChart === 'servicenow-modules' && (
+                <TabsContent value="aicte-riseup" className="space-y-4">
+                  <div className="bg-white/90 p-4 rounded-lg">
+                    <AICTERiseUpContent />
+                  </div>
+                </TabsContent>
+              )}
+
+
               <TabsContent value="export" className="space-y-4">
                 <Card className="p-4 bg-slate-800/90 border-slate-700/50">
                   <h4 className="font-semibold mb-4 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">Export Options</h4>
                   <div className="space-y-3">
-                    <Button 
+                    <Button
                       onClick={() => {
                         if (!chartDetails.chartData || chartDetails.chartData.length === 0) return
                         const csv = [
@@ -714,7 +727,7 @@ export default function AnalyticsPage() {
                       <Download className="w-4 h-4" />
                       Export as CSV
                     </Button>
-                    <Button 
+                    <Button
                       onClick={() => {
                         const json = JSON.stringify(chartDetails, null, 2)
                         const blob = new Blob([json], { type: 'application/json' })

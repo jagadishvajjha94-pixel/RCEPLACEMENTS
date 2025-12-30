@@ -21,6 +21,7 @@ import {
 } from "lucide-react"
 import { AdminSidebar } from "@/components/admin-sidebar"
 import { AdminHeader } from "@/components/admin-header"
+import AICTERiseUpContent from "@/components/aicte-riseup-content"
 
 export default function ServiceNowModulesPage() {
   const [searchQuery, setSearchQuery] = useState("")
@@ -79,13 +80,14 @@ export default function ServiceNowModulesPage() {
 
             {/* Main Tabs */}
             <Tabs defaultValue="certifications" className="w-full">
-              <TabsList className="grid w-full grid-cols-6 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-2 border-gray-100 shadow-lg">
+              <TabsList className="grid w-full grid-cols-7 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-2 border-gray-100 shadow-lg">
                 <TabsTrigger value="certifications">Certifications</TabsTrigger>
                 <TabsTrigger value="modules">Modules</TabsTrigger>
                 <TabsTrigger value="question-banks">Question Banks</TabsTrigger>
                 <TabsTrigger value="test-scores">Test Scores</TabsTrigger>
                 <TabsTrigger value="mock-interviews">Mock Interviews</TabsTrigger>
                 <TabsTrigger value="database">ServiceNow DB</TabsTrigger>
+                <TabsTrigger value="aicte-riseup">AICTE / RiseUp</TabsTrigger>
               </TabsList>
 
               {/* Certifications Tab */}
@@ -362,6 +364,11 @@ export default function ServiceNowModulesPage() {
                     </div>
                   </div>
                 </Card>
+              </TabsContent>
+
+              {/* AICTE / RiseUp Content */}
+              <TabsContent value="aicte-riseup" className="space-y-6 mt-6">
+                <AICTERiseUpContent />
               </TabsContent>
             </Tabs>
           </div>
