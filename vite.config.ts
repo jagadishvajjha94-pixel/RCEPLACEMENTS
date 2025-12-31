@@ -15,6 +15,10 @@ export default defineConfig(({ mode }) => ({
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-is', 'recharts'],
   },
+  ssr: {
+    // Ensure these packages are bundled during SSR builds (prevents Vercel/Turbopack "module not found" for react-is)
+    noExternal: ['react-is', 'recharts'],
+  },
   server: {
     port: 5173,
     proxy: {
