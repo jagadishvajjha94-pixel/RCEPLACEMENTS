@@ -20,7 +20,7 @@ export function InteractiveStats({ stats }: InteractiveStatsProps) {
 
   useEffect(() => {
     const timers: NodeJS.Timeout[] = []
-    
+
     stats.forEach((stat, index) => {
       if (typeof stat.value === "number") {
         let current = 0
@@ -40,7 +40,7 @@ export function InteractiveStats({ stats }: InteractiveStatsProps) {
         timers.push(timer)
       }
     })
-    
+
     return () => {
       timers.forEach(timer => clearInterval(timer))
     }
@@ -61,7 +61,7 @@ export function InteractiveStats({ stats }: InteractiveStatsProps) {
     visible: {
       opacity: 1,
       scale: 1,
-      transition: { duration: 0.5, ease: "easeOut" },
+      transition: { duration: 0.5, ease: "easeOut" as const },
     },
   }
 

@@ -1,5 +1,7 @@
 "use client"
 
+"use client"
+"use client"
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"

@@ -1,4 +1,6 @@
 
+"use client"
+
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { Card } from "@/components/ui/card"
@@ -145,9 +147,9 @@ export default function TrainingAssessmentsPage() {
                         <h3 className="text-lg font-bold text-gray-900">{item}</h3>
                       </div>
                       <div className="flex gap-2">
-                        <Button 
-                          variant="outline" 
-                          size="sm" 
+                        <Button
+                          variant="outline"
+                          size="sm"
                           className="flex-1 gap-2"
                           onClick={() => handleUpload(item)}
                           disabled={uploadingFile === item}
@@ -155,9 +157,9 @@ export default function TrainingAssessmentsPage() {
                           <Upload className="w-4 h-4" />
                           {uploadingFile === item ? "Uploading..." : "Upload"}
                         </Button>
-                        <Button 
-                          variant="outline" 
-                          size="sm" 
+                        <Button
+                          variant="outline"
+                          size="sm"
                           className="flex-1 gap-2"
                           onClick={() => handleDownload(item)}
                         >
@@ -233,7 +235,7 @@ export default function TrainingAssessmentsPage() {
                         {["2025-26", "2024-25", "2023-24"].map((year) => (
                           <div key={year} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                             <span className="font-medium">{year}</span>
-                            <Button variant="outline" size="sm" onClick={() => handleView("Assignment", branch)}>View</Button>
+                            <Button variant="outline" size="sm" onClick={() => handleView("Assignment", selectedBranch)}>View</Button>
                           </div>
                         ))}
                       </div>
@@ -259,7 +261,7 @@ export default function TrainingAssessmentsPage() {
                         {branches.slice(0, 5).map((branch) => (
                           <div key={branch} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                             <span className="font-medium">{branch}</span>
-                            <Button variant="outline" size="sm" onClick={() => handleView("Assignment", branch)}>View</Button>
+                            <Button variant="outline" size="sm" onClick={() => handleView("Assignment", selectedBranch)}>View</Button>
                           </div>
                         ))}
                       </div>
@@ -270,7 +272,7 @@ export default function TrainingAssessmentsPage() {
                         {["2025-26", "2024-25", "2023-24"].map((year) => (
                           <div key={year} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                             <span className="font-medium">{year}</span>
-                            <Button variant="outline" size="sm" onClick={() => handleView("Assignment", branch)}>View</Button>
+                            <Button variant="outline" size="sm" onClick={() => handleView("Assignment", selectedBranch)}>View</Button>
                           </div>
                         ))}
                       </div>

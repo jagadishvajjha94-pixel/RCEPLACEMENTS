@@ -1,4 +1,6 @@
 
+"use client"
+
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { Card } from "@/components/ui/card"
@@ -36,7 +38,7 @@ export default function ConsultantHRDataPage() {
   const [showEditModal, setShowEditModal] = useState(false)
   const [showViewModal, setShowViewModal] = useState(false)
   const [viewingData, setViewingData] = useState<any>(null)
-  
+
   const [hrData, setHrData] = useState([
     {
       id: "1",
@@ -186,9 +188,8 @@ export default function ConsultantHRDataPage() {
                             <td className="p-3">{hr.mobile}</td>
                             <td className="p-3">{hr.email}</td>
                             <td className="p-3">
-                              <span className={`px-2 py-1 rounded text-xs ${
-                                hr.status === "active" ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-700"
-                              }`}>
+                              <span className={`px-2 py-1 rounded text-xs ${hr.status === "active" ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-700"
+                                }`}>
                                 {hr.status}
                               </span>
                             </td>
@@ -236,9 +237,8 @@ export default function ConsultantHRDataPage() {
                             <td className="p-3">{company.area}</td>
                             <td className="p-3">{company.requirements}</td>
                             <td className="p-3">
-                              <span className={`px-2 py-1 rounded text-xs ${
-                                company.status === "active" ? "bg-green-100 text-green-700" : "bg-blue-100 text-blue-700"
-                              }`}>
+                              <span className={`px-2 py-1 rounded text-xs ${company.status === "active" ? "bg-green-100 text-green-700" : "bg-blue-100 text-blue-700"
+                                }`}>
                                 {company.status}
                               </span>
                             </td>
@@ -250,7 +250,7 @@ export default function ConsultantHRDataPage() {
                             </td>
                             <td className="p-3">
                               <Button variant="ghost" size="sm" onClick={() => {
-                                setEditingHr(hr)
+                                setEditingHr(company)
                                 setShowEditModal(true)
                               }}>Edit</Button>
                             </td>
@@ -360,9 +360,9 @@ export default function ConsultantHRDataPage() {
                           <p className="text-sm text-gray-600">15 companies</p>
                         </div>
                         <Button variant="outline" size="sm" onClick={() => {
-                        setViewingData({ type: "Master Sheet", data: hrData })
-                        setShowViewModal(true)
-                      }}>View</Button>
+                          setViewingData({ type: "Master Sheet", data: hrData })
+                          setShowViewModal(true)
+                        }}>View</Button>
                       </div>
                     </div>
                     <div className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
@@ -372,9 +372,9 @@ export default function ConsultantHRDataPage() {
                           <p className="text-sm text-gray-600">8 companies</p>
                         </div>
                         <Button variant="outline" size="sm" onClick={() => {
-                        setViewingData({ type: "Master Sheet", data: hrData })
-                        setShowViewModal(true)
-                      }}>View</Button>
+                          setViewingData({ type: "Master Sheet", data: hrData })
+                          setShowViewModal(true)
+                        }}>View</Button>
                       </div>
                     </div>
                     <div className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
@@ -384,9 +384,9 @@ export default function ConsultantHRDataPage() {
                           <p className="text-sm text-gray-600">5 companies</p>
                         </div>
                         <Button variant="outline" size="sm" onClick={() => {
-                        setViewingData({ type: "Master Sheet", data: hrData })
-                        setShowViewModal(true)
-                      }}>View</Button>
+                          setViewingData({ type: "Master Sheet", data: hrData })
+                          setShowViewModal(true)
+                        }}>View</Button>
                       </div>
                     </div>
                   </div>
@@ -410,7 +410,7 @@ export default function ConsultantHRDataPage() {
                 </Card>
               </TabsContent>
             </Tabs>
-            
+
             {/* Edit HR Modal */}
             <Dialog open={showEditModal} onOpenChange={setShowEditModal}>
               <DialogContent className="bg-white max-w-2xl">
@@ -473,7 +473,7 @@ export default function ConsultantHRDataPage() {
                 )}
               </DialogContent>
             </Dialog>
-            
+
             {/* View Data Modal */}
             <Dialog open={showViewModal} onOpenChange={setShowViewModal}>
               <DialogContent className="bg-white max-w-4xl max-h-[90vh] overflow-y-auto">

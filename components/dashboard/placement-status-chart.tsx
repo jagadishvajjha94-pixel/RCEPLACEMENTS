@@ -9,6 +9,7 @@ interface PlacementStatusData {
   name: string
   value: number
   color: string
+  [key: string]: any
 }
 
 interface PlacementStatusChartProps {
@@ -22,8 +23,8 @@ const COLORS = {
 }
 
 export function PlacementStatusChart({ data = [] }: PlacementStatusChartProps) {
-  const defaultData: PlacementStatusData[] = data.length > 0 
-    ? data 
+  const defaultData: PlacementStatusData[] = data.length > 0
+    ? data
     : [{ name: "Not Placed", value: 100, color: COLORS["Not Placed"] }]
 
   return (
@@ -43,7 +44,7 @@ export function PlacementStatusChart({ data = [] }: PlacementStatusChartProps) {
             </Button>
           </div>
         </div>
-        
+
         <div className="flex items-center justify-center gap-8">
           <div className="w-64 h-64">
             <ResponsiveContainer width="100%" height="100%">
@@ -65,7 +66,7 @@ export function PlacementStatusChart({ data = [] }: PlacementStatusChartProps) {
               </PieChart>
             </ResponsiveContainer>
           </div>
-          
+
           <div className="space-y-3">
             {defaultData.map((item, index) => (
               <div key={index} className="flex items-center gap-3">

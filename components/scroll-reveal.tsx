@@ -32,7 +32,7 @@ export function ScrollReveal({ children, direction = "up", delay = 0 }: ScrollRe
       transition={{
         duration: 0.6,
         delay,
-        ease: "easeOut",
+        ease: "easeOut" as const,
       }}
       viewport={{ once: true, amount: 0.3 }}
     >

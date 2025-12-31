@@ -25,7 +25,7 @@ import {
 // Database configuration
 const DB_CONFIG = {
   isSupabaseEnabled: false, // Will be set to true when Supabase is connected
-  supabaseUrl: typeof window !== 'undefined' 
+  supabaseUrl: typeof window !== 'undefined'
     ? (import.meta.env.VITE_SUPABASE_URL || import.meta.env.NEXT_PUBLIC_SUPABASE_URL || '')
     : '',
   supabaseKey: typeof window !== 'undefined'
@@ -41,12 +41,16 @@ export const StudentService = {
     section?: string
     year?: string
     status?: string
+    minCgpa?: number // Added minCgpa filter for students
   }): Promise<Student[]> {
     // TODO: Replace with Supabase query when enabled
     let students = [...mockStudents]
 
     if (filters?.branch) {
       students = students.filter((s) => s.branch === filters.branch)
+    }
+    if (filters?.minCgpa) { // Apply minCgpa filter
+      students = students.filter((s) => s.cgpa >= filters.minCgpa!)
     }
     if (filters?.section) {
       students = students.filter((s) => s.section === filters.section)
@@ -105,10 +109,10 @@ export const DriveService = {
       drives = drives.filter((d) => d.status === filters.status)
     }
     if (filters?.branch) {
-      drives = drives.filter((d) => d.eligibleBranches.includes(filters.branch))
+      drives = drives.filter((d) => d.eligibleBranches.includes(filters!.branch!))
     }
     if (filters?.minCgpa !== undefined) {
-      drives = drives.filter((d) => d.minCgpa <= filters.minCgpa)
+      drives = drives.filter((d) => d.minCgpa <= filters!.minCgpa!)
     }
 
     return drives
@@ -347,7 +351,7 @@ export const CompanySpecificPrepService = {
   async getAll(): Promise<CompanySpecificPrep[]> {
     return [...mockCompanySpecificPrep]
   },
-  
+
   async getByCompany(company: string): Promise<CompanySpecificPrep | null> {
     const prep = mockCompanySpecificPrep.find(c => c.company.toLowerCase() === company.toLowerCase())
     return prep || null
@@ -359,7 +363,7 @@ export const FacultyFeedbackService = {
   async getByStudent(studentId: string): Promise<FacultyFeedback[]> {
     return mockFacultyFeedback.filter(f => f.studentId === studentId)
   },
-  
+
   async getAll(): Promise<FacultyFeedback[]> {
     return [...mockFacultyFeedback]
   }
@@ -401,7 +405,7 @@ export const TimetableService = {
   // Get timetables for a specific semester
   async getBySemester(semester: number, branch?: string, section?: string): Promise<Timetable | null> {
     let timetables = mockTimetables.filter((t) => t.semester === semester)
-    
+
     if (branch) {
       timetables = timetables.filter((t) => t.branch === branch)
     }

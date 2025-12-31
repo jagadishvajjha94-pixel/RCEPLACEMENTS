@@ -129,15 +129,15 @@ export class PlacementDriveService {
       drives = drives.filter((d) => d.type === filters.type)
     }
     if (filters?.branch) {
-      drives = drives.filter((d) => 
-        !d.eligibilityCriteria.branches || 
-        d.eligibilityCriteria.branches.includes(filters.branch)
+      drives = drives.filter((d) =>
+        !d.eligibilityCriteria.branches ||
+        d.eligibilityCriteria.branches.includes(filters!.branch!)
       )
     }
     if (filters?.year) {
-      drives = drives.filter((d) => 
-        !d.eligibilityCriteria.years || 
-        d.eligibilityCriteria.years.includes(filters.year)
+      drives = drives.filter((d) =>
+        !d.eligibilityCriteria.years ||
+        d.eligibilityCriteria.years.includes(filters!.year!)
       )
     }
 
@@ -164,15 +164,15 @@ export class PlacementDriveService {
         drives = drives.filter((d) => d.type === filters.type)
       }
       if (filters?.branch) {
-        drives = drives.filter((d) => 
-          !d.eligibilityCriteria.branches || 
-          d.eligibilityCriteria.branches.includes(filters.branch)
+        drives = drives.filter((d) =>
+          !d.eligibilityCriteria.branches ||
+          d.eligibilityCriteria.branches.includes(filters!.branch!)
         )
       }
       if (filters?.year) {
-        drives = drives.filter((d) => 
-          !d.eligibilityCriteria.years || 
-          d.eligibilityCriteria.years.includes(filters.year)
+        drives = drives.filter((d) =>
+          !d.eligibilityCriteria.years ||
+          d.eligibilityCriteria.years.includes(filters!.year!)
         )
       }
 
@@ -314,7 +314,7 @@ export class RegistrationService {
     year?: string
   }): StudentRegistration[] {
     if (typeof window === "undefined") return []
-    
+
     const data = localStorage.getItem(STORAGE_KEYS.REGISTRATIONS)
     let registrations: StudentRegistration[] = data ? JSON.parse(data) : []
 
@@ -340,7 +340,7 @@ export class RegistrationService {
   // Submit registration with deadline validation
   static submit(data: Omit<StudentRegistration, "id" | "submittedAt" | "status">): StudentRegistration {
     const registrations = this.getAll()
-    
+
     // Check if already registered
     const existing = registrations.find(
       (r) => r.driveId === data.driveId && r.studentId === data.studentId
@@ -365,7 +365,7 @@ export class RegistrationService {
       const deadline = new Date(drive.deadline)
       const now = new Date()
       const timeRemaining = deadline.getTime() - now.getTime()
-      
+
       if (timeRemaining < 0) {
         status = "expired"
       } else if (timeRemaining < 24 * 60 * 60 * 1000) { // Less than 24 hours
@@ -373,12 +373,13 @@ export class RegistrationService {
       }
     }
 
+    const { hasOffer: _ignored, ...restData } = data
     const newRegistration: StudentRegistration = {
       id: `REG_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
       submittedAt: new Date().toISOString(),
       status,
       hasOffer: false,
-      ...data,
+      ...restData,
     }
 
     registrations.push(newRegistration)
@@ -576,7 +577,7 @@ export class RegistrationService {
   // Download registrations as CSV
   static downloadCSV(driveId?: string, filters?: any): void {
     const registrations = driveId ? this.getByDrive(driveId) : this.getAll(filters)
-    
+
     if (registrations.length === 0) {
       alert("No registrations to download")
       return

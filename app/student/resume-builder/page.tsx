@@ -1,3 +1,5 @@
+"use client"
+
 import { useState, useEffect, useRef } from "react"
 import { motion } from "framer-motion"
 import { Card } from "@/components/ui/card"
@@ -258,7 +260,7 @@ function ResumePreview({ data, templateId }: { data: ResumeData; templateId: str
             {data.personalInfo.linkedin && <p>💼 {data.personalInfo.linkedin}</p>}
             {data.personalInfo.github && <p>💻 {data.personalInfo.github}</p>}
           </div>
-          
+
           <div className="mt-6">
             <h2 className="font-bold text-lg mb-2">Skills</h2>
             {data.skills.length > 0 ? (
@@ -694,7 +696,7 @@ export default function ResumeBuilderPage() {
 
       // Advanced Grammar and spelling checks (mock AI - can be replaced with real AI API)
       const allText = `${resumeData.objective} ${resumeData.experience.map(e => e.description).join(" ")} ${resumeData.projects.map(p => p.description).join(" ")}`.toLowerCase()
-      
+
       // Common spelling mistakes
       const spellingMistakes: { [key: string]: string } = {
         "teh ": "the ",
@@ -846,14 +848,14 @@ export default function ResumeBuilderPage() {
   const handleRemoveItem = (section: string, id: string) => {
     setResumeData(prev => ({
       ...prev,
-      [section]: prev[section as keyof ResumeData].filter((item: any) => item.id !== id)
+      [section]: (prev[section as keyof ResumeData] as any[]).filter((item: any) => item.id !== id)
     }))
   }
 
   const handleUpdateItem = (section: string, id: string, field: string, value: string) => {
     setResumeData(prev => ({
       ...prev,
-      [section]: prev[section as keyof ResumeData].map((item: any) =>
+      [section]: (prev[section as keyof ResumeData] as any[]).map((item: any) =>
         item.id === id ? { ...item, [field]: value } : item
       )
     }))
@@ -919,7 +921,7 @@ export default function ResumeBuilderPage() {
       const imgHeight = canvas.height
       const pdfWidth = 210 // A4 width in mm
       const pdfHeight = (imgHeight * pdfWidth) / imgWidth
-      
+
       // Create PDF
       const pdf = new jsPDF('p', 'mm', 'a4')
       let heightLeft = pdfHeight
@@ -973,10 +975,10 @@ export default function ResumeBuilderPage() {
     if (currentUser?.profile) {
       // Simulate AI processing
       alert("AI is generating your resume... Please wait.")
-      
+
       // Simulate API call delay
       await new Promise(resolve => setTimeout(resolve, 1500))
-      
+
       setResumeData(prev => ({
         ...prev,
         objective: `Motivated ${currentUser.profile?.branch || "Engineering"} student with strong problem-solving skills and passion for technology. Seeking opportunities to apply technical knowledge and contribute to innovative projects.`,
@@ -1096,11 +1098,10 @@ export default function ResumeBuilderPage() {
                     <button
                       key={section.id}
                       onClick={() => setCurrentSection(section.id as any)}
-                      className={`w-full text-left px-3 py-2 rounded-lg transition-all flex items-center gap-2 ${
-                        currentSection === section.id
+                      className={`w-full text-left px-3 py-2 rounded-lg transition-all flex items-center gap-2 ${currentSection === section.id
                           ? "bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-semibold"
                           : "bg-slate-50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
-                      }`}
+                        }`}
                     >
                       <Icon className="w-4 h-4" />
                       {section.label}
@@ -1463,7 +1464,7 @@ export default function ResumeBuilderPage() {
                       onKeyPress={(e) => {
                         if (e.key === "Enter") {
                           handleAddSkill((e.target as HTMLInputElement).value)
-                          ;(e.target as HTMLInputElement).value = ""
+                            ; (e.target as HTMLInputElement).value = ""
                         }
                       }}
                       className="flex-1"
@@ -1586,11 +1587,10 @@ export default function ResumeBuilderPage() {
               <div className="space-y-2">
                 <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-3">
                   <div
-                    className={`h-3 rounded-full transition-all duration-500 ${
-                      atsScore >= 80 ? "bg-green-500" :
-                      atsScore >= 60 ? "bg-yellow-500" :
-                      "bg-red-500"
-                    }`}
+                    className={`h-3 rounded-full transition-all duration-500 ${atsScore >= 80 ? "bg-green-500" :
+                        atsScore >= 60 ? "bg-yellow-500" :
+                          "bg-red-500"
+                      }`}
                     style={{ width: `${atsScore}%` }}
                   />
                 </div>
@@ -1630,13 +1630,12 @@ export default function ResumeBuilderPage() {
                     aiSuggestions.map((suggestion, index) => (
                       <div
                         key={index}
-                        className={`p-3 rounded-lg border-l-4 ${
-                          suggestion.severity === "error"
+                        className={`p-3 rounded-lg border-l-4 ${suggestion.severity === "error"
                             ? "bg-red-50 dark:bg-red-900/20 border-red-500"
                             : suggestion.severity === "warning"
-                            ? "bg-yellow-50 dark:bg-yellow-900/20 border-yellow-500"
-                            : "bg-blue-50 dark:bg-blue-900/20 border-blue-500"
-                        }`}
+                              ? "bg-yellow-50 dark:bg-yellow-900/20 border-yellow-500"
+                              : "bg-blue-50 dark:bg-blue-900/20 border-blue-500"
+                          }`}
                       >
                         <div className="flex items-start gap-2">
                           {suggestion.severity === "error" ? (
@@ -1649,13 +1648,12 @@ export default function ResumeBuilderPage() {
                           <div className="flex-1">
                             <Badge
                               variant="outline"
-                              className={`text-xs mb-1 ${
-                                suggestion.severity === "error"
+                              className={`text-xs mb-1 ${suggestion.severity === "error"
                                   ? "border-red-500 text-red-700 dark:text-red-300"
                                   : suggestion.severity === "warning"
-                                  ? "border-yellow-500 text-yellow-700 dark:text-yellow-300"
-                                  : "border-blue-500 text-blue-700 dark:text-blue-300"
-                              }`}
+                                    ? "border-yellow-500 text-yellow-700 dark:text-yellow-300"
+                                    : "border-blue-500 text-blue-700 dark:text-blue-300"
+                                }`}
                             >
                               {suggestion.type.toUpperCase()}
                             </Badge>
@@ -1740,11 +1738,10 @@ export default function ResumeBuilderPage() {
               {resumeTemplates.map((template) => (
                 <Card
                   key={template.id}
-                  className={`p-4 cursor-pointer transition-all border-2 ${
-                    selectedTemplate === template.id
+                  className={`p-4 cursor-pointer transition-all border-2 ${selectedTemplate === template.id
                       ? "border-blue-500 bg-blue-50 dark:bg-blue-900/30"
                       : "border-slate-200 dark:border-slate-700 hover:border-blue-300"
-                  }`}
+                    }`}
                   onClick={() => {
                     setSelectedTemplate(template.id)
                     setShowTemplateModal(false)
@@ -1790,7 +1787,7 @@ export default function ResumeBuilderPage() {
               </div>
             </DialogHeader>
             <div className="p-6 overflow-y-auto">
-              <div 
+              <div
                 id="resume-preview-content"
                 className="border-2 border-gray-300 rounded-lg overflow-hidden shadow-lg bg-white mx-auto"
                 style={{ maxWidth: '210mm', minHeight: '297mm' }}

@@ -17,6 +17,7 @@ export interface StudentProfile {
   phone: string
   linkedin?: string
   github?: string
+  resumeUrl?: string
 }
 
 export class AuthService {
@@ -50,7 +51,7 @@ export class AuthService {
 
   static registerUser(userData: Omit<User, "id">): User | null {
     const users = this.getUsers()
-    
+
     // Check if email already exists
     if (users.some(u => u.email === userData.email)) {
       return null
@@ -69,7 +70,7 @@ export class AuthService {
   static login(email: string, password: string): User | null {
     const users = this.getUsers()
     const user = users.find(u => u.email === email && u.password === password)
-    
+
     if (user) {
       if (typeof window !== "undefined") {
         localStorage.setItem(this.CURRENT_USER_KEY, JSON.stringify(user))
@@ -91,11 +92,11 @@ export class AuthService {
 
     const users = this.getUsers()
     const userIndex = users.findIndex(u => u.id === currentUser.id)
-    
+
     if (userIndex !== -1) {
       users[userIndex] = { ...users[userIndex], ...updates }
       this.saveUsers(users)
-      
+
       const updatedUser = users[userIndex]
       if (typeof window !== "undefined") {
         localStorage.setItem(this.CURRENT_USER_KEY, JSON.stringify(updatedUser))

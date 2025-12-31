@@ -32,7 +32,7 @@ export function Hero3DSection() {
       transition: {
         duration: 6 + custom,
         repeat: Number.POSITIVE_INFINITY,
-        ease: "easeInOut",
+        ease: "easeInOut" as const,
         delay: custom * 0.2,
       },
     }),
@@ -122,7 +122,7 @@ export function Hero3DSection() {
       {/* Animated background circles */}
       <motion.div
         animate={{ rotate: 360 }}
-        transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+        transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" as const }}
         className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 pointer-events-none"
       >
         <div className="w-full h-full border border-accent/20 rounded-full" />
@@ -130,7 +130,7 @@ export function Hero3DSection() {
 
       <motion.div
         animate={{ rotate: -360 }}
-        transition={{ duration: 30, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+        transition={{ duration: 30, repeat: Number.POSITIVE_INFINITY, ease: "linear" as const }}
         className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 pointer-events-none"
       >
         <div className="w-full h-full border border-primary/20 rounded-full" />

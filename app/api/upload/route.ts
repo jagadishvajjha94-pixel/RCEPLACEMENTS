@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     const { data, error } = await (await import('@/lib/supabase-server')).supabaseAdmin.storage.from('uploads').upload(filename, buffer, { upsert: true })
     if (error) throw error
 
-    const { publicUrl } = (await import('@/lib/supabase-server')).supabaseAdmin.storage.from('uploads').getPublicUrl(data.path)
+    const { data: { publicUrl } } = (await import('@/lib/supabase-server')).supabaseAdmin.storage.from('uploads').getPublicUrl(data.path)
 
     return Response.json(
       {

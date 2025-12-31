@@ -23,7 +23,7 @@ export async function POST(req: Request) {
 Be helpful, concise, and professional. If a question is outside your scope, politely redirect to contacting the admin at placement@college.edu.`,
       prompt: question,
       temperature: 0.7,
-      maxTokens: 500,
+      // maxTokens: 500,
     })
 
     return Response.json({

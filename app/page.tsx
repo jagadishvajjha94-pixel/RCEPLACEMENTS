@@ -68,7 +68,7 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-x-hidden">
-        
+
         <div className="container mx-auto px-4 py-20 relative z-10 max-w-7xl">
           <div className="max-w-4xl mx-auto w-full">
             {/* Content */}
@@ -86,13 +86,13 @@ export default function Home() {
               >
                 <motion.div
                   animate={{ rotate: [0, 360] }}
-                  transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                  transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "linear" as const }}
                 >
                   <Star className="w-4 h-4 fill-blue-400" />
                 </motion.div>
                 <span className="text-blue-200 drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]">India's Leading College Placement Portal</span>
               </motion.div>
-              
+
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -108,7 +108,7 @@ export default function Home() {
                   transition={{
                     duration: 3,
                     repeat: Number.POSITIVE_INFINITY,
-                    ease: "linear"
+                    ease: "linear" as const
                   }}
                   style={{
                     backgroundSize: "200% auto"
@@ -121,7 +121,7 @@ export default function Home() {
                   of Your Life
                 </span>
               </motion.h1>
-              
+
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -131,18 +131,18 @@ export default function Home() {
                 <div className="flex items-center justify-center gap-3 text-xl md:text-2xl font-semibold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.6)]">
                   <motion.div
                     animate={{ scale: [1, 1.2, 1], rotate: [0, 180, 360] }}
-                    transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+                    transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" as const }}
                   >
                     <TrendingUp className="w-8 h-8 text-cyan-300 drop-shadow-[0_0_10px_rgba(34,211,238,0.8)]" />
                   </motion.div>
                   <span>Use our platform and</span>
                 </div>
                 <p className="text-xl md:text-2xl text-gray-100 font-medium leading-relaxed drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">
-                  <span className="text-cyan-300 font-bold drop-shadow-[0_0_12px_rgba(34,211,238,0.9)]">Step Up to Success!</span> Your journey to the top starts here. 
+                  <span className="text-cyan-300 font-bold drop-shadow-[0_0_12px_rgba(34,211,238,0.9)]">Step Up to Success!</span> Your journey to the top starts here.
                   Connect with top companies and achieve your career dreams.
                 </p>
               </motion.div>
-              
+
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -294,7 +294,7 @@ export default function Home() {
           >
             <motion.div
               animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+              transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" as const }}
               className="inline-block mb-6"
             >
               <Rocket className="w-12 h-12 text-accent" />

@@ -1,5 +1,6 @@
 
 import { useState, useEffect, useCallback } from "react"
+"use client"
 import { useNavigate } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { Card } from "@/components/ui/card"

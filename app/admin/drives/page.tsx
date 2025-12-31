@@ -1,4 +1,6 @@
 
+"use client"
+
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { PlacementDriveService, type PlacementDrive } from "@/lib/placement-service"

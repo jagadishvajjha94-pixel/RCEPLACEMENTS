@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from "react"
+"use client"
 import { useNavigate } from "react-router-dom"
 import { AuthService } from "@/lib/auth-service"
 import { AdminSidebar } from "@/components/admin-sidebar"

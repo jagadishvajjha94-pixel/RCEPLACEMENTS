@@ -1,3 +1,5 @@
+"use client"
+
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Card } from "@/components/ui/card"
@@ -51,8 +53,8 @@ export default function AssignmentsPage() {
       ...a,
       submissions: Math.floor(Math.random() * 45),
       total: 45,
-      status: new Date(a.dueDate) > new Date() ? "active" : "closed",
-      questionType: "coding",
+      status: (new Date(a.dueDate) > new Date() ? "active" : "closed") as "active" | "closed",
+      questionType: "coding" as const,
       questions: [],
     }))
     setAssignments(assignmentsWithSubmissions)
@@ -172,14 +174,14 @@ export default function AssignmentsPage() {
       alert("Assignment not found")
       return
     }
-    
+
     // Simulate AI grading process
     const confirmGrade = confirm(`AI will grade all submissions for "${assignment.title}". This will:\n\n1. Compile and test coding solutions\n2. Check MCQ answers automatically\n3. Evaluate practice questions\n4. Generate scores and feedback\n\nProceed?`)
     if (!confirmGrade) return
-    
+
     // Simulate processing
     alert("AI grading in progress...\n\n✓ Compiling code submissions\n✓ Running test cases\n✓ Checking MCQ answers\n✓ Evaluating practice responses\n✓ Generating scores and feedback\n\nGrading complete! Results will be available in student submissions.")
-    
+
     // In real implementation:
     // 1. Fetch all submissions for this assignment
     // 2. For coding questions: compile code, run test cases
@@ -203,7 +205,7 @@ export default function AssignmentsPage() {
           </h1>
           <p className="text-muted-foreground">Create and track student assignments with AI grading</p>
         </div>
-        <Button 
+        <Button
           onClick={() => {
             setAssignmentForm({ title: "", subject: "", description: "", dueDate: "", totalMarks: 100, questionType: "coding", questions: [] })
             setEditingAssignment(null)
@@ -510,8 +512,8 @@ export default function AssignmentsPage() {
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  <Button 
-                    size="sm" 
+                  <Button
+                    size="sm"
                     variant="outline"
                     onClick={() => handleEditAssignment(assignment)}
                     className="bg-slate-50 dark:bg-slate-800/50"

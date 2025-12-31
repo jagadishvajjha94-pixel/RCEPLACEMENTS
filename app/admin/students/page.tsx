@@ -1,4 +1,6 @@
 
+"use client"
+
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
@@ -40,7 +42,7 @@ export default function StudentsPage() {
     setUser(currentUser)
     // Load students data
     loadStudents()
-  }, [router, selectedBranch, selectedYear])
+  }, [navigate, selectedBranch, selectedYear])
 
   const loadStudents = () => {
     // Mock student data
@@ -70,7 +72,7 @@ export default function StudentsPage() {
   }
 
   const filteredStudents = students.filter((student) => {
-    const matchesSearch = 
+    const matchesSearch =
       student.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       student.rollNo.toLowerCase().includes(searchQuery.toLowerCase())
     const matchesBranch = selectedBranch === "all" || student.branch === selectedBranch
