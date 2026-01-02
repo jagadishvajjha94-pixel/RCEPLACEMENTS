@@ -1,8 +1,7 @@
 // AI Automation Service for Daily Updates and Reports
 import { PlacementAnalyticsService, RegistrationService, PlacementDriveService } from "./placement-service"
 import { StudentService } from "./db-service"
-import { generateText } from "ai"
-import { chatModel } from "./openai-client"
+import { generateFreeText } from "./free-ai-client"
 
 export interface AutomationReport {
   id: string
@@ -239,11 +238,10 @@ Focus on:
 
 Return ONLY the JSON array, no additional text.`
 
-      const { text } = await generateText({
-        model: chatModel,
+      const text = await generateFreeText({
         prompt: recommendationPrompt,
-        temperature: 0.5,
-        maxTokens: 800,
+        system: "You are an expert placement and career guidance advisor. Provide recommendations as a JSON array of strings.",
+        model: "instruction",
       })
 
       try {

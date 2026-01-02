@@ -1,6 +1,5 @@
 // AI-Powered Training and Timetable Scheduling Service
-import { generateText } from "ai"
-import { model, chatModel } from "./openai-client"
+import { generateFreeText } from "./free-ai-client"
 import { TrainingService } from "./db-service"
 import { TimetableService } from "./db-service"
 import type { Training } from "./mock-data"
@@ -137,11 +136,10 @@ Important constraints:
 - Provide specific day and time slots
 - Return ONLY valid JSON, no additional text`
 
-      const { text } = await generateText({
-        model: chatModel,
+      const text = await generateFreeText({
         prompt,
-        temperature: 0.3,
-        maxTokens: 2000,
+        system: "You are an expert academic scheduling assistant. Generate optimal schedules as JSON.",
+        model: "instruction",
       })
 
       // Parse AI response
@@ -226,11 +224,10 @@ Constraints:
 - Ensure total hours per subject match requirements
 - Return ONLY valid JSON`
 
-      const { text } = await generateText({
-        model: chatModel,
+      const text = await generateFreeText({
         prompt,
-        temperature: 0.3,
-        maxTokens: 3000,
+        system: "You are an expert academic timetable scheduler. Generate optimal timetables as JSON.",
+        model: "instruction",
       })
 
       let result: AIScheduleResult
@@ -351,11 +348,10 @@ Focus on:
 
 Return ONLY the JSON array, no additional text.`
 
-      const { text } = await generateText({
-        model: chatModel,
+      const text = await generateFreeText({
         prompt,
-        temperature: 0.5,
-        maxTokens: 500,
+        system: "You are a training program advisor. Provide recommendations as a JSON array.",
+        model: "instruction",
       })
 
       try {
