@@ -158,12 +158,12 @@ export default function LoginPage() {
   }
 
   const getRoleColor = (role: string) => {
-    // Unified blue to purple gradient for all roles
-    return "from-blue-600 to-purple-600"
+    // Black to light lavender gradient for all roles
+    return "from-black to-purple-200"
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-950 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-black via-purple-950 to-black flex items-center justify-center p-4">
       <motion.div
         className="w-full max-w-md"
         initial={{ opacity: 0, y: 20 }}
