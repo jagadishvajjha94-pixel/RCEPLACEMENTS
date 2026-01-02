@@ -212,7 +212,7 @@ export default function AdminPlacementsPage() {
       <AdminSidebar />
 
       <main className="flex-1 lg:ml-72 overflow-y-auto">
-        <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
+        <div className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50">
           <div className="p-4 md:p-8 max-w-[1600px] mx-auto w-full">
             {/* Header */}
             <motion.div
@@ -241,7 +241,7 @@ export default function AdminPlacementsPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="glass-lg rounded-lg p-6 mb-8"
+              className="bg-white rounded-lg p-6 mb-8 shadow-md border border-gray-200"
             >
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex-1 relative">
@@ -280,7 +280,7 @@ export default function AdminPlacementsPage() {
             {/* Drives List */}
             <motion.div className="space-y-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               {filteredDrives.length === 0 ? (
-                <Card className="glass-lg p-12 text-center">
+                <Card className="bg-white p-12 text-center shadow-md border border-gray-200">
                   <Building className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
                   <p className="text-muted-foreground text-lg">No drives found</p>
                   <Button onClick={() => setShowCreateForm(true)} className="mt-4 gap-2">
@@ -301,7 +301,7 @@ export default function AdminPlacementsPage() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.05 }}
                     >
-                      <Card className="glass-lg p-6 hover:shadow-lg transition-all duration-300">
+                      <Card className="bg-white p-6 hover:shadow-lg transition-all duration-300 shadow-md border border-gray-200">
                         <div className="flex items-start justify-between gap-4">
                           <div className="flex-1">
                             <div className="flex items-center gap-3 mb-3 flex-wrap">

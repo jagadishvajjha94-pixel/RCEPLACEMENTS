@@ -26,7 +26,7 @@ export default function SupportPage() {
       const res = await fetch("/api/support/chatbot", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: question }),
+        body: JSON.stringify({ question: question }),
       })
 
       if (!res.ok) throw new Error("Failed to get response")

@@ -123,7 +123,7 @@ export default function AdminDrivesPage() {
       <AdminSidebar />
 
       <main className="flex-1 lg:ml-72 overflow-y-auto">
-        <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
+        <div className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50">
           <div className="p-4 md:p-8">
             {/* Header */}
             <motion.div
@@ -169,7 +169,7 @@ export default function AdminDrivesPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="glass-lg rounded-lg p-6 mb-8"
+              className="bg-white rounded-lg p-6 mb-8 shadow-md border border-gray-200"
             >
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex-1 relative">
@@ -213,7 +213,7 @@ export default function AdminDrivesPage() {
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent mx-auto" />
               </div>
             ) : filteredDrives.length === 0 ? (
-              <Card className="glass-lg p-12 text-center">
+              <Card className="bg-white p-12 text-center shadow-md border border-gray-200">
                 <Building className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
                 <h3 className="text-xl font-bold mb-2">No Drives Found</h3>
                 <p className="text-muted-foreground mb-4">Get started by creating your first placement drive</p>
@@ -230,7 +230,7 @@ export default function AdminDrivesPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                 >
-                    <Card className="glass-lg p-6 hover:shadow-xl transition-all">
+                    <Card className="bg-white p-6 hover:shadow-xl transition-all shadow-md border border-gray-200">
                       <div className="flex flex-col md:flex-row justify-between gap-4">
                       <div className="flex-1">
                           <div className="flex items-start justify-between mb-4">

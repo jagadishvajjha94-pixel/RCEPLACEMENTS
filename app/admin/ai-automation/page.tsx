@@ -91,7 +91,7 @@ export default function AIAutomationPage() {
   const handleGenerateReport = async () => {
     setIsGenerating(true)
     try {
-      const report = AIAutomationService.generateDailyReport()
+      const report = await AIAutomationService.generateDailyReport()
       setLatestReport(report)
       loadReports()
     } catch (error) {

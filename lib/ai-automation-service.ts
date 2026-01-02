@@ -1,6 +1,8 @@
 // AI Automation Service for Daily Updates and Reports
 import { PlacementAnalyticsService, RegistrationService, PlacementDriveService } from "./placement-service"
 import { StudentService } from "./db-service"
+import { generateText } from "ai"
+import { chatModel } from "./openai-client"
 
 export interface AutomationReport {
   id: string
@@ -44,7 +46,7 @@ class AIAutomationServiceClass {
   private reports: AutomationReport[] = []
 
   // Generate daily automation report
-  generateDailyReport(): AutomationReport {
+  async generateDailyReport(): Promise<AutomationReport> {
     const now = new Date()
     const today = now.toISOString().split('T')[0]
     const timestamp = now.toISOString()
@@ -69,8 +71,8 @@ class AIAutomationServiceClass {
     // Generate trends (last 7 days)
     const trendData = this.generateTrendData(7)
 
-    // Generate insights
-    const insights = this.generateInsights(stats, registrations, drives)
+    // Generate insights using AI
+    const insights = await this.generateAIInsights(stats, registrations, drives)
 
     // Branch-wise statistics
     const branchStats = this.calculateBranchStats(registrations)
@@ -133,7 +135,7 @@ class AIAutomationServiceClass {
     return { registrationTrend, placementTrend, driveActivity }
   }
 
-  private generateInsights(stats: any, registrations: any[], drives: any[]) {
+  private async generateAIInsights(stats: any, registrations: any[], drives: any[]) {
     // Top performing branches
     const branchMap = new Map<string, { placed: number; total: number }>()
     registrations.forEach(reg => {
@@ -209,23 +211,70 @@ class AIAutomationServiceClass {
       })
     }
 
-    // Generate recommendations
-    const recommendations: string[] = []
+    // Generate AI-powered recommendations
+    let recommendations: string[] = []
     
-    if (stats.placementRate < 50) {
-      recommendations.push("Consider organizing additional placement drives to improve overall placement rate")
-    }
-    
-    if (topBranches.length > 0 && topBranches[0].placementRate > 80) {
-      recommendations.push(`Excellent performance in ${topBranches[0].branch} branch - consider sharing best practices with other branches`)
+    try {
+      const recommendationPrompt = `You are an expert placement and career guidance advisor analyzing placement data. Based on the following statistics, provide 5-7 specific, actionable recommendations:
+
+Statistics:
+- Total Students: ${stats.totalStudents}
+- Placed Students: ${stats.placedStudents}
+- Placement Rate: ${stats.placementRate.toFixed(2)}%
+- Pending Applications: ${pendingCount}
+- Active Drives: ${drives.filter(d => d.status === "active").length}
+- Top Performing Branch: ${topBranches[0]?.branch || "N/A"} (${topBranches[0]?.placementRate.toFixed(2)}%)
+- Low Performing Branches: ${lowPlacementBranches.map(b => b.branch).join(", ")}
+- Top Companies: ${topCompanies.slice(0, 3).map(c => c.company).join(", ")}
+
+Provide recommendations as a JSON array of strings:
+["Recommendation 1", "Recommendation 2", ...]
+
+Focus on:
+- Improving placement rates for underperforming branches
+- Strategic actions to increase placements
+- Resource allocation and drive management
+- Student preparation and skill development
+- Data-driven insights and predictions
+
+Return ONLY the JSON array, no additional text.`
+
+      const { text } = await generateText({
+        model: chatModel,
+        prompt: recommendationPrompt,
+        temperature: 0.5,
+        maxTokens: 800,
+      })
+
+      try {
+        const jsonMatch = text.match(/\[[\s\S]*\]/)
+        if (jsonMatch) {
+          recommendations = JSON.parse(jsonMatch[0])
+        }
+      } catch (parseError) {
+        console.error("Failed to parse AI recommendations:", parseError)
+      }
+    } catch (error) {
+      console.error("AI Recommendation generation failed:", error)
     }
 
-    if (pendingCount > 50) {
-      recommendations.push("High number of pending applications - consider increasing review capacity")
-    }
+    // Fallback to rule-based recommendations if AI fails
+    if (recommendations.length === 0) {
+      if (stats.placementRate < 50) {
+        recommendations.push("Consider organizing additional placement drives to improve overall placement rate")
+      }
+      
+      if (topBranches.length > 0 && topBranches[0].placementRate > 80) {
+        recommendations.push(`Excellent performance in ${topBranches[0].branch} branch - consider sharing best practices with other branches`)
+      }
 
-    if (drives.filter(d => d.status === "active").length < 5) {
-      recommendations.push("Low number of active drives - consider reaching out to more companies")
+      if (pendingCount > 50) {
+        recommendations.push("High number of pending applications - consider increasing review capacity")
+      }
+
+      if (drives.filter(d => d.status === "active").length < 5) {
+        recommendations.push("Low number of active drives - consider reaching out to more companies")
+      }
     }
 
     return {
@@ -371,18 +420,22 @@ class AIAutomationServiceClass {
     
     if (!existingReport) {
       // Generate report if it doesn't exist
-      this.generateDailyReport()
+      this.generateDailyReport().catch(err => console.error("Error generating report:", err))
     }
 
     // Set up interval to check for end of day (11:59 PM)
-    const checkTime = () => {
+    const checkTime = async () => {
       const now = new Date()
       const hours = now.getHours()
       const minutes = now.getMinutes()
 
       // Run at 11:59 PM
       if (hours === 23 && minutes === 59) {
-        this.generateDailyReport()
+        try {
+          await this.generateDailyReport()
+        } catch (err) {
+          console.error("Error generating scheduled report:", err)
+        }
       }
     }
 
@@ -398,7 +451,7 @@ class AIAutomationServiceClass {
     // Generate report for today if it doesn't exist
     const today = new Date().toISOString().split('T')[0]
     if (!this.getReportByDate(today)) {
-      this.generateDailyReport()
+      this.generateDailyReport().catch(err => console.error("Error generating initial report:", err))
     }
   }
 }
