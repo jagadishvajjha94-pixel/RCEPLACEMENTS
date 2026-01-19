@@ -3,6 +3,7 @@ import React from 'react';
 import App from './App';
 import { ErrorBoundary } from './ErrorBoundary';
 import './index.css';
+import '../app/globals.css';
 
 const rootElement = document.getElementById('root');
 

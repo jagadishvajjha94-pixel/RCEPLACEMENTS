@@ -7,13 +7,13 @@ import {
   LayoutGrid,
   FileText,
   LogOut,
-  Menu,
-  X,
   BookOpen,
   MessageSquare,
   Calendar,
   CheckSquare,
   Sparkles,
+  Menu,
+  X,
 } from "lucide-react"
 import { useState, useEffect } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
@@ -33,29 +33,26 @@ const navItems = [
 
 export function StudentSidebar() {
   const [isOpen, setIsOpen] = useState(false)
-  const [isDesktop, setIsDesktop] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
   const pathname = location.pathname
 
-  // Expose isOpen state to parent components via custom event
-  useEffect(() => {
-    const event = new CustomEvent('sidebar-toggle', { detail: { isOpen } })
-    window.dispatchEvent(event)
-  }, [isOpen])
-
   useEffect(() => {
     if (typeof window === 'undefined') return
     
-    const checkDesktop = () => {
+    const checkMobile = () => {
       const width = window.innerWidth
-      setIsDesktop(width >= 1024)
-      // Sidebar closed by default on all screen sizes
+      setIsMobile(width < 1024)
+      // On desktop, always show sidebar
+      if (width >= 1024) {
+        setIsOpen(true)
+      }
     }
     
-    checkDesktop()
-    window.addEventListener("resize", checkDesktop)
-    return () => window.removeEventListener("resize", checkDesktop)
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
   }, [])
 
   const handleSignOut = () => {
@@ -65,62 +62,85 @@ export function StudentSidebar() {
 
   return (
     <>
-      {/* Menu Button - Show on all screen sizes */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={`fixed top-4 z-40 p-2 rounded-lg bg-[#CC5500] hover:bg-[#B84E00] text-white border border-[#A34700] shadow-lg transition-all duration-300 ${isOpen ? 'left-[280px]' : 'left-4'}`}
-      >
-        {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-      </button>
+      {/* Menu Button - Only on Mobile */}
+      {isMobile && (
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className={`fixed top-4 z-40 p-2 rounded-lg bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 shadow-lg transition-all duration-300 ${isOpen ? 'left-[280px]' : 'left-4'}`}
+        >
+          {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        </button>
+      )}
 
-      {/* Sidebar */}
+      {/* Sidebar - Always Visible on Desktop, Toggleable on Mobile */}
       <motion.aside
         initial={false}
         animate={{ 
-          x: isOpen ? 0 : -280
+          x: isMobile ? (isOpen ? 0 : -280) : 0
         }}
         transition={{ duration: 0.3 }}
-        className="fixed left-0 top-0 h-screen w-72 bg-[#CC5500] dark:bg-[#CC5500] border-r border-[#A34700] z-30 flex flex-col overflow-y-auto"
+        className="fixed left-0 top-0 h-screen w-72 bg-white border-r border-gray-200 z-30 flex flex-col overflow-y-auto shadow-sm"
       >
-        <div className="p-6 border-b border-[#A34700]">
-          <h1 className="text-2xl font-bold text-white">
-            RCE Hub
-          </h1>
-          <p className="text-xs text-gray-400 mt-1">Student Portal</p>
+        <div className="p-6 border-b border-gray-200">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-bold text-xl">
+              R
+            </div>
+            <div>
+              <h1 className="text-xl font-bold text-gray-900">
+                RCE Hub
+              </h1>
+              <p className="text-xs text-gray-500 mt-0.5">Student Portal</p>
+            </div>
+          </div>
         </div>
 
-        <nav className="flex-1 p-6 space-y-2">
+        <nav className="flex-1 p-4 space-y-1">
           {navItems.map((item, index) => {
             const Icon = item.icon
             const isActive = pathname === item.href
             return (
-              <Link key={index} to={item.href} onClick={() => setIsOpen(false)}>
+              <Link key={index} to={item.href} onClick={() => isMobile && setIsOpen(false)}>
                 <motion.div
-                  whileHover={{ x: 5 }}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+                  whileHover={{ x: 2 }}
+                  className={`relative flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors ${
                     isActive 
-                      ? "bg-white/20 text-white" 
-                      : "text-gray-300 hover:bg-white/10 hover:text-white"
+                      ? "bg-blue-50 text-blue-600 font-medium" 
+                      : "text-gray-700 hover:bg-gray-50"
                   }`}
                 >
-                  <Icon className="w-5 h-5" />
-                  <span className="font-medium">{item.label}</span>
+                  {isActive && (
+                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-blue-600 rounded-r-full" />
+                  )}
+                  <Icon className={`w-5 h-5 ${isActive ? 'text-blue-600' : 'text-gray-500'}`} />
+                  <span className="text-sm">{item.label}</span>
+                  {item.label === "Feedback" && (
+                    <span className="ml-auto bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full">4</span>
+                  )}
                 </motion.div>
               </Link>
             )
           })}
         </nav>
 
-        <div className="p-6 border-t border-[#A34700]">
-          <Button onClick={handleSignOut} className="w-full gap-2 bg-white/10 text-white hover:bg-white/20 border border-white/20">
+        <div className="p-4 border-t border-gray-200">
+          <Button 
+            onClick={handleSignOut} 
+            className="w-full gap-2 bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-200"
+          >
             <LogOut className="w-4 h-4" />
             Sign Out
-          </Button>
+            </Button>
         </div>
       </motion.aside>
 
-      {/* Overlay */}
-      {isOpen && <div className="fixed inset-0 bg-black/50 z-20" onClick={() => setIsOpen(false)} />}
+      {/* Overlay - Only on Mobile */}
+      {isMobile && isOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-20" 
+          onClick={() => setIsOpen(false)} 
+        />
+      )}
     </>
   )
 }

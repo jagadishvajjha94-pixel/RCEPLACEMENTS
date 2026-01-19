@@ -39,62 +39,30 @@ export function AdminHeader() {
     return () => clearInterval(interval)
   }, [mounted])
 
+  const currentDate = new Date().toLocaleDateString('en-GB', { 
+    day: 'numeric', 
+    month: 'short', 
+    year: 'numeric',
+    weekday: 'long'
+  })
+
   return (
-    <header className="h-16 bg-[#1e3a5f] dark:bg-[#1e3a5f] border-b border-[#2a4a6f] flex items-center justify-between px-6 fixed top-0 left-72 right-0 z-20 shadow-sm">
+    <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 fixed top-0 left-72 right-0 z-20 shadow-sm">
       {/* Left side - Title */}
       <div className="flex items-center gap-6">
-        <h2 className="text-white font-semibold text-lg">Admin Portal</h2>
+        <h2 className="text-gray-900 font-semibold text-lg">Dashboard</h2>
       </div>
 
-      {/* Right side - Search, Notifications, User */}
+      {/* Right side - Date, Search */}
       <div className="flex items-center gap-4">
-        {/* Search Bar */}
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-          <Input
-            type="text"
-            placeholder="Search..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 pr-20 w-64 bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:bg-white/15"
-          />
-          <kbd className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-gray-400 bg-white/10 px-2 py-1 rounded">
-            Ctrl + K
-          </kbd>
-        </div>
-
-        {/* Notifications */}
+        <span className="text-sm text-gray-600">{currentDate}</span>
+        {/* Search Icon */}
         <button
-          onClick={() => setNotificationOpen(!notificationOpen)}
-          className="relative p-2 text-white hover:bg-white/10 rounded-lg transition-colors"
+          onClick={() => {}}
+          className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
         >
-          <Bell className="w-5 h-5" />
-          {unreadCount > 0 && (
-            <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
-          )}
+          <Search className="w-5 h-5" />
         </button>
-        <NotificationFeed isOpen={notificationOpen} onClose={() => setNotificationOpen(false)} />
-
-        {/* Batch Selector */}
-        <Select defaultValue="2026">
-          <SelectTrigger className="w-24 bg-white/10 border-white/20 text-white hover:bg-white/15">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent className="bg-[#1e3a5f] border-[#2a4a6f]">
-            <SelectItem value="2026" className="text-white hover:bg-white/10">2026</SelectItem>
-            <SelectItem value="2025" className="text-white hover:bg-white/10">2025</SelectItem>
-            <SelectItem value="2024" className="text-white hover:bg-white/10">2024</SelectItem>
-          </SelectContent>
-        </Select>
-
-        {/* User Dropdown */}
-        <div className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white/10 cursor-pointer transition-colors">
-          <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white text-sm font-semibold">
-            {userInitials}
-          </div>
-          <span className="text-white font-medium text-sm">{userName}</span>
-          <ChevronDown className="w-4 h-4 text-white" />
-        </div>
       </div>
     </header>
   )

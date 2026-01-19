@@ -46,6 +46,7 @@ import {
   Briefcase as BriefcaseIcon,
   GraduationCap as GraduationCapIcon,
   X,
+  Code,
 } from "lucide-react"
 import { Link } from "react-router-dom"
 import { AuthService } from "@/lib/auth-service"
@@ -54,6 +55,10 @@ import { initializeAllMockData } from "@/lib/mock-data-initializer"
 import { mockToppers, type Topper, type FacultyFeedback } from "@/lib/mock-data"
 import { FacultyFeedbackService } from "@/lib/db-service"
 import type { User as AuthUser } from "@/lib/auth-service"
+import { WelcomeIllustration } from "@/components/welcome-illustration"
+import { ArrowRight, ChevronRight } from "lucide-react"
+import { TimeSpentChart } from "@/components/dashboard/time-spent-chart"
+import { timeTrackingService } from "@/lib/time-tracking-service"
 
 const containerVariants: any = {
   hidden: { opacity: 0 },
@@ -87,6 +92,9 @@ export default function StudentDashboard() {
     cgpa: 0,
     rank: 0,
   })
+  const [timeSpentData, setTimeSpentData] = useState<any[]>([])
+  const [timePeriod, setTimePeriod] = useState<'last-week' | 'this-week' | 'last-month'>('last-week')
+  const [practicingTechnologies, setPracticingTechnologies] = useState<string[]>([]) // Technologies from interview prep
 
   // Get toppers by category
   const trainingToppers = mockToppers.filter(t => t.category === "training")
@@ -143,6 +151,13 @@ export default function StudentDashboard() {
     // Initialize mock data if needed
     initializeAllMockData()
 
+    // Initialize time tracking
+    if (currentUser) {
+      timeTrackingService.initializeTracking(currentUser.id)
+      const lastWeekData = timeTrackingService.getLastWeekData(currentUser.id)
+      setTimeSpentData(lastWeekData)
+    }
+
     // Pre-fill application form with user data
     setApplicationData({
       name: currentUser.name,
@@ -156,7 +171,45 @@ export default function StudentDashboard() {
     })
 
     loadData(currentUser)
+    
+    // Refresh technologies when component mounts
+    const refreshTechnologies = () => {
+      if (currentUser) {
+        const solvedProblems = JSON.parse(localStorage.getItem(`interview_prep_${currentUser.id}`) || '[]')
+        const techSet = new Set<string>()
+        // Extract unique technologies from solved problems
+        solvedProblems.forEach((problem: any) => {
+          if (problem.language) {
+            techSet.add(problem.language)
+          }
+        })
+        setPracticingTechnologies(Array.from(techSet))
+      }
+    }
+    
+    refreshTechnologies()
+    
+    // Refresh on focus (when user comes back from interview prep)
+    const handleFocus = () => {
+      refreshTechnologies()
+    }
+    window.addEventListener('focus', handleFocus)
+    return () => window.removeEventListener('focus', handleFocus)
   }, [navigate])
+
+  const updateTimeSpentData = (userId: string, period: 'last-week' | 'this-week' | 'last-month') => {
+    let data: any[] = []
+    if (period === 'last-week') {
+      data = timeTrackingService.getLastWeekData(userId)
+    } else if (period === 'this-week') {
+      data = timeTrackingService.getThisWeekData(userId)
+    } else {
+      // For last month, we'll use last week data for now
+      data = timeTrackingService.getLastWeekData(userId)
+    }
+    setTimeSpentData(data)
+    setTimePeriod(period)
+  }
 
   const loadData = async (currentUser: AuthUser) => {
     setLoading(true)
@@ -171,6 +224,20 @@ export default function StudentDashboard() {
       // Get student's registrations
       const studentRegs = RegistrationService.getByStudent(currentUser.id)
       setRegistrations(studentRegs)
+
+      // Load technologies from interview prep
+      // Extract technologies from coding problems the student has worked on
+      const solvedProblems = JSON.parse(localStorage.getItem(`interview_prep_${currentUser.id}`) || '[]')
+      
+      // Extract unique languages/technologies from solved problems
+      const techSet = new Set<string>()
+      solvedProblems.forEach((problem: any) => {
+        if (problem.language) {
+          techSet.add(problem.language)
+        }
+      })
+      
+      setPracticingTechnologies(Array.from(techSet))
 
       // Calculate stats
       const appliedDrives = studentRegs.length
@@ -350,104 +417,183 @@ export default function StudentDashboard() {
     )
   }
 
+  // Calculate progress percentage (mock data)
+  const progressPercentage = Math.min(80, Math.round((studentStats.appliedDrives / 10) * 100))
+
   return (
-    <div className="w-full max-w-full p-4 md:p-6 space-y-4 md:space-y-6">
-      {/* Welcome Section */}
+    <div className="w-full max-w-full p-6 space-y-6">
+      {/* Welcome Banner - Linglee Style */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex items-center justify-between"
+        className="relative bg-gradient-to-br from-pink-400 to-pink-500 rounded-2xl p-6 md:p-8 overflow-hidden"
       >
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-1">
-            Welcome back, {user?.name || "Student"}! 👋
-          </h1>
-          <p className="text-sm text-gray-600">Track your placement journey and manage applications</p>
-        </div>
-        <div className="flex gap-3">
-          <Link to="/student/profile">
-            <Button variant="outline" className="gap-2">
-              <User className="w-4 h-4" />
-              Edit Profile
-            </Button>
-          </Link>
+        <div className="relative z-10 flex items-center justify-between">
+          <div className="flex-1 pr-4">
+            <h2 className="text-xl md:text-2xl font-bold leading-tight">
+              <span className="text-white drop-shadow-sm">Welcome back {user?.name || "Student"}!</span>
+            </h2>
+            <p className="text-white/90 text-sm md:text-base mt-3">
+              You've learned {progressPercentage}% of your goal this week! Keep it up and improve your results!
+            </p>
+          </div>
+          <div className="flex-shrink-0 w-32 h-32 md:w-40 md:h-40 opacity-90">
+            <WelcomeIllustration />
+          </div>
         </div>
       </motion.div>
 
-      {/* Key Metrics Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
+      {/* Latest Results and Time Spent - Side by Side - Linglee Style */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Latest Results Section - Linglee Style */}
         <motion.div
-          whileHover={{ y: -4 }}
-          className="cursor-pointer"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm"
         >
-          <Card className="bg-gradient-to-br from-blue-500 to-blue-600 border-0 text-white overflow-hidden relative">
-            <div className="p-2 relative z-10">
-              <div className="flex items-start justify-between mb-1">
-                <div className="p-1.5 bg-white/20 rounded-md backdrop-blur-sm">
-                  <Briefcase className="w-4 h-4" />
+          <div className="flex items-center justify-between mb-5">
+            <h3 className="text-base font-semibold text-gray-900">Technologies</h3>
+            <Link to="/student/interview-prep" className="flex items-center gap-1 text-xs text-gray-600 hover:text-gray-900">
+              More
+              <ChevronRight className="w-3 h-3" />
+            </Link>
+          </div>
+          <div className="space-y-4">
+            {(() => {
+              // Get technologies from profile
+              const profileTechs = user?.profile?.technologies || []
+              
+              // Get technologies from interview prep (practicing)
+              // For now, we'll use a combination of profile techs and common interview prep techs
+              const allTechnologies = [
+                ...new Set([...profileTechs, ...practicingTechnologies])
+              ]
+              
+              // If no technologies, show default message
+              if (allTechnologies.length === 0) {
+                return (
+                  <div className="text-center py-8 text-gray-500 text-sm">
+                    <Code className="w-8 h-8 mx-auto mb-2 text-gray-400" />
+                    <p>No technologies added yet</p>
+                    <p className="text-xs mt-1">Add technologies in your profile or start practicing in Interview Prep</p>
+                  </div>
+                )
+              }
+              
+              // Show technologies with progress indicators based on solved problems
+              return allTechnologies.slice(0, 5).map((tech, index) => {
+                const isInProfile = profileTechs.includes(tech)
+                
+                // Total problems available per technology (matching interview prep page)
+                const totalProblemsByTech: Record<string, number> = {
+                  "JavaScript": 8,
+                  "Python": 8,
+                  "Java": 7,
+                  "C++": 5,
+                  "React": 4,
+                  "Node.js": 3,
+                  "SQL": 4,
+                  "TypeScript": 0, // No problems yet
+                }
+                
+                // Get solved problems for this technology
+                const solvedProblems = JSON.parse(localStorage.getItem(`interview_prep_${user?.id}`) || '[]')
+                const solvedForTech = solvedProblems.filter((p: any) => p.language === tech)
+                
+                // Calculate progress: (solved / total) * 100
+                const totalProblems = totalProblemsByTech[tech] || 0
+                const solvedCount = solvedForTech.length
+                const progress = totalProblems > 0 ? Math.round((solvedCount / totalProblems) * 100) : 0
+                
+                // If in profile, show 100% (mastered in profile)
+                // Otherwise show actual progress based on solved problems
+                const finalProgress = isInProfile ? 100 : progress
+                const color = isInProfile 
+                  ? "bg-green-500" 
+                  : progress >= 75
+                    ? "bg-green-500"
+                    : progress >= 50 
+                      ? "bg-blue-500" 
+                      : progress > 0 
+                        ? "bg-yellow-500" 
+                        : "bg-gray-400"
+                
+                return (
+              <div key={index} className="space-y-1.5">
+                <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Code className="w-4 h-4 text-gray-500" />
+                        <span className="text-sm font-medium text-gray-900">{tech}</span>
+                        {isInProfile && (
+                          <Badge variant="outline" className="text-xs px-1.5 py-0 h-5 border-green-500 text-green-700 bg-green-50">
+                            Profile
+                          </Badge>
+                        )}
+                        {!isInProfile && totalProblems > 0 && (
+                          <Badge variant="outline" className="text-xs px-1.5 py-0 h-5 border-blue-500 text-blue-700 bg-blue-50">
+                            {solvedCount}/{totalProblems}
+                          </Badge>
+                        )}
+                      </div>
+                      <span className="text-sm text-gray-600 font-medium">{finalProgress}%</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-1.5 overflow-hidden">
+                  <div
+                        className={`${color} h-full rounded-full transition-all duration-300`}
+                        style={{ width: `${finalProgress}%` }}
+                  />
                 </div>
               </div>
-              <h3 className="text-xl font-bold mb-1">{studentStats.appliedDrives}</h3>
-              <p className="text-white/90 text-xs font-medium">Applications</p>
-            </div>
-            <div className="absolute bottom-0 right-0 w-12 h-12 bg-white/10 rounded-full -mr-6 -mb-6"></div>
-          </Card>
+                )
+              })
+            })()}
+          </div>
         </motion.div>
 
+        {/* Time Spent on Learning Section - Linglee Style */}
         <motion.div
-          whileHover={{ y: -4 }}
-          className="cursor-pointer"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
         >
-          <Card className="bg-gradient-to-br from-green-500 to-emerald-600 border-0 text-white overflow-hidden relative">
-            <div className="p-2 relative z-10">
-              <div className="flex items-start justify-between mb-1">
-                <div className="p-1.5 bg-white/20 rounded-md backdrop-blur-sm">
-                  <CheckCircle className="w-4 h-4" />
-                </div>
-              </div>
-              <h3 className="text-xl font-bold mb-1">{studentStats.selectedDrives}</h3>
-              <p className="text-white/90 text-xs font-medium">Offers Received</p>
-            </div>
-            <div className="absolute bottom-0 right-0 w-12 h-12 bg-white/10 rounded-full -mr-6 -mb-6"></div>
-          </Card>
-        </motion.div>
-
-        <motion.div
-          whileHover={{ y: -4 }}
-          className="cursor-pointer"
-        >
-          <Card className="bg-gradient-to-br from-purple-500 to-purple-600 border-0 text-white overflow-hidden relative">
-            <div className="p-2 relative z-10">
-              <div className="flex items-start justify-between mb-1">
-                <div className="p-1.5 bg-white/20 rounded-md backdrop-blur-sm">
-                  <GraduationCap className="w-4 h-4" />
-                </div>
-              </div>
-              <h3 className="text-xl font-bold mb-1">{studentStats.cgpa}</h3>
-              <p className="text-white/90 text-xs font-medium">CGPA</p>
-            </div>
-            <div className="absolute bottom-0 right-0 w-12 h-12 bg-white/10 rounded-full -mr-6 -mb-6"></div>
-          </Card>
-        </motion.div>
-
-        <motion.div
-          whileHover={{ y: -4 }}
-          className="cursor-pointer"
-        >
-          <Card className="bg-gradient-to-br from-orange-500 to-red-500 border-0 text-white overflow-hidden relative">
-            <div className="p-2 relative z-10">
-              <div className="flex items-start justify-between mb-1">
-                <div className="p-1.5 bg-white/20 rounded-md backdrop-blur-sm">
-                  <Award className="w-4 h-4" />
-                </div>
-              </div>
-              <h3 className="text-xl font-bold mb-1">#{studentStats.rank}</h3>
-              <p className="text-white/90 text-xs font-medium">Class Rank</p>
-            </div>
-            <div className="absolute bottom-0 right-0 w-12 h-12 bg-white/10 rounded-full -mr-6 -mb-6"></div>
-          </Card>
+          <TimeSpentChart 
+            data={timeSpentData} 
+            onPeriodChange={(period) => user && updateTimeSpentData(user.id, period)}
+          />
         </motion.div>
       </div>
+
+      {/* Your Courses Section - Linglee Style */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm"
+      >
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold text-gray-900">Your courses</h3>
+          <Link to="/student/drives" className="flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900">
+            More
+            <ChevronRight className="w-4 h-4" />
+          </Link>
+        </div>
+        <div className="grid md:grid-cols-3 gap-4">
+          {[
+            { name: "Placement Preparation", color: "bg-purple-500" },
+            { name: "Interview Skills", color: "bg-purple-300" },
+            { name: "Resume Building", color: "bg-pink-400" },
+          ].map((course, index) => (
+            <Card
+              key={index}
+              className={`${course.color} text-white p-4 rounded-xl cursor-pointer hover:opacity-90 transition-opacity`}
+            >
+              <div className="flex items-center justify-between">
+                <h4 className="font-semibold text-sm">{course.name}</h4>
+                <ArrowRight className="w-4 h-4" />
+              </div>
+            </Card>
+          ))}
+        </div>
+      </motion.div>
 
       {/* Toppers Section */}
       <motion.div
@@ -456,7 +602,7 @@ export default function StudentDashboard() {
         className="space-y-6"
       >
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold">Top Performers</h2>
+          <h2 className="text-xl font-bold text-gray-900">Top Performers</h2>
         </div>
 
         {/* College-wide Toppers */}

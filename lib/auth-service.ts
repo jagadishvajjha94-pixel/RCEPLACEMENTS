@@ -18,6 +18,8 @@ export interface StudentProfile {
   linkedin?: string
   github?: string
   resumeUrl?: string
+  profilePictureUrl?: string
+  technologies?: string[] // Technologies student has added to profile
 }
 
 export class AuthService {

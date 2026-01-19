@@ -6,7 +6,8 @@ import { motion } from "framer-motion"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { ArrowLeft, Save, User, Mail, Phone, Linkedin, Github, Award, Upload, FileText } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { ArrowLeft, Save, User, Mail, Phone, Linkedin, Github, Award, Upload, FileText, Image as ImageIcon, Code, X, Plus } from "lucide-react"
 import { AuthService } from "@/lib/auth-service"
 import type { User as AuthUser } from "@/lib/auth-service"
 
@@ -27,9 +28,13 @@ export default function StudentProfile() {
     phone: "",
     linkedin: "",
     github: "",
+    technologies: [] as string[],
   })
+  const [newTechnology, setNewTechnology] = useState("")
   const [resumeFile, setResumeFile] = useState<File | null>(null)
   const [resumeUrl, setResumeUrl] = useState<string>("")
+  const [profilePictureFile, setProfilePictureFile] = useState<File | null>(null)
+  const [profilePictureUrl, setProfilePictureUrl] = useState<string>("")
 
   useEffect(() => {
     const currentUser = AuthService.getCurrentUser()
@@ -52,13 +57,16 @@ export default function StudentProfile() {
       phone: currentUser.profile?.phone || "",
       linkedin: currentUser.profile?.linkedin || "",
       github: currentUser.profile?.github || "",
+      technologies: currentUser.profile?.technologies || [],
     }
     setProfileData(newProfileData)
     setResumeUrl(currentUser.profile?.resumeUrl || "")
+    setProfilePictureUrl(currentUser.profile?.profilePictureUrl || "")
   }, [navigate])
 
   const handleSave = async () => {
     let resumeUrlToSave = resumeUrl
+    let profilePictureUrlToSave = profilePictureUrl
     
     // If new resume file is uploaded, simulate upload
     if (resumeFile) {
@@ -67,6 +75,15 @@ export default function StudentProfile() {
       const fileUrl = URL.createObjectURL(resumeFile)
       resumeUrlToSave = fileUrl
       setResumeUrl(fileUrl)
+    }
+
+    // If new profile picture file is uploaded, simulate upload
+    if (profilePictureFile) {
+      // In a real app, upload to storage service
+      // For now, create a local URL
+      const fileUrl = URL.createObjectURL(profilePictureFile)
+      profilePictureUrlToSave = fileUrl
+      setProfilePictureUrl(fileUrl)
     }
 
     AuthService.updateCurrentUser({
@@ -81,12 +98,15 @@ export default function StudentProfile() {
         linkedin: profileData.linkedin,
         github: profileData.github,
         resumeUrl: resumeUrlToSave,
+        profilePictureUrl: profilePictureUrlToSave,
+        technologies: profileData.technologies,
       },
     })
 
     setSuccess(true)
     setEditing(false)
     setResumeFile(null)
+    setProfilePictureFile(null)
     setTimeout(() => setSuccess(false), 3000)
   }
 
@@ -102,6 +122,24 @@ export default function StudentProfile() {
         return
       }
       setResumeFile(file)
+    }
+  }
+
+  const handleProfilePictureUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        alert("File size must be less than 5 MB")
+        return
+      }
+      if (!file.type.includes("image")) {
+        alert("Please upload an image file")
+        return
+      }
+      setProfilePictureFile(file)
+      // Preview the image
+      const fileUrl = URL.createObjectURL(file)
+      setProfilePictureUrl(fileUrl)
     }
   }
 
@@ -168,6 +206,60 @@ export default function StudentProfile() {
             )}
 
             <div className="space-y-6">
+              {/* Profile Picture Upload */}
+              <div>
+                <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+                  <ImageIcon className="w-5 h-5 text-blue-600" />
+                  Profile Picture
+                </h2>
+                <div className="flex items-center gap-6">
+                  <div className="relative">
+                    <div className="w-32 h-32 rounded-full border-2 border-purple-200 bg-purple-50 flex items-center justify-center overflow-hidden">
+                      {profilePictureUrl ? (
+                        <img 
+                          src={profilePictureUrl} 
+                          alt={profileData.name || "Profile"}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <User className="w-16 h-16 text-purple-400" />
+                      )}
+                    </div>
+                  </div>
+                  {editing && (
+                    <div className="flex-1">
+                      <label className="text-sm font-semibold mb-2 block">Upload Profile Picture</label>
+                      <div className="border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg p-4 text-center hover:border-primary transition-colors">
+                        <Upload className="w-6 h-6 mx-auto mb-2 text-muted-foreground" />
+                        <p className="text-sm text-muted-foreground mb-1">
+                          {profilePictureFile ? profilePictureFile.name : "Click to upload or drag and drop"}
+                        </p>
+                        <p className="text-xs text-muted-foreground mb-3">PNG, JPG, or JPEG (Max 5MB)</p>
+                        <Input
+                          type="file"
+                          accept="image/png,image/jpeg,image/jpg"
+                          onChange={handleProfilePictureUpload}
+                          className="hidden"
+                          id="profile-picture-upload"
+                        />
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={() => document.getElementById('profile-picture-upload')?.click()}
+                          className="gap-2"
+                        >
+                          <Upload className="w-4 h-4" />
+                          {profilePictureFile ? "Change Picture" : "Choose Picture"}
+                        </Button>
+                        {profilePictureFile && (
+                          <p className="text-xs text-green-600 mt-2">✓ {profilePictureFile.name} selected</p>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
               {/* Personal Information */}
               <div>
                 <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
@@ -302,6 +394,83 @@ export default function StudentProfile() {
                       />
                     </div>
                   </div>
+                </div>
+              </div>
+
+              {/* Technologies Section */}
+              <div>
+                <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+                  <Code className="w-5 h-5 text-blue-600" />
+                  Technologies
+                </h2>
+                <div className="space-y-4">
+                  {profileData.technologies.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      {profileData.technologies.map((tech, index) => (
+                        <Badge
+                          key={index}
+                          variant="secondary"
+                          className="px-3 py-1 text-sm bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300"
+                        >
+                          {tech}
+                          {editing && (
+                            <button
+                              onClick={() => {
+                                setProfileData({
+                                  ...profileData,
+                                  technologies: profileData.technologies.filter((_, i) => i !== index),
+                                })
+                              }}
+                              className="ml-2 hover:text-red-600"
+                            >
+                              <X className="w-3 h-3" />
+                            </button>
+                          )}
+                        </Badge>
+                      ))}
+                    </div>
+                  )}
+                  {editing && (
+                    <div className="flex gap-2">
+                      <Input
+                        placeholder="Add technology (e.g., React, Python, Java)"
+                        value={newTechnology}
+                        onChange={(e) => setNewTechnology(e.target.value)}
+                        onKeyPress={(e) => {
+                          if (e.key === 'Enter' && newTechnology.trim()) {
+                            if (!profileData.technologies.includes(newTechnology.trim())) {
+                              setProfileData({
+                                ...profileData,
+                                technologies: [...profileData.technologies, newTechnology.trim()],
+                              })
+                              setNewTechnology("")
+                            }
+                          }
+                        }}
+                        className="flex-1"
+                      />
+                      <Button
+                        type="button"
+                        onClick={() => {
+                          if (newTechnology.trim() && !profileData.technologies.includes(newTechnology.trim())) {
+                            setProfileData({
+                              ...profileData,
+                              technologies: [...profileData.technologies, newTechnology.trim()],
+                            })
+                            setNewTechnology("")
+                          }
+                        }}
+                        disabled={!newTechnology.trim() || profileData.technologies.includes(newTechnology.trim())}
+                        className="gap-2"
+                      >
+                        <Plus className="w-4 h-4" />
+                        Add
+                      </Button>
+                    </div>
+                  )}
+                  {!editing && profileData.technologies.length === 0 && (
+                    <p className="text-sm text-muted-foreground">No technologies added yet. Edit profile to add technologies.</p>
+                  )}
                 </div>
               </div>
 

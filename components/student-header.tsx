@@ -17,7 +17,6 @@ export function StudentHeader() {
   const [mounted, setMounted] = useState(false)
   const [userName, setUserName] = useState("Student")
   const [userInitials, setUserInitials] = useState("ST")
-  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   useEffect(() => {
     setMounted(true)
@@ -27,14 +26,6 @@ export function StudentHeader() {
       setUserName(name)
       setUserInitials(name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2))
     }
-  }, [])
-
-  useEffect(() => {
-    const handleSidebarToggle = (event: CustomEvent) => {
-      setSidebarOpen(event.detail.isOpen)
-    }
-    window.addEventListener('sidebar-toggle', handleSidebarToggle as EventListener)
-    return () => window.removeEventListener('sidebar-toggle', handleSidebarToggle as EventListener)
   }, [])
 
   useEffect(() => {
@@ -76,71 +67,30 @@ export function StudentHeader() {
     }
   }
 
+  const currentDate = new Date().toLocaleDateString('en-GB', { 
+    day: 'numeric', 
+    month: 'short', 
+    year: 'numeric',
+    weekday: 'long'
+  })
+
   return (
-    <header className={`h-16 bg-[#1e3a5f] dark:bg-[#1e3a5f] border-b border-[#2a4a6f] flex items-center justify-between px-6 fixed top-0 right-0 z-20 shadow-sm transition-all duration-300 ${sidebarOpen ? 'left-72' : 'left-0'}`}>
+    <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 fixed top-0 left-0 lg:left-72 right-0 z-20 shadow-sm">
       {/* Left side - Title */}
-      <div className={`flex items-center gap-6 transition-all duration-300 ${sidebarOpen ? 'ml-4' : 'ml-16'}`}>
-        <h2 className="text-white font-semibold text-lg">Student Portal</h2>
+      <div className="flex items-center gap-6 ml-4 lg:ml-0">
+        <h2 className="text-gray-900 font-semibold text-lg">Dashboard</h2>
       </div>
 
-      {/* Right side - Search, Notifications, User */}
+      {/* Right side - Date, Search */}
       <div className="flex items-center gap-4">
-        {/* Search Bar */}
-        <form onSubmit={handleSearch} className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-          <Input
-            type="text"
-            placeholder="Search..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 pr-20 w-64 bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:bg-white/15"
-          />
-          <kbd className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-gray-400 bg-white/10 px-2 py-1 rounded">
-            Ctrl + K
-          </kbd>
-        </form>
-
-        {/* Notifications */}
+        <span className="text-sm text-gray-600">{currentDate}</span>
+        {/* Search Icon */}
         <button
-          onClick={() => setNotificationOpen(!notificationOpen)}
-          className="relative p-2 text-white hover:bg-white/10 rounded-lg transition-colors"
+          onClick={handleSearch}
+          className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
         >
-          <Bell className="w-5 h-5" />
-          {unreadCount > 0 && (
-            <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
-          )}
+          <Search className="w-5 h-5" />
         </button>
-        <NotificationFeed isOpen={notificationOpen} onClose={() => setNotificationOpen(false)} />
-
-        {/* User Dropdown */}
-        <div className="relative user-dropdown">
-          <button
-            onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white/10 cursor-pointer transition-colors"
-          >
-            <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white text-sm font-semibold">
-              {userInitials}
-            </div>
-            <span className="text-white font-medium text-sm">{userName}</span>
-            <ChevronDown className={`w-4 h-4 text-white transition-transform ${userDropdownOpen ? 'rotate-180' : ''}`} />
-          </button>
-          
-          {userDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-1 z-50">
-              <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
-                <p className="text-sm font-semibold text-gray-900 dark:text-white">{userName}</p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Student</p>
-              </div>
-              <button
-                onClick={handleSignOut}
-                className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-              >
-                <LogOut className="w-4 h-4" />
-                Sign Out
-              </button>
-            </div>
-          )}
-        </div>
       </div>
     </header>
   )

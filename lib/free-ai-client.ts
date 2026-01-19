@@ -216,6 +216,3 @@ export const freeModel = {
   },
 }
 
-// Export for use in API routes
-export { generateFreeText }
-

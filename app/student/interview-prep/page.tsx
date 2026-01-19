@@ -9,29 +9,62 @@ import { Link } from "react-router-dom"
 import { CompanySpecificPrepService } from "@/lib/db-service"
 import { useState, useEffect } from "react"
 import type { CompanySpecificPrep } from "@/lib/mock-data"
+import { AuthService } from "@/lib/auth-service"
 
+// All available coding problems by technology
 const codingProblems = [
-  {
-    id: 1,
-    title: "Two Sum",
-    difficulty: "Easy",
-    language: "JavaScript",
-    solved: true,
-  },
-  {
-    id: 2,
-    title: "Merge Sorted Array",
-    difficulty: "Easy",
-    language: "Python",
-    solved: false,
-  },
-  {
-    id: 3,
-    title: "Binary Tree Level Order Traversal",
-    difficulty: "Medium",
-    language: "Java",
-    solved: false,
-  },
+  // JavaScript problems
+  { id: 1, title: "Two Sum", difficulty: "Easy", language: "JavaScript", solved: false },
+  { id: 2, title: "Reverse String", difficulty: "Easy", language: "JavaScript", solved: false },
+  { id: 3, title: "Valid Parentheses", difficulty: "Easy", language: "JavaScript", solved: false },
+  { id: 4, title: "Merge Intervals", difficulty: "Medium", language: "JavaScript", solved: false },
+  { id: 5, title: "Longest Substring", difficulty: "Medium", language: "JavaScript", solved: false },
+  { id: 6, title: "3Sum", difficulty: "Medium", language: "JavaScript", solved: false },
+  { id: 7, title: "Trapping Rain Water", difficulty: "Hard", language: "JavaScript", solved: false },
+  { id: 8, title: "Word Ladder", difficulty: "Hard", language: "JavaScript", solved: false },
+  
+  // Python problems
+  { id: 9, title: "Merge Sorted Array", difficulty: "Easy", language: "Python", solved: false },
+  { id: 10, title: "Contains Duplicate", difficulty: "Easy", language: "Python", solved: false },
+  { id: 11, title: "Best Time to Buy", difficulty: "Easy", language: "Python", solved: false },
+  { id: 12, title: "Product of Array", difficulty: "Medium", language: "Python", solved: false },
+  { id: 13, title: "Group Anagrams", difficulty: "Medium", language: "Python", solved: false },
+  { id: 14, title: "Longest Palindromic", difficulty: "Medium", language: "Python", solved: false },
+  { id: 15, title: "Edit Distance", difficulty: "Hard", language: "Python", solved: false },
+  { id: 16, title: "N-Queens", difficulty: "Hard", language: "Python", solved: false },
+  
+  // Java problems
+  { id: 17, title: "Binary Tree Level Order", difficulty: "Medium", language: "Java", solved: false },
+  { id: 18, title: "Maximum Depth", difficulty: "Easy", language: "Java", solved: false },
+  { id: 19, title: "Same Tree", difficulty: "Easy", language: "Java", solved: false },
+  { id: 20, title: "Invert Binary Tree", difficulty: "Easy", language: "Java", solved: false },
+  { id: 21, title: "Path Sum", difficulty: "Medium", language: "Java", solved: false },
+  { id: 22, title: "Serialize Tree", difficulty: "Hard", language: "Java", solved: false },
+  { id: 23, title: "Word Search II", difficulty: "Hard", language: "Java", solved: false },
+  
+  // C++ problems
+  { id: 24, title: "Rotate Array", difficulty: "Medium", language: "C++", solved: false },
+  { id: 25, title: "Move Zeroes", difficulty: "Easy", language: "C++", solved: false },
+  { id: 26, title: "Plus One", difficulty: "Easy", language: "C++", solved: false },
+  { id: 27, title: "Single Number", difficulty: "Easy", language: "C++", solved: false },
+  { id: 28, title: "Missing Number", difficulty: "Easy", language: "C++", solved: false },
+  
+  // React problems
+  { id: 29, title: "Component State", difficulty: "Easy", language: "React", solved: false },
+  { id: 30, title: "Hooks Usage", difficulty: "Medium", language: "React", solved: false },
+  { id: 31, title: "Context API", difficulty: "Medium", language: "React", solved: false },
+  { id: 32, title: "Performance Optimization", difficulty: "Hard", language: "React", solved: false },
+  
+  // Node.js problems
+  { id: 33, title: "Async Operations", difficulty: "Medium", language: "Node.js", solved: false },
+  { id: 34, title: "File System", difficulty: "Medium", language: "Node.js", solved: false },
+  { id: 35, title: "Express Routes", difficulty: "Medium", language: "Node.js", solved: false },
+  
+  // SQL problems
+  { id: 36, title: "Select Queries", difficulty: "Easy", language: "SQL", solved: false },
+  { id: 37, title: "Joins Practice", difficulty: "Medium", language: "SQL", solved: false },
+  { id: 38, title: "Subqueries", difficulty: "Medium", language: "SQL", solved: false },
+  { id: 39, title: "Window Functions", difficulty: "Hard", language: "SQL", solved: false },
 ]
 
 const externalResources = [
@@ -65,6 +98,16 @@ export default function InterviewPrepPage() {
   const [companyPrep, setCompanyPrep] = useState<CompanySpecificPrep[]>([])
   const [selectedCompany, setSelectedCompany] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
+  const [solvedProblems, setSolvedProblems] = useState<any[]>([])
+
+  useEffect(() => {
+    const currentUser = AuthService.getCurrentUser()
+    if (currentUser) {
+      // Load solved problems from localStorage
+      const saved = JSON.parse(localStorage.getItem(`interview_prep_${currentUser.id}`) || '[]')
+      setSolvedProblems(saved)
+    }
+  }, [])
 
   useEffect(() => {
     const loadCompanyPrep = async () => {
@@ -79,6 +122,16 @@ export default function InterviewPrepPage() {
     }
     loadCompanyPrep()
   }, [])
+
+  const handleProblemSolved = (problemId: number, language: string) => {
+    const currentUser = AuthService.getCurrentUser()
+    if (!currentUser) return
+
+    const saved = JSON.parse(localStorage.getItem(`interview_prep_${currentUser.id}`) || '[]')
+    const updated = [...saved, { id: problemId, language, solved: true, date: new Date().toISOString() }]
+    localStorage.setItem(`interview_prep_${currentUser.id}`, JSON.stringify(updated))
+    setSolvedProblems(updated)
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 p-4 md:p-8 overflow-x-hidden">
@@ -111,7 +164,9 @@ export default function InterviewPrepPage() {
               </TabsList>
 
               <TabsContent value="problems" className="space-y-4">
-                {codingProblems.map((problem, index) => (
+                {codingProblems.map((problem, index) => {
+                  const isSolved = solvedProblems.some((p: any) => p.id === problem.id)
+                  return (
                   <motion.div
                     key={problem.id}
                     initial={{ opacity: 0, x: -20 }}
@@ -138,11 +193,13 @@ export default function InterviewPrepPage() {
                             <span className="bg-primary/20 text-primary px-2 py-1 rounded">{problem.language}</span>
                           </div>
                         </div>
-                        {problem.solved && <div className="text-green-500 text-xl">✓</div>}
+                          {(problem.solved || isSolved) && <div className="text-green-500 text-xl">✓</div>}
                       </div>
                       <Button 
                         className="w-full bg-blue-500 hover:bg-blue-600 text-white gap-2 shadow-md"
                         onClick={() => {
+                            // Track that student is practicing this technology
+                            handleProblemSolved(problem.id, problem.language)
                           // Open online IDE in new tab
                           const problemTitle = problem.title.replace(/\s+/g, '-').toLowerCase()
                           window.open(`https://onecompiler.com/${problem.language.toLowerCase()}?code=${encodeURIComponent(`// ${problem.title}\n// Difficulty: ${problem.difficulty}\n\nfunction solution() {\n  // Your code here\n  \n}`)}`, '_blank')
@@ -154,7 +211,8 @@ export default function InterviewPrepPage() {
                       </Button>
                     </Card>
                   </motion.div>
-                ))}
+                  )
+                })}
               </TabsContent>
 
               <TabsContent value="concepts" className="space-y-4">
