@@ -1,7 +1,6 @@
 import type React from "react"
 import { AdminSidebar } from "@/components/admin-sidebar"
 import { AdminHeader } from "@/components/admin-header"
-import { TaskManager } from "@/components/task-manager"
 
 export default function AdminLayout({
   children,
@@ -19,7 +18,6 @@ export default function AdminLayout({
           </div>
         </main>
       </div>
-      <TaskManager />
     </div>
   )
 }

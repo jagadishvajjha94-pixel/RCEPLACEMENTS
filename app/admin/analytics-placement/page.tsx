@@ -85,7 +85,7 @@ export default function AnalyticsPlacementPage() {
       <AdminSidebar />
 
       <main className="flex-1 lg:ml-72 overflow-y-auto">
-        <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
+        <div className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50">
           <div className="p-4 md:p-8">
             {/* Header */}
             <motion.div
@@ -97,7 +97,7 @@ export default function AnalyticsPlacementPage() {
                 <h1 className="text-4xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent mb-2">
                   Placement Analytics
                 </h1>
-                <p className="text-muted-foreground">
+                <p className="text-gray-600">
                   Comprehensive analytics, reports, and consolidated sheets
                 </p>
               </div>
@@ -172,11 +172,11 @@ export default function AnalyticsPlacementPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.05 }}
                   >
-                    <Card className="glass-lg p-4 hover:shadow-lg transition-all">
+                    <Card className="glass-lg p-4 hover:shadow-sm transition-all">
                       <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${metric.color} bg-opacity-10 flex items-center justify-center mb-3`}>
                         <Icon className="w-5 h-5" />
                       </div>
-                      <p className="text-sm text-muted-foreground mb-1">{metric.label}</p>
+                      <p className="text-sm text-gray-600 mb-1">{metric.label}</p>
                       <p className="text-2xl font-bold">{metric.value}</p>
                     </Card>
                   </motion.div>
@@ -274,19 +274,19 @@ export default function AnalyticsPlacementPage() {
                         <h4 className="font-semibold mb-3">{yearData.year} Year</h4>
                         <div className="space-y-2 text-sm">
                           <div className="flex justify-between">
-                            <span className="text-muted-foreground">Total:</span>
+                            <span className="text-gray-600">Total:</span>
                             <span className="font-semibold">{yearData.total}</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-muted-foreground">Placed:</span>
+                            <span className="text-gray-600">Placed:</span>
                             <span className="font-semibold text-green-600">{yearData.placed}</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-muted-foreground">Internships:</span>
+                            <span className="text-gray-600">Internships:</span>
                             <span className="font-semibold text-orange-600">{yearData.internships}</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-muted-foreground">Rate:</span>
+                            <span className="text-gray-600">Rate:</span>
                             <span className="font-semibold">
                               {Math.round((yearData.placed / yearData.total) * 100)}%
                             </span>
@@ -324,15 +324,15 @@ export default function AnalyticsPlacementPage() {
                         <h4 className="font-semibold mb-3">{branchData.branch}</h4>
                         <div className="space-y-2 text-sm">
                           <div className="flex justify-between">
-                            <span className="text-muted-foreground">Total Students:</span>
+                            <span className="text-gray-600">Total Students:</span>
                             <span className="font-semibold">{branchData.total}</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-muted-foreground">Placed:</span>
+                            <span className="text-gray-600">Placed:</span>
                             <span className="font-semibold text-green-600">{branchData.placed}</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-muted-foreground">Percentage:</span>
+                            <span className="text-gray-600">Percentage:</span>
                             <span className="font-semibold text-accent">{branchData.percentage}%</span>
                           </div>
                         </div>
@@ -352,7 +352,7 @@ export default function AnalyticsPlacementPage() {
                         <div className="flex justify-between items-center">
                           <div>
                             <h4 className="font-semibold">{drive.driveName}</h4>
-                            <p className="text-sm text-muted-foreground">
+                            <p className="text-sm text-gray-600">
                               {drive.totalApplicants} applicants • {drive.placed} placed
                             </p>
                           </div>
@@ -363,7 +363,7 @@ export default function AnalyticsPlacementPage() {
                                 : 0}
                               %
                             </p>
-                            <p className="text-xs text-muted-foreground">Success Rate</p>
+                            <p className="text-xs text-gray-600">Success Rate</p>
                           </div>
                         </div>
                       </Card>
@@ -379,15 +379,15 @@ export default function AnalyticsPlacementPage() {
                     <h3 className="text-lg font-bold mb-4">Offer Statement Overview</h3>
                     <div className="space-y-6">
                       <div>
-                        <p className="text-sm text-muted-foreground mb-2">Single Offer</p>
+                        <p className="text-sm text-gray-600 mb-2">Single Offer</p>
                         <p className="text-4xl font-bold text-green-600">{offerStatement?.singleOffer || 0}</p>
                       </div>
                       <div>
-                        <p className="text-sm text-muted-foreground mb-2">Multiple Offers</p>
+                        <p className="text-sm text-gray-600 mb-2">Multiple Offers</p>
                         <p className="text-4xl font-bold text-purple-600">{offerStatement?.multipleOffers || 0}</p>
                       </div>
                       <div>
-                        <p className="text-sm text-muted-foreground mb-2">Total Placed</p>
+                        <p className="text-sm text-gray-600 mb-2">Total Placed</p>
                         <p className="text-4xl font-bold text-accent">
                           {(offerStatement?.singleOffer || 0) + (offerStatement?.multipleOffers || 0)}
                         </p>
@@ -408,11 +408,11 @@ export default function AnalyticsPlacementPage() {
                           </div>
                           <div className="grid grid-cols-2 gap-4 text-sm">
                             <div>
-                              <p className="text-muted-foreground">Single Offer</p>
+                              <p className="text-gray-600">Single Offer</p>
                               <p className="text-xl font-bold text-green-600">{branch.single}</p>
                             </div>
                             <div>
-                              <p className="text-muted-foreground">Multiple Offers</p>
+                              <p className="text-gray-600">Multiple Offers</p>
                               <p className="text-xl font-bold text-purple-600">{branch.multiple}</p>
                             </div>
                           </div>
@@ -427,7 +427,7 @@ export default function AnalyticsPlacementPage() {
               <TabsContent value="consolidated">
                 <Card className="glass-lg p-6">
                   <h3 className="text-lg font-bold mb-4">Generate Consolidated Sheet</h3>
-                  <p className="text-muted-foreground mb-6">
+                  <p className="text-gray-600 mb-6">
                     Generate and download comprehensive placement/internship sheets with custom filters
                   </p>
 

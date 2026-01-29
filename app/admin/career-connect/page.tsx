@@ -27,7 +27,7 @@ export default function CareerConnectPage() {
   const [selectedYear, setSelectedYear] = useState("2023-27")
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="flex h-screen bg-gray-50">
       <AdminSidebar />
       <div className="flex-1 flex flex-col ml-72">
         <AdminHeader />
@@ -52,7 +52,7 @@ export default function CareerConnectPage() {
             </motion.div>
 
             {/* Year Selection & Search */}
-            <Card className="p-4 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+            <Card className="p-4 border border-gray-200 bg-white">
               <div className="flex items-center gap-4">
                 <label className="text-sm font-semibold text-gray-700">Year Range:</label>
                 <select
@@ -81,7 +81,7 @@ export default function CareerConnectPage() {
 
             {/* Main Tabs */}
             <Tabs defaultValue="phase1" className="w-full">
-              <TabsList className="grid w-full grid-cols-4 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-2 border-gray-100 shadow-lg">
+              <TabsList className="grid w-full grid-cols-4 bg-gray-100 border border-gray-200">
                 <TabsTrigger value="phase1">Phase 1: Enrollment</TabsTrigger>
                 <TabsTrigger value="phase2">Phase 2: Communication</TabsTrigger>
                 <TabsTrigger value="phase3">Phase 3: Counselling</TabsTrigger>
@@ -90,7 +90,7 @@ export default function CareerConnectPage() {
 
               {/* Phase 1: Enrollment Tab */}
               <TabsContent value="phase1" className="space-y-6 mt-6">
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-xl font-bold text-gray-900">Career Connect Enrollment</h3>
                     <Button className="gap-2">
@@ -127,7 +127,7 @@ export default function CareerConnectPage() {
 
               {/* Phase 2 & 3: Communication & Counselling Tab */}
               <TabsContent value="phase2" className="space-y-6 mt-6">
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <h3 className="text-xl font-bold text-gray-900 mb-4">Phase 2 & 3: Communication Check & Career Counselling</h3>
                   <p className="text-sm text-gray-600 mb-4">
                     Evaluations with X, XII, B.Tech, backlogs, contact details
@@ -163,7 +163,7 @@ export default function CareerConnectPage() {
 
               {/* Phase 3: Counselling Tab */}
               <TabsContent value="phase3" className="space-y-6 mt-6">
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <h3 className="text-xl font-bold text-gray-900 mb-4">Career Counselling Progress</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="p-4 border border-gray-200 rounded-lg">
@@ -182,7 +182,7 @@ export default function CareerConnectPage() {
 
               {/* Phase 4: Mock Interviews Tab */}
               <TabsContent value="phase4" className="space-y-6 mt-6">
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <h3 className="text-xl font-bold text-gray-900 mb-4">Phase 4: Multiple Mock Interviews</h3>
                   <div className="space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

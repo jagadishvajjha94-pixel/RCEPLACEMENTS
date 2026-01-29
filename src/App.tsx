@@ -38,6 +38,27 @@ import AdminAicteRiseup from '@/app/admin/aicte-riseup/page';
 import AdminAIAutomation from '@/app/admin/ai-automation/page';
 import { AIAutomationService } from '@/lib/ai-automation-service';
 
+// Section Login Pages
+import PlacementDrivesLogin from '@/app/login/placement-drives/page';
+import CareerGuidanceLogin from '@/app/login/career-guidance/page';
+import TrainingAssessmentsLogin from '@/app/login/training-assessments/page';
+import ServiceNowLogin from '@/app/login/servicenow/page';
+import HelpDeskLogin from '@/app/login/help-desk/page';
+
+// Section Layouts
+import PlacementDrivesLayout from '@/app/placement-drives/layout';
+import CareerGuidanceLayout from '@/app/career-guidance/layout';
+import TrainingAssessmentsLayout from '@/app/training-assessments/layout';
+import ServiceNowLayout from '@/app/servicenow/layout';
+import HelpDeskLayout from '@/app/help-desk/layout';
+
+// Section Dashboard Pages
+import PlacementDrivesDashboard from '@/app/placement-drives/dashboard/page';
+import CareerGuidanceDashboard from '@/app/career-guidance/dashboard/page';
+import TrainingAssessmentsDashboard from '@/app/training-assessments/dashboard/page';
+import ServiceNowDashboard from '@/app/servicenow/dashboard/page';
+import HelpDeskDashboard from '@/app/help-desk/dashboard/page';
+
 // Student Pages
 import StudentDashboard from '@/app/student/dashboard/page';
 import StudentDrives from '@/app/student/drives/page';
@@ -73,9 +94,37 @@ const App = () => (
         <Toaster />
         <BrowserRouter>
           <Routes>
+            {/* Login Routes - Outside RootLayout for proper routing */}
+            <Route path="/login" element={<RootLayout><LoginPage /></RootLayout>} />
+            <Route path="/login/placement-drives" element={<RootLayout><PlacementDrivesLogin /></RootLayout>} />
+            <Route path="/login/career-guidance" element={<RootLayout><CareerGuidanceLogin /></RootLayout>} />
+            <Route path="/login/training-assessments" element={<RootLayout><TrainingAssessmentsLogin /></RootLayout>} />
+            <Route path="/login/servicenow" element={<RootLayout><ServiceNowLogin /></RootLayout>} />
+            <Route path="/login/help-desk" element={<RootLayout><HelpDeskLogin /></RootLayout>} />
+            
             <Route path="/" element={<RootLayout><Outlet /></RootLayout>}>
               <Route index element={<HomePage />} />
-              <Route path="login" element={<LoginPage />} />
+              
+              {/* Standalone Section Routes */}
+              <Route path="placement-drives" element={<PlacementDrivesLayout><Outlet /></PlacementDrivesLayout>}>
+                <Route path="dashboard" element={<PlacementDrivesDashboard />} />
+              </Route>
+              
+              <Route path="career-guidance" element={<CareerGuidanceLayout><Outlet /></CareerGuidanceLayout>}>
+                <Route path="dashboard" element={<CareerGuidanceDashboard />} />
+              </Route>
+              
+              <Route path="training-assessments" element={<TrainingAssessmentsLayout><Outlet /></TrainingAssessmentsLayout>}>
+                <Route path="dashboard" element={<TrainingAssessmentsDashboard />} />
+              </Route>
+              
+              <Route path="servicenow" element={<ServiceNowLayout><Outlet /></ServiceNowLayout>}>
+                <Route path="dashboard" element={<ServiceNowDashboard />} />
+              </Route>
+              
+              <Route path="help-desk" element={<HelpDeskLayout><Outlet /></HelpDeskLayout>}>
+                <Route path="dashboard" element={<HelpDeskDashboard />} />
+              </Route>
               
               {/* Admin Routes */}
               <Route path="admin" element={<AdminLayout><Outlet /></AdminLayout>}>

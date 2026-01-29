@@ -152,11 +152,11 @@ export default function StudentDrivesPage() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="border-2 border-gray-100 bg-white/80 backdrop-blur-sm rounded-lg p-6 shadow-xl"
+        className="border border-gray-200 bg-white rounded-lg p-6 shadow-sm"
       >
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex-1 relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600 w-5 h-5" />
                   <Input
                     placeholder="Search companies or roles..."
                     value={searchTerm}
@@ -177,7 +177,7 @@ export default function StudentDrivesPage() {
                       className={`px-4 py-2 rounded-lg font-medium transition-all ${
                         filterStatus === filter.value
                           ? "bg-accent text-accent-foreground"
-                          : "bg-muted hover:bg-muted/80"
+                          : "bg-muted hover:bg-muted"
                       }`}
                     >
                       <Filter className="inline w-4 h-4 mr-2" />
@@ -194,10 +194,10 @@ export default function StudentDrivesPage() {
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent mx-auto" />
               </div>
             ) : filteredDrives.length === 0 ? (
-              <Card className="border-2 border-gray-100 bg-white/80 backdrop-blur-sm p-12 text-center shadow-xl">
-                <FileText className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
+              <Card className="border border-gray-200 bg-white p-12 text-center shadow-sm">
+                <FileText className="w-16 h-16 mx-auto mb-4 text-gray-600" />
                 <h3 className="text-xl font-bold mb-2">No Drives Found</h3>
-                <p className="text-muted-foreground">No drives match your search criteria</p>
+                <p className="text-gray-600">No drives match your search criteria</p>
               </Card>
             ) : (
             <motion.div
@@ -228,12 +228,12 @@ export default function StudentDrivesPage() {
                   <motion.div
                     whileHover={{ x: 4 }}
                   >
-                    <Card className="border-2 border-gray-100 bg-white/80 backdrop-blur-sm p-6 hover:shadow-xl transition-all h-full flex flex-col">
+                    <Card className="border border-gray-200 bg-white p-6 hover:shadow-sm transition-all h-full flex flex-col">
                     <div className="mb-4">
                       <div className="flex items-start justify-between mb-2">
                             <div className="flex-1">
                               <h3 className="text-xl font-bold">{drive.companyName}</h3>
-                              <p className="text-sm text-muted-foreground">{drive.position}</p>
+                              <p className="text-sm text-gray-600">{drive.position}</p>
                         </div>
                             <div className="flex flex-col gap-1">
                               <Badge
@@ -268,13 +268,13 @@ export default function StudentDrivesPage() {
                           </div>
 
                           {drive.eligibilityCriteria.minCGPA && (
-                            <div className="text-xs text-muted-foreground">
+                            <div className="text-xs text-gray-600">
                               Min CGPA: {drive.eligibilityCriteria.minCGPA}
                             </div>
                           )}
 
                           {drive.eligibilityCriteria.branches && drive.eligibilityCriteria.branches.length > 0 && (
-                            <div className="text-xs text-muted-foreground">
+                            <div className="text-xs text-gray-600">
                               Branches: {drive.eligibilityCriteria.branches.join(", ")}
                             </div>
                           )}
@@ -299,7 +299,7 @@ export default function StudentDrivesPage() {
                         {registration ? (
                           <div className="space-y-2">
                     <Button
-                              className="w-full gap-2 bg-green-500/20 text-green-700 dark:text-green-300 hover:bg-green-500/30"
+                              className="w-full gap-2 bg-green-500/20 text-green-700 hover:bg-green-500/30"
                               disabled
                             >
                           <CheckCircle className="w-4 h-4" />
@@ -322,7 +322,7 @@ export default function StudentDrivesPage() {
                           </Button>
                         ) : (
                           <Button
-                            className="w-full gap-2 bg-accent text-accent-foreground hover:bg-accent/90"
+                            className="w-full gap-2 bg-accent text-accent-foreground hover:bg-accent"
                             onClick={() => handleApply(drive)}
                           >
                           <Clock className="w-4 h-4" />
@@ -353,11 +353,11 @@ export default function StudentDrivesPage() {
               <div className="space-y-4">
                 <div>
                   <h3 className="font-bold text-lg">{selectedDrive.companyName}</h3>
-                  <p className="text-muted-foreground">{selectedDrive.position}</p>
+                  <p className="text-gray-600">{selectedDrive.position}</p>
                 </div>
                 <div>
                   <p className="text-sm font-medium mb-2">Job Description:</p>
-                  <p className="text-sm text-muted-foreground whitespace-pre-wrap">{selectedDrive.jobDescription}</p>
+                  <p className="text-sm text-gray-600 whitespace-pre-wrap">{selectedDrive.jobDescription}</p>
                 </div>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>

@@ -66,7 +66,7 @@ export default function StudentSchedulePage() {
       <div className="p-8 flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Loading timetable...</p>
+          <p className="text-gray-600">Loading timetable...</p>
         </div>
       </div>
     )
@@ -83,7 +83,7 @@ export default function StudentSchedulePage() {
         <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-2">
           Academic Schedule
         </h1>
-        <p className="text-muted-foreground">
+        <p className="text-gray-600">
           View your semester-wise timetable and training schedules
         </p>
       </motion.div>
@@ -125,13 +125,13 @@ export default function StudentSchedulePage() {
                   <h2 className="text-2xl font-bold mb-2">
                     Semester {selectedTimetable.semester} - {selectedTimetable.academicYear}
                   </h2>
-                  <div className="flex gap-4 text-sm text-muted-foreground">
+                  <div className="flex gap-4 text-sm text-gray-600">
                     <span>{selectedTimetable.branch} - Section {selectedTimetable.section}</span>
                     <span>•</span>
                     <span>Year: {selectedTimetable.year}</span>
                   </div>
                 </div>
-                <div className="text-right text-sm text-muted-foreground">
+                <div className="text-right text-sm text-gray-600">
                   <p>Uploaded by: {selectedTimetable.uploadedBy}</p>
                   <p>{new Date(selectedTimetable.uploadedAt).toLocaleDateString()}</p>
                 </div>
@@ -173,14 +173,14 @@ export default function StudentSchedulePage() {
                                         ? "bg-primary text-primary-foreground"
                                         : slot.type === "Lecture"
                                           ? "bg-secondary text-secondary-foreground"
-                                          : "bg-muted text-muted-foreground"
+                                          : "bg-muted text-gray-600"
                                   }
                                 >
                                   {slot.type}
                                 </Badge>
                               </div>
                               <h4 className="font-semibold text-lg mb-2">{slot.subject}</h4>
-                              <div className="space-y-1 text-sm text-muted-foreground">
+                              <div className="space-y-1 text-sm text-gray-600">
                                 <div className="flex items-center gap-2">
                                   <Clock className="w-4 h-4" />
                                   <span>{slot.time}</span>
@@ -198,7 +198,7 @@ export default function StudentSchedulePage() {
                           ))}
                         </div>
                       ) : (
-                        <p className="text-muted-foreground text-center py-4">No classes scheduled</p>
+                        <p className="text-gray-600 text-center py-4">No classes scheduled</p>
                       )}
                     </Card>
                   </motion.div>
@@ -221,13 +221,13 @@ export default function StudentSchedulePage() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      className="border rounded-lg p-6 hover:shadow-lg transition-all bg-gradient-to-br from-white to-accent/5"
+                      className="border rounded-lg p-6 hover:shadow-sm transition-all bg-gradient-to-br from-white to-accent/5"
                     >
                       <div className="flex items-start justify-between mb-4">
                         <h3 className="text-xl font-bold">{training.title}</h3>
                         <Badge className="bg-accent text-accent-foreground">Training</Badge>
                       </div>
-                      <p className="text-muted-foreground mb-4">{training.description}</p>
+                      <p className="text-gray-600 mb-4">{training.description}</p>
                       <div className="space-y-2 text-sm">
                         <div className="flex items-center gap-2">
                           <Calendar className="w-4 h-4 text-primary" />
@@ -250,16 +250,16 @@ export default function StudentSchedulePage() {
                   ))}
                 </div>
               ) : (
-                <p className="text-muted-foreground text-center py-8">No trainings scheduled for this semester</p>
+                <p className="text-gray-600 text-center py-8">No trainings scheduled for this semester</p>
               )}
             </Card>
           </TabsContent>
         </Tabs>
       ) : (
         <Card className="bg-white p-12 text-center">
-          <Calendar className="w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-50" />
+          <Calendar className="w-16 h-16 text-gray-600 mx-auto mb-4 opacity-50" />
           <h3 className="text-xl font-semibold mb-2">No Timetable Available</h3>
-          <p className="text-muted-foreground">
+          <p className="text-gray-600">
             The timetable for your branch and section has not been uploaded yet. Please check back later.
           </p>
         </Card>

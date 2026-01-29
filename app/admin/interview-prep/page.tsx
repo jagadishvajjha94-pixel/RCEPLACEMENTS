@@ -29,7 +29,7 @@ export default function InterviewPrepPage() {
   }
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="flex h-screen bg-gray-50">
       <AdminSidebar />
       <div className="flex-1 flex flex-col ml-72">
         <AdminHeader />
@@ -54,7 +54,7 @@ export default function InterviewPrepPage() {
             </motion.div>
 
             {/* Search */}
-            <Card className="p-4 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+            <Card className="p-4 border border-gray-200 bg-white">
               <div className="flex items-center gap-4">
                 <div className="flex-1 max-w-md">
                   <div className="relative">
@@ -73,7 +73,7 @@ export default function InterviewPrepPage() {
 
             {/* Main Tabs */}
             <Tabs defaultValue="companies" className="w-full">
-              <TabsList className="grid w-full grid-cols-4 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-2 border-gray-100 shadow-lg">
+              <TabsList className="grid w-full grid-cols-4 bg-gray-100 border border-gray-200">
                 <TabsTrigger value="companies">Companies</TabsTrigger>
                 <TabsTrigger value="technical">Technical Skills</TabsTrigger>
                 <TabsTrigger value="hr">HR Skills</TabsTrigger>
@@ -84,7 +84,7 @@ export default function InterviewPrepPage() {
               <TabsContent value="companies" className="space-y-6 mt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   {prepCategories["Companies"].map((company, idx) => (
-                    <Card key={idx} className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm hover:shadow-xl transition-all">
+                    <Card key={idx} className="p-6 border border-gray-200 bg-white hover:shadow-sm transition-all">
                       <div className="flex items-center gap-3 mb-4">
                         <FileText className="w-6 h-6 text-blue-600" />
                         <h3 className="text-lg font-bold text-gray-900">{company}</h3>
@@ -108,7 +108,7 @@ export default function InterviewPrepPage() {
               <TabsContent value="technical" className="space-y-6 mt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   {prepCategories["Technical Skills"].map((skill, idx) => (
-                    <Card key={idx} className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm hover:shadow-xl transition-all">
+                    <Card key={idx} className="p-6 border border-gray-200 bg-white hover:shadow-sm transition-all">
                       <div className="flex items-center gap-3 mb-4">
                         <Code className="w-6 h-6 text-green-600" />
                         <h3 className="text-lg font-bold text-gray-900">{skill}</h3>
@@ -132,7 +132,7 @@ export default function InterviewPrepPage() {
               <TabsContent value="hr" className="space-y-6 mt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   {prepCategories["HR Skills"].map((skill, idx) => (
-                    <Card key={idx} className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm hover:shadow-xl transition-all">
+                    <Card key={idx} className="p-6 border border-gray-200 bg-white hover:shadow-sm transition-all">
                       <div className="flex items-center gap-3 mb-4">
                         <BookOpen className="w-6 h-6 text-purple-600" />
                         <h3 className="text-lg font-bold text-gray-900">{skill}</h3>
@@ -156,7 +156,7 @@ export default function InterviewPrepPage() {
               <TabsContent value="other" className="space-y-6 mt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   {prepCategories["Other"].map((item, idx) => (
-                    <Card key={idx} className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm hover:shadow-xl transition-all">
+                    <Card key={idx} className="p-6 border border-gray-200 bg-white hover:shadow-sm transition-all">
                       <div className="flex items-center gap-3 mb-4">
                         <Database className="w-6 h-6 text-orange-600" />
                         <h3 className="text-lg font-bold text-gray-900">{item}</h3>

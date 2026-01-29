@@ -87,12 +87,12 @@ export default function OfferStatementPage() {
   }
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="flex h-screen bg-gray-50">
       <AdminSidebar />
       <div className="flex-1 flex flex-col ml-72">
         <AdminHeader />
         <main className="flex-1 overflow-y-auto pt-16">
-        <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
+        <div className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50">
           <div className="p-4 md:p-8">
             {/* Header */}
             <motion.div
@@ -104,7 +104,7 @@ export default function OfferStatementPage() {
                 <h1 className="text-4xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent mb-2">
                   Offer Statement
                 </h1>
-                <p className="text-muted-foreground">Single and multiple offer statistics with branch-wise breakdown</p>
+                <p className="text-gray-600">Single and multiple offer statistics with branch-wise breakdown</p>
               </div>
               <Button onClick={handleDownload} variant="outline" className="gap-2">
                 <Download className="w-4 h-4" />
@@ -115,7 +115,7 @@ export default function OfferStatementPage() {
             {loading ? (
               <Card className="glass-lg p-12 text-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent mx-auto" />
-                <p className="mt-4 text-muted-foreground">Loading offer statement...</p>
+                <p className="mt-4 text-gray-600">Loading offer statement...</p>
               </Card>
             ) : statement ? (
               <div className="space-y-6">
@@ -124,9 +124,9 @@ export default function OfferStatementPage() {
                   <Card className="glass-lg p-6">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm text-muted-foreground mb-1">Single Offer</p>
+                        <p className="text-sm text-gray-600 mb-1">Single Offer</p>
                         <p className="text-3xl font-bold text-green-600">{statement.singleOffer}</p>
-                        <p className="text-xs text-muted-foreground mt-1">Students with one offer</p>
+                        <p className="text-xs text-gray-600 mt-1">Students with one offer</p>
                       </div>
                       <Award className="w-12 h-12 text-green-600 opacity-50" />
                     </div>
@@ -135,9 +135,9 @@ export default function OfferStatementPage() {
                   <Card className="glass-lg p-6">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm text-muted-foreground mb-1">Multiple Offers</p>
+                        <p className="text-sm text-gray-600 mb-1">Multiple Offers</p>
                         <p className="text-3xl font-bold text-accent">{statement.multipleOffers}</p>
-                        <p className="text-xs text-muted-foreground mt-1">Students with multiple offers</p>
+                        <p className="text-xs text-gray-600 mt-1">Students with multiple offers</p>
                       </div>
                       <TrendingUp className="w-12 h-12 text-accent opacity-50" />
                     </div>
@@ -146,11 +146,11 @@ export default function OfferStatementPage() {
                   <Card className="glass-lg p-6">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm text-muted-foreground mb-1">Total Offers</p>
+                        <p className="text-sm text-gray-600 mb-1">Total Offers</p>
                         <p className="text-3xl font-bold text-primary">
                           {statement.singleOffer + statement.multipleOffers}
                         </p>
-                        <p className="text-xs text-muted-foreground mt-1">Combined offer count</p>
+                        <p className="text-xs text-gray-600 mt-1">Combined offer count</p>
                       </div>
                       <FileText className="w-12 h-12 text-primary opacity-50" />
                     </div>

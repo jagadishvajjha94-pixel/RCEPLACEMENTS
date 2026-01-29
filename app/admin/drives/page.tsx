@@ -135,7 +135,7 @@ export default function AdminDrivesPage() {
                 <h1 className="text-4xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent mb-2">
                   Placement & Internship Drives
                 </h1>
-                <p className="text-muted-foreground">Create and manage company drives with eligibility criteria</p>
+                <p className="text-gray-600">Create and manage company drives with eligibility criteria</p>
               </div>
               <div className="flex gap-2">
                 <Button
@@ -173,7 +173,7 @@ export default function AdminDrivesPage() {
             >
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex-1 relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600 w-5 h-5" />
                   <Input
                     placeholder="Search by company name or position..."
                     value={searchTerm}
@@ -214,9 +214,9 @@ export default function AdminDrivesPage() {
               </div>
             ) : filteredDrives.length === 0 ? (
               <Card className="bg-white p-12 text-center shadow-md border border-gray-200">
-                <Building className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
+                <Building className="w-16 h-16 mx-auto mb-4 text-gray-600" />
                 <h3 className="text-xl font-bold mb-2">No Drives Found</h3>
-                <p className="text-muted-foreground mb-4">Get started by creating your first placement drive</p>
+                <p className="text-gray-600 mb-4">Get started by creating your first placement drive</p>
                 <Button onClick={() => setShowAddModal(true)} className="gap-2 bg-accent text-accent-foreground">
                   <Plus className="w-4 h-4" />
                   Add Drive
@@ -230,7 +230,7 @@ export default function AdminDrivesPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                 >
-                    <Card className="bg-white p-6 hover:shadow-xl transition-all shadow-md border border-gray-200">
+                    <Card className="bg-white p-6 hover:shadow-sm transition-all shadow-md border border-gray-200">
                       <div className="flex flex-col md:flex-row justify-between gap-4">
                       <div className="flex-1">
                           <div className="flex items-start justify-between mb-4">
@@ -250,7 +250,7 @@ export default function AdminDrivesPage() {
                           </Badge>
                                 <Badge variant="outline">{drive.type}</Badge>
                               </div>
-                              <p className="text-lg text-muted-foreground">{drive.position}</p>
+                              <p className="text-lg text-gray-600">{drive.position}</p>
                         </div>
                           </div>
 
@@ -294,10 +294,10 @@ export default function AdminDrivesPage() {
                               size="sm"
                               onClick={() => {
                                 const modal = document.createElement("div")
-                                modal.className = "fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 z-50"
+                                modal.className = "fixed inset-0 bg-black/60  flex items-center justify-center p-4 z-50"
                                 
                                 const container = document.createElement("div")
-                                container.className = "bg-background rounded-2xl max-w-3xl w-full p-8 shadow-2xl max-h-[90vh] overflow-y-auto"
+                                container.className = "bg-background rounded-2xl max-w-3xl w-full p-8 shadow-sm max-h-[90vh] overflow-y-auto"
                                 
                                 const header = document.createElement("div")
                                 header.className = "flex justify-between items-center mb-4"
@@ -307,7 +307,7 @@ export default function AdminDrivesPage() {
                                 title.textContent = `Job Description - ${drive.companyName || ""}`
                                 
                                 const closeBtn = document.createElement("button")
-                                closeBtn.className = "text-muted-foreground hover:text-foreground text-2xl leading-none"
+                                closeBtn.className = "text-gray-600 hover:text-foreground text-2xl leading-none"
                                 closeBtn.textContent = "×"
                                 closeBtn.onclick = () => modal.remove()
                                 

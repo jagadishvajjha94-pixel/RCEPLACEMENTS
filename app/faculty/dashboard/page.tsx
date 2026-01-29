@@ -298,15 +298,15 @@ export default function FacultyDashboard() {
             whileHover={{ y: -4 }}
             className="cursor-pointer"
           >
-            <Card className="bg-gradient-to-br from-blue-500 to-blue-600 border-0 text-white overflow-hidden relative">
+            <Card className="bg-gradient-to-br from-blue-500 to-blue-600 border-0 text-gray-900 overflow-hidden relative">
               <div className="p-6 relative z-10">
                 <div className="flex items-start justify-between mb-4">
-                  <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
+                  <div className="p-3 bg-white/20 rounded-xl ">
                     <Users className="w-6 h-6" />
                   </div>
                 </div>
                 <h3 className="text-3xl font-bold mb-1">{facultyStats.totalStudents}</h3>
-                <p className="text-white/90 text-sm font-medium">Total Students</p>
+                <p className="text-gray-900 text-sm font-medium">Total Students</p>
               </div>
               <div className="absolute bottom-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mb-16"></div>
             </Card>
@@ -316,15 +316,15 @@ export default function FacultyDashboard() {
             whileHover={{ y: -4 }}
             className="cursor-pointer"
           >
-            <Card className="bg-gradient-to-br from-green-500 to-emerald-600 border-0 text-white overflow-hidden relative">
+            <Card className="bg-gradient-to-br from-green-500 to-emerald-600 border-0 text-gray-900 overflow-hidden relative">
               <div className="p-6 relative z-10">
                 <div className="flex items-start justify-between mb-4">
-                  <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
+                  <div className="p-3 bg-white/20 rounded-xl ">
                     <BookOpen className="w-6 h-6" />
                   </div>
                 </div>
                 <h3 className="text-3xl font-bold mb-1">{facultyStats.ongoingTrainings}</h3>
-                <p className="text-white/90 text-sm font-medium">Active Trainings</p>
+                <p className="text-gray-900 text-sm font-medium">Active Trainings</p>
               </div>
               <div className="absolute bottom-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mb-16"></div>
             </Card>
@@ -334,15 +334,15 @@ export default function FacultyDashboard() {
             whileHover={{ y: -4 }}
             className="cursor-pointer"
           >
-            <Card className="bg-gradient-to-br from-purple-500 to-purple-600 border-0 text-white overflow-hidden relative">
+            <Card className="bg-gradient-to-br from-purple-500 to-purple-600 border-0 text-gray-900 overflow-hidden relative">
               <div className="p-6 relative z-10">
                 <div className="flex items-start justify-between mb-4">
-                  <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
+                  <div className="p-3 bg-white/20 rounded-xl ">
                     <FileText className="w-6 h-6" />
                   </div>
                 </div>
                 <h3 className="text-3xl font-bold mb-1">{facultyStats.assignmentsPending}</h3>
-                <p className="text-white/90 text-sm font-medium">Assignments</p>
+                <p className="text-gray-900 text-sm font-medium">Assignments</p>
               </div>
               <div className="absolute bottom-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mb-16"></div>
             </Card>
@@ -352,15 +352,15 @@ export default function FacultyDashboard() {
             whileHover={{ y: -4 }}
             className="cursor-pointer"
           >
-            <Card className="bg-gradient-to-br from-orange-500 to-red-500 border-0 text-white overflow-hidden relative">
+            <Card className="bg-gradient-to-br from-orange-500 to-red-500 border-0 text-gray-900 overflow-hidden relative">
               <div className="p-6 relative z-10">
                 <div className="flex items-start justify-between mb-4">
-                  <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
+                  <div className="p-3 bg-white/20 rounded-xl ">
                     <TrendingUp className="w-6 h-6" />
                   </div>
                 </div>
                 <h3 className="text-3xl font-bold mb-1">{facultyStats.avgAttendance}%</h3>
-                <p className="text-white/90 text-sm font-medium">Avg Attendance</p>
+                <p className="text-gray-900 text-sm font-medium">Avg Attendance</p>
               </div>
               <div className="absolute bottom-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mb-16"></div>
             </Card>
@@ -369,7 +369,7 @@ export default function FacultyDashboard() {
 
         {/* Enhanced Filters */}
         <motion.div
-          className="border-2 border-gray-100 bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-xl"
+          className="border border-gray-200 bg-white rounded-xl p-6 shadow-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
@@ -384,7 +384,7 @@ export default function FacultyDashboard() {
               <select
                 value={selectedBranch}
                 onChange={(e) => setSelectedBranch(e.target.value)}
-                className="w-full px-4 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-emerald-500 transition-all"
+                className="w-full px-4 py-2 rounded-lg bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-emerald-500 transition-all"
               >
                 {filterOptions.branch.map((b) => (
                   <option key={b} value={b}>
@@ -398,7 +398,7 @@ export default function FacultyDashboard() {
               <select
                 value={selectedSection}
                 onChange={(e) => setSelectedSection(e.target.value)}
-                className="w-full px-4 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-emerald-500 transition-all"
+                className="w-full px-4 py-2 rounded-lg bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-emerald-500 transition-all"
               >
                 {filterOptions.section.map((s) => (
                   <option key={s} value={s}>
@@ -412,7 +412,7 @@ export default function FacultyDashboard() {
               <select
                 value={selectedYear}
                 onChange={(e) => setSelectedYear(e.target.value)}
-                className="w-full px-4 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-emerald-500 transition-all"
+                className="w-full px-4 py-2 rounded-lg bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-emerald-500 transition-all"
               >
                 {filterOptions.year.map((y) => (
                   <option key={y} value={y}>
@@ -422,8 +422,8 @@ export default function FacultyDashboard() {
               </select>
             </div>
           </div>
-          <div className="mt-4 p-3 bg-emerald-50 dark:bg-emerald-950/30 rounded-lg">
-            <p className="text-sm font-medium text-emerald-700 dark:text-emerald-300">
+          <div className="mt-4 p-3 bg-emerald-50 rounded-lg">
+            <p className="text-sm font-medium text-emerald-700">
               📊 Showing: {selectedBranch} - Section {selectedSection} - {selectedYear} Year ({students.length} students)
             </p>
           </div>
@@ -437,7 +437,7 @@ export default function FacultyDashboard() {
           transition={{ delay: 0.3 }}
         >
           {/* Branch Distribution Chart */}
-          <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 shadow-sm">
+          <Card className="bg-white border border-slate-200/70 p-6 shadow-sm">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-bold flex items-center gap-2">
                 <BarChart3 className="w-5 h-5 text-emerald-600" />
@@ -452,9 +452,9 @@ export default function FacultyDashboard() {
                   <div key={stat.branch} className="space-y-1">
                     <div className="flex justify-between items-center text-sm">
                       <span className="font-medium">{stat.branch}</span>
-                      <span className="text-muted-foreground">{stat.count} students</span>
+                      <span className="text-gray-600">{stat.count} students</span>
                     </div>
-                    <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-3">
+                    <div className="w-full bg-slate-200 rounded-full h-3">
                       <div
                         className="bg-gradient-to-r from-emerald-500 to-teal-500 h-3 rounded-full transition-all duration-500"
                         style={{ width: `${percentage}%` }}
@@ -467,7 +467,7 @@ export default function FacultyDashboard() {
           </Card>
 
           {/* Performance Overview */}
-          <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 shadow-sm">
+          <Card className="bg-white border border-slate-200/70 p-6 shadow-sm">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-bold flex items-center gap-2">
                 <PieChart className="w-5 h-5 text-blue-600" />
@@ -475,28 +475,28 @@ export default function FacultyDashboard() {
               </h3>
             </div>
             <div className="space-y-4">
-              <div className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+              <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
                 <div className="flex items-center gap-2">
                   <Users className="w-5 h-5 text-blue-600" />
                   <span className="font-medium">Total Students</span>
                 </div>
                 <span className="text-2xl font-bold text-blue-600">{facultyStats.totalStudents}</span>
               </div>
-              <div className="flex items-center justify-between p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+              <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
                 <div className="flex items-center gap-2">
                   <BookOpen className="w-5 h-5 text-green-600" />
                   <span className="font-medium">Active Trainings</span>
                 </div>
                 <span className="text-2xl font-bold text-green-600">{facultyStats.ongoingTrainings}</span>
               </div>
-              <div className="flex items-center justify-between p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+              <div className="flex items-center justify-between p-3 bg-purple-50 rounded-lg">
                 <div className="flex items-center gap-2">
                   <FileText className="w-5 h-5 text-purple-600" />
                   <span className="font-medium">Assignments</span>
                 </div>
                 <span className="text-2xl font-bold text-purple-600">{facultyStats.assignmentsPending}</span>
               </div>
-              <div className="flex items-center justify-between p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
+              <div className="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
                 <div className="flex items-center gap-2">
                   <TrendingUp className="w-5 h-5 text-orange-600" />
                   <span className="font-medium">Avg Attendance</span>
@@ -509,7 +509,7 @@ export default function FacultyDashboard() {
 
         {/* Enhanced Tabs - Resources tab removed */}
         <Tabs defaultValue="students" className="w-full">
-          <TabsList className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-2 border-gray-100 shadow-lg">
+          <TabsList className="grid w-full grid-cols-4 bg-gray-100 border border-gray-200">
             <TabsTrigger value="students">Student List</TabsTrigger>
             <TabsTrigger value="trainings">Trainings</TabsTrigger>
             <TabsTrigger value="assignments">Assignments</TabsTrigger>
@@ -518,19 +518,19 @@ export default function FacultyDashboard() {
           <TabsContent value="students" className="space-y-4 mt-4">
             {/* Search Bar */}
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600 w-5 h-5" />
               <Input
                 placeholder="Search students by name or roll number..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border shadow-sm"
+                className="pl-10 bg-white border shadow-sm"
               />
             </div>
 
             {loading ? (
               <div className="text-center py-12">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto" />
-                <p className="mt-4 text-muted-foreground">Loading students...</p>
+                <p className="mt-4 text-gray-600">Loading students...</p>
               </div>
             ) : (
               <div className="space-y-3">
@@ -539,7 +539,7 @@ export default function FacultyDashboard() {
                     key={student.id}
                     whileHover={{ x: 4 }}
                   >
-                    <Card className="border-2 border-gray-100 bg-white/80 backdrop-blur-sm p-6 hover:shadow-xl transition-all">
+                    <Card className="border border-gray-200 bg-white p-6 hover:shadow-sm transition-all">
                     <div className="flex justify-between items-start">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
@@ -547,8 +547,8 @@ export default function FacultyDashboard() {
                           <Badge
                             className={
                               student.status === "placed"
-                                ? "bg-green-500/20 text-green-700 dark:text-green-300"
-                                : "bg-blue-500/20 text-blue-700 dark:text-blue-300"
+                                ? "bg-green-500/20 text-green-700"
+                                : "bg-blue-500/20 text-blue-700"
                             }
                           >
                             {student.status === "placed" ? "✓ Placed" : "Active"}
@@ -556,19 +556,19 @@ export default function FacultyDashboard() {
                         </div>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                           <div>
-                            <p className="text-muted-foreground">Roll Number</p>
+                            <p className="text-gray-600">Roll Number</p>
                             <p className="font-semibold">{student.rollNumber}</p>
                           </div>
                           <div>
-                            <p className="text-muted-foreground">CGPA</p>
+                            <p className="text-gray-600">CGPA</p>
                             <p className="font-semibold">{student.cgpa}</p>
                           </div>
                           <div>
-                            <p className="text-muted-foreground">Email</p>
+                            <p className="text-gray-600">Email</p>
                             <p className="font-semibold text-xs">{student.email}</p>
                           </div>
                           <div>
-                            <p className="text-muted-foreground">Applications</p>
+                            <p className="text-gray-600">Applications</p>
                             <p className="font-semibold">{student.appliedDrives.length}</p>
                           </div>
                         </div>
@@ -610,7 +610,7 @@ export default function FacultyDashboard() {
                 {trainings.map((training) => (
                   <Card
                     key={training.id}
-                    className="border-0 shadow-lg bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm p-6"
+                    className="border-0 shadow-sm bg-white p-6"
                   >
                     <div className="flex justify-between items-start mb-4">
                       <div className="flex-1">
@@ -628,19 +628,19 @@ export default function FacultyDashboard() {
                             {training.status}
                           </Badge>
                         </div>
-                        <p className="text-muted-foreground mb-3">{training.topic}</p>
+                        <p className="text-gray-600 mb-3">{training.topic}</p>
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
                           <div>
-                            <p className="text-muted-foreground">Date & Time</p>
+                            <p className="text-gray-600">Date & Time</p>
                             <p className="font-semibold">{new Date(training.date).toLocaleDateString()}</p>
-                            <p className="text-xs text-muted-foreground">{training.time}</p>
+                            <p className="text-xs text-gray-600">{training.time}</p>
                           </div>
                           <div>
-                            <p className="text-muted-foreground">Location</p>
+                            <p className="text-gray-600">Location</p>
                             <p className="font-semibold">{training.location}</p>
                           </div>
                           <div>
-                            <p className="text-muted-foreground">Instructor</p>
+                            <p className="text-gray-600">Instructor</p>
                             <p className="font-semibold">{training.instructor}</p>
                           </div>
                         </div>
@@ -658,9 +658,9 @@ export default function FacultyDashboard() {
                 ))}
               </div>
             ) : (
-              <Card className="border-2 border-gray-100 bg-white/80 backdrop-blur-sm p-12 text-center shadow-xl">
-                <BookOpen className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-                <p className="text-muted-foreground">No trainings scheduled. Create one to get started!</p>
+              <Card className="border border-gray-200 bg-white p-12 text-center shadow-sm">
+                <BookOpen className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+                <p className="text-gray-600">No trainings scheduled. Create one to get started!</p>
               </Card>
             )}
           </TabsContent>
@@ -682,23 +682,23 @@ export default function FacultyDashboard() {
                 {assignments.map((assignment) => (
                   <Card
                     key={assignment.id}
-                    className="border-0 shadow-lg bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm p-6"
+                    className="border-0 shadow-sm bg-white p-6"
                   >
                     <div className="flex justify-between items-start">
                       <div className="flex-1">
                         <h3 className="text-xl font-bold mb-2">{assignment.title}</h3>
-                        <p className="text-muted-foreground mb-3">{assignment.description}</p>
+                        <p className="text-gray-600 mb-3">{assignment.description}</p>
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
                           <div>
-                            <p className="text-muted-foreground">Subject</p>
+                            <p className="text-gray-600">Subject</p>
                             <p className="font-semibold">{assignment.subject}</p>
                           </div>
                           <div>
-                            <p className="text-muted-foreground">Due Date</p>
+                            <p className="text-gray-600">Due Date</p>
                             <p className="font-semibold">{new Date(assignment.dueDate).toLocaleDateString()}</p>
                           </div>
                           <div>
-                            <p className="text-muted-foreground">Total Marks</p>
+                            <p className="text-gray-600">Total Marks</p>
                             <p className="font-semibold">{assignment.totalMarks}</p>
                           </div>
                         </div>
@@ -716,9 +716,9 @@ export default function FacultyDashboard() {
                 ))}
               </div>
             ) : (
-              <Card className="border-2 border-gray-100 bg-white/80 backdrop-blur-sm p-12 text-center shadow-xl">
-                <FileText className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-                <p className="text-muted-foreground">No assignments created. Add one to get started!</p>
+              <Card className="border border-gray-200 bg-white p-12 text-center shadow-sm">
+                <FileText className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+                <p className="text-gray-600">No assignments created. Add one to get started!</p>
               </Card>
             )}
           </TabsContent>
@@ -728,14 +728,14 @@ export default function FacultyDashboard() {
       <AnimatePresence>
         {showNewTraining && (
           <motion.div
-            className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 z-50"
+            className="fixed inset-0 bg-black/60  flex items-center justify-center p-4 z-50"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setShowNewTraining(false)}
           >
             <motion.div
-              className="bg-white dark:bg-slate-900 rounded-2xl max-w-2xl w-full p-8 shadow-2xl max-h-[90vh] overflow-y-auto"
+              className="bg-white rounded-2xl max-w-2xl w-full p-8 shadow-sm max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -820,14 +820,14 @@ export default function FacultyDashboard() {
       <AnimatePresence>
         {showNewAssignment && (
           <motion.div
-            className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 z-50"
+            className="fixed inset-0 bg-black/60  flex items-center justify-center p-4 z-50"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setShowNewAssignment(false)}
           >
             <motion.div
-              className="bg-white dark:bg-slate-900 rounded-2xl max-w-2xl w-full p-8 shadow-2xl max-h-[90vh] overflow-y-auto"
+              className="bg-white rounded-2xl max-w-2xl w-full p-8 shadow-sm max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -910,14 +910,14 @@ export default function FacultyDashboard() {
       <AnimatePresence>
         {showStudentModal && selectedStudent && (
           <motion.div
-            className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 z-50"
+            className="fixed inset-0 bg-black/60  flex items-center justify-center p-4 z-50"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setShowStudentModal(false)}
           >
             <motion.div
-              className="bg-white dark:bg-slate-900 rounded-2xl max-w-4xl w-full p-8 shadow-2xl max-h-[90vh] overflow-y-auto"
+              className="bg-white rounded-2xl max-w-4xl w-full p-8 shadow-sm max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -932,41 +932,41 @@ export default function FacultyDashboard() {
 
               <div className="space-y-6">
                 {/* Student Basic Info */}
-                <Card className="p-6 bg-slate-50 dark:bg-slate-800/50">
+                <Card className="p-6 bg-slate-50">
                   <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
                     <Users className="w-5 h-5" />
                     Student Information
                   </h3>
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <p className="text-sm text-muted-foreground">Name</p>
+                      <p className="text-sm text-gray-600">Name</p>
                       <p className="font-semibold">{selectedStudent.name}</p>
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">Roll Number</p>
+                      <p className="text-sm text-gray-600">Roll Number</p>
                       <p className="font-semibold">{selectedStudent.rollNumber}</p>
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">Email</p>
+                      <p className="text-sm text-gray-600">Email</p>
                       <p className="font-semibold">{selectedStudent.email}</p>
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">CGPA</p>
+                      <p className="text-sm text-gray-600">CGPA</p>
                       <p className="font-semibold">{selectedStudent.cgpa}</p>
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">Branch</p>
+                      <p className="text-sm text-gray-600">Branch</p>
                       <p className="font-semibold">{selectedStudent.branch}</p>
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">Section</p>
+                      <p className="text-sm text-gray-600">Section</p>
                       <p className="font-semibold">{selectedStudent.section}</p>
                     </div>
                   </div>
                 </Card>
 
                 {/* Offers Received */}
-                <Card className="p-6 bg-green-50 dark:bg-green-900/20">
+                <Card className="p-6 bg-green-50">
                   <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
                     <Award className="w-5 h-5 text-green-600" />
                     Job Offers
@@ -976,13 +976,13 @@ export default function FacultyDashboard() {
                       {selectedStudent.selectedDrives.map((driveId, index) => {
                         // In real app, fetch drive details
                         return (
-                          <div key={index} className="p-4 bg-white dark:bg-slate-800 rounded-lg border border-green-200 dark:border-green-800">
+                          <div key={index} className="p-4 bg-white rounded-lg border border-green-200">
                             <div className="flex items-center justify-between">
                               <div>
                                 <p className="font-semibold">Offer #{index + 1}</p>
-                                <p className="text-sm text-muted-foreground">Drive ID: {driveId}</p>
+                                <p className="text-sm text-gray-600">Drive ID: {driveId}</p>
                               </div>
-                              <Badge className="bg-green-500/20 text-green-700 dark:text-green-300">
+                              <Badge className="bg-green-500/20 text-green-700">
                                 <CheckCircle className="w-4 h-4 mr-1" />
                                 Selected
                               </Badge>
@@ -992,7 +992,7 @@ export default function FacultyDashboard() {
                       })}
                     </div>
                   ) : (
-                    <p className="text-muted-foreground">No offers received yet.</p>
+                    <p className="text-gray-600">No offers received yet.</p>
                   )}
                 </Card>
 
@@ -1003,16 +1003,16 @@ export default function FacultyDashboard() {
                     Performance Metrics
                   </h3>
                   <div className="grid md:grid-cols-3 gap-4">
-                    <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                      <p className="text-sm text-muted-foreground mb-1">Applications</p>
+                    <div className="p-4 bg-blue-50 rounded-lg">
+                      <p className="text-sm text-gray-600 mb-1">Applications</p>
                       <p className="text-2xl font-bold text-blue-600">{selectedStudent.appliedDrives.length}</p>
                     </div>
-                    <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                      <p className="text-sm text-muted-foreground mb-1">Offers</p>
+                    <div className="p-4 bg-green-50 rounded-lg">
+                      <p className="text-sm text-gray-600 mb-1">Offers</p>
                       <p className="text-2xl font-bold text-green-600">{selectedStudent.selectedDrives.length}</p>
                     </div>
-                    <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
-                      <p className="text-sm text-muted-foreground mb-1">CGPA</p>
+                    <div className="p-4 bg-purple-50 rounded-lg">
+                      <p className="text-sm text-gray-600 mb-1">CGPA</p>
                       <p className="text-2xl font-bold text-purple-600">{selectedStudent.cgpa}</p>
                     </div>
                   </div>
@@ -1024,10 +1024,10 @@ export default function FacultyDashboard() {
                     <h3 className="text-xl font-bold mb-4">Semester Performance</h3>
                     <div className="space-y-2">
                       {selectedStudent.semesterMarks.map((sem, index) => (
-                        <div key={index} className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+                        <div key={index} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
                           <div>
                             <p className="font-semibold">Semester {sem.semester}</p>
-                            <p className="text-sm text-muted-foreground">Grade: {sem.grade}</p>
+                            <p className="text-sm text-gray-600">Grade: {sem.grade}</p>
                           </div>
                           <p className="text-lg font-bold">{sem.marks}%</p>
                         </div>

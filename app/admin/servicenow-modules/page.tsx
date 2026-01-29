@@ -28,7 +28,7 @@ export default function ServiceNowModulesPage() {
   const [selectedYear, setSelectedYear] = useState("2025-26")
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="flex h-screen bg-gray-50">
       <AdminSidebar />
       <div className="flex-1 flex flex-col ml-72">
         <AdminHeader />
@@ -53,7 +53,7 @@ export default function ServiceNowModulesPage() {
             </motion.div>
 
             {/* Search & Year Selection */}
-            <Card className="p-4 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+            <Card className="p-4 border border-gray-200 bg-white">
               <div className="flex items-center gap-4">
                 <div className="flex-1 max-w-md">
                   <div className="relative">
@@ -80,7 +80,7 @@ export default function ServiceNowModulesPage() {
 
             {/* Main Tabs */}
             <Tabs defaultValue="certifications" className="w-full">
-              <TabsList className="grid w-full grid-cols-7 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-2 border-gray-100 shadow-lg">
+              <TabsList className="grid w-full grid-cols-7 bg-gray-100 border border-gray-200">
                 <TabsTrigger value="certifications">Certifications</TabsTrigger>
                 <TabsTrigger value="modules">Modules</TabsTrigger>
                 <TabsTrigger value="question-banks">Question Banks</TabsTrigger>
@@ -93,7 +93,7 @@ export default function ServiceNowModulesPage() {
               {/* Certifications Tab */}
               <TabsContent value="certifications" className="space-y-6 mt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                  <Card className="p-6 border border-gray-200 bg-white">
                     <div className="flex items-center gap-3 mb-4">
                       <Award className="w-6 h-6 text-blue-600" />
                       <h3 className="text-xl font-bold text-gray-900">Certification Links/Domains</h3>
@@ -105,7 +105,7 @@ export default function ServiceNowModulesPage() {
                     </Button>
                   </Card>
 
-                  <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                  <Card className="p-6 border border-gray-200 bg-white">
                     <div className="flex items-center gap-3 mb-4">
                       <CheckCircle className="w-6 h-6 text-green-600" />
                       <h3 className="text-xl font-bold text-gray-900">CSA & CAD Certified</h3>
@@ -124,7 +124,7 @@ export default function ServiceNowModulesPage() {
                   </Card>
                 </div>
 
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <h3 className="text-xl font-bold text-gray-900 mb-4">CSA & CAD Exam Date Sheet</h3>
                   <div className="overflow-x-auto">
                     <table className="w-full">
@@ -157,7 +157,7 @@ export default function ServiceNowModulesPage() {
               <TabsContent value="modules" className="space-y-6 mt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {["Module 1: Fundamentals", "Module 2: Advanced", "Module 3: Specialization", "CAD Uploaded Modules", "Recap Session Questions"].map((module, idx) => (
-                    <Card key={idx} className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm hover:shadow-xl transition-all">
+                    <Card key={idx} className="p-6 border border-gray-200 bg-white hover:shadow-sm transition-all">
                       <div className="flex items-center gap-3 mb-4">
                         <BookOpen className="w-6 h-6 text-purple-600" />
                         <h3 className="text-lg font-bold text-gray-900">{module}</h3>
@@ -180,7 +180,7 @@ export default function ServiceNowModulesPage() {
               {/* Question Banks Tab */}
               <TabsContent value="question-banks" className="space-y-6 mt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                  <Card className="p-6 border border-gray-200 bg-white">
                     <h3 className="text-xl font-bold text-gray-900 mb-4">MCQ's</h3>
                     <div className="space-y-3">
                       <div className="p-4 border border-gray-200 rounded-lg">
@@ -200,7 +200,7 @@ export default function ServiceNowModulesPage() {
                     </div>
                   </Card>
 
-                  <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                  <Card className="p-6 border border-gray-200 bg-white">
                     <h3 className="text-xl font-bold text-gray-900 mb-4">Question Sets</h3>
                     <div className="space-y-3">
                       <div className="p-4 border border-gray-200 rounded-lg">
@@ -231,7 +231,7 @@ export default function ServiceNowModulesPage() {
 
               {/* Test Scores Tab */}
               <TabsContent value="test-scores" className="space-y-6 mt-6">
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-xl font-bold text-gray-900">ServiceNow Test Scores</h3>
                     <Button className="gap-2">
@@ -272,7 +272,7 @@ export default function ServiceNowModulesPage() {
                 </Card>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                  <Card className="p-6 border border-gray-200 bg-white">
                     <h3 className="text-xl font-bold text-gray-900 mb-4">Training Timetable</h3>
                     <Button variant="outline" className="w-full gap-2">
                       <FileText className="w-4 h-4" />
@@ -280,7 +280,7 @@ export default function ServiceNowModulesPage() {
                     </Button>
                   </Card>
 
-                  <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                  <Card className="p-6 border border-gray-200 bg-white">
                     <h3 className="text-xl font-bold text-gray-900 mb-4">Test Result Sheets</h3>
                     <div className="space-y-2">
                       <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
@@ -300,7 +300,7 @@ export default function ServiceNowModulesPage() {
               <TabsContent value="mock-interviews" className="space-y-6 mt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {["Mock Interviews", "PPTs", "DSA", "JavaScript", "ServiceNow Modules", "Quiz Questions"].map((item, idx) => (
-                    <Card key={idx} className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm hover:shadow-xl transition-all">
+                    <Card key={idx} className="p-6 border border-gray-200 bg-white hover:shadow-sm transition-all">
                       <div className="flex items-center gap-3 mb-4">
                         <FileText className="w-6 h-6 text-orange-600" />
                         <h3 className="text-lg font-bold text-gray-900">{item}</h3>
@@ -316,7 +316,7 @@ export default function ServiceNowModulesPage() {
 
               {/* ServiceNow Database Tab */}
               <TabsContent value="database" className="space-y-6 mt-6">
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-xl font-bold text-gray-900">Main File – ServiceNow Batch DB</h3>
                     <Button className="gap-2">
@@ -347,7 +347,7 @@ export default function ServiceNowModulesPage() {
                   </div>
                 </Card>
 
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <h3 className="text-xl font-bold text-gray-900 mb-4">Shortlisted Students</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="p-4 border border-gray-200 rounded-lg">

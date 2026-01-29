@@ -35,7 +35,6 @@ import { AdminHeader } from "@/components/admin-header"
 import { AuthService } from "@/lib/auth-service"
 import { PlacementAnalyticsService, RegistrationService, PlacementDriveService, ConsolidatedSheetService } from "@/lib/placement-service"
 import { initializeAllMockData } from "@/lib/mock-data-initializer"
-import AICTERiseUpContent from "@/components/aicte-riseup-content"
 import type { User as AuthUser } from "@/lib/auth-service"
 
 const COLORS = ["#FF8C42", "#2E86AB", "#A23B72", "#F18F01", "#06A77D", "#8b5cf6", "#ef4444", "#10b981"]
@@ -186,89 +185,6 @@ const generateSectionAnalytics = (stats: any, registrations: any[], drives: any[
         scheduled: 8,
       }
     },
-    "career-guidance": {
-      title: "Career Guidance",
-      icon: GraduationCap,
-      data: [
-        { name: "Sessions", value: 28 },
-        { name: "Students Attended", value: 1250 },
-        { name: "Upcoming", value: 5 },
-      ],
-      chartData: [
-        { topic: "Resume Writing", attendance: 320 },
-        { topic: "Interview Prep", attendance: 280 },
-        { topic: "Soft Skills", attendance: 250 },
-        { topic: "Career Planning", attendance: 200 },
-        { topic: "Industry Trends", attendance: 200 },
-      ],
-      summary: {
-        sessions: 28,
-        studentsAttended: 1250,
-        upcoming: 5,
-      }
-    },
-    "consultant-hr": {
-      title: "Consultant & HR Data",
-      icon: Phone,
-      data: [
-        { name: "Total Contacts", value: 156 },
-        { name: "Active", value: 98 },
-        { name: "Companies", value: 87 },
-      ],
-      chartData: [
-        { category: "HR Managers", count: 45 },
-        { category: "Recruiters", count: 32 },
-        { category: "Consultants", count: 28 },
-        { category: "Talent Acquisition", count: 51 },
-      ],
-      summary: {
-        totalContacts: 156,
-        active: 98,
-        companies: 87,
-      }
-    },
-    "servicenow-modules": {
-      title: "ServiceNow Modules",
-      icon: BookOpen,
-      data: [
-        { name: "Total Modules", value: 12 },
-        { name: "Completed", value: 8 },
-        { name: "In Progress", value: 4 },
-      ],
-      chartData: [
-        { module: "Module 1", progress: 100 },
-        { module: "Module 2", progress: 100 },
-        { module: "Module 3", progress: 85 },
-        { module: "Module 4", progress: 60 },
-        { module: "Module 5", progress: 45 },
-      ],
-      summary: {
-        totalModules: 12,
-        completed: 8,
-        inProgress: 4,
-      }
-    },
-    "help-desk": {
-      title: "T&P Help Desk",
-      icon: HelpCircle,
-      data: [
-        { name: "Total Tickets", value: 234 },
-        { name: "Resolved", value: 198 },
-        { name: "Pending", value: 36 },
-      ],
-      chartData: [
-        { category: "Technical", count: 85 },
-        { category: "Registration", count: 62 },
-        { category: "General", count: 54 },
-        { category: "Documentation", count: 33 },
-      ],
-      summary: {
-        totalTickets: 234,
-        resolved: 198,
-        pending: 36,
-        resolutionRate: 84.6,
-      }
-    },
     "career-connect": {
       title: "Career Connect",
       icon: MessageSquare,
@@ -289,27 +205,6 @@ const generateSectionAnalytics = (stats: any, registrations: any[], drives: any[
         totalConnections: 567,
         active: 423,
         messages: 1234,
-      }
-    },
-    "linkedin-softskills": {
-      title: "LinkedIn & Soft Skills",
-      icon: Link2,
-      data: [
-        { name: "LinkedIn Profiles", value: 3420 },
-        { name: "Soft Skills Sessions", value: 45 },
-        { name: "Certifications", value: 892 },
-      ],
-      chartData: [
-        { skill: "Communication", students: 1250 },
-        { skill: "Leadership", students: 980 },
-        { skill: "Teamwork", students: 1150 },
-        { skill: "Problem Solving", students: 1080 },
-        { skill: "Time Management", students: 920 },
-      ],
-      summary: {
-        linkedInProfiles: 3420,
-        sessions: 45,
-        certifications: 892,
       }
     },
   }
@@ -399,21 +294,16 @@ export default function AnalyticsPage() {
     "reports",
     "placement-a-to-z",
     "industry-institute",
-    "career-guidance",
-    "consultant-hr",
-    "servicenow-modules",
-    "help-desk",
     "career-connect",
-    "linkedin-softskills",
   ]
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="flex h-screen bg-gray-50">
       <AdminSidebar />
       <div className="flex-1 flex flex-col ml-72">
         <AdminHeader />
         <main className="flex-1 overflow-y-auto pt-16">
-          <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
+          <div className="min-h-screen bg-gray-50">
             <div className="p-4 md:p-8">
               {/* Header */}
               <motion.div
@@ -422,10 +312,10 @@ export default function AnalyticsPage() {
                 className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4"
               >
                 <div>
-                  <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent mb-2 drop-shadow-[0_0_15px_rgba(59,130,246,0.8)]">
+                  <h1 className="text-4xl font-bold text-gray-900 mb-2">
                     Comprehensive Analytics Dashboard
                   </h1>
-                  <p className="text-gray-300 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">All admin sections in one unified view</p>
+                  <p className="text-gray-600">All admin sections in one unified view</p>
                 </div>
                 <div className="flex gap-2">
                   <Button variant="outline" onClick={handleDownloadReport} className="gap-2">
@@ -439,37 +329,37 @@ export default function AnalyticsPage() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-slate-800/80 backdrop-blur-sm border border-slate-700/50 rounded-lg p-4 mb-6 shadow-xl"
+                className="bg-white border border-gray-200 rounded-lg p-4 mb-6 shadow-sm"
               >
                 <div className="flex flex-col md:flex-row gap-4">
                   <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4 text-cyan-400" />
-                    <Label className="text-gray-300">Academic Year</Label>
+                    <Calendar className="w-4 h-4 text-blue-600" />
+                    <Label className="text-gray-700">Academic Year</Label>
                     <Select value={academicYear} onValueChange={setAcademicYear}>
-                      <SelectTrigger className="w-[140px] bg-slate-700 border-slate-600 text-white">
+                      <SelectTrigger className="w-[140px] bg-white border-gray-300 text-gray-900">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-slate-800 border-slate-700">
-                        <SelectItem value="2023-24" className="text-white">2023-24</SelectItem>
-                        <SelectItem value="2024-25" className="text-white">2024-25</SelectItem>
-                        <SelectItem value="2025-26" className="text-white">2025-26</SelectItem>
+                      <SelectContent className="bg-white border-gray-200">
+                        <SelectItem value="2023-24">2023-24</SelectItem>
+                        <SelectItem value="2024-25">2024-25</SelectItem>
+                        <SelectItem value="2025-26">2025-26</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Filter className="w-4 h-4 text-cyan-400" />
-                    <Label className="text-gray-300">Branch</Label>
+                    <Filter className="w-4 h-4 text-blue-600" />
+                    <Label className="text-gray-700">Branch</Label>
                     <Select value={selectedBranch} onValueChange={setSelectedBranch}>
-                      <SelectTrigger className="w-[140px] bg-slate-700 border-slate-600 text-white">
+                      <SelectTrigger className="w-[140px] bg-white border-gray-300 text-gray-900">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-slate-800 border-slate-700">
-                        <SelectItem value="all" className="text-white">All Branches</SelectItem>
-                        <SelectItem value="CSE" className="text-white">CSE</SelectItem>
-                        <SelectItem value="ECE" className="text-white">ECE</SelectItem>
-                        <SelectItem value="Mechanical" className="text-white">Mechanical</SelectItem>
-                        <SelectItem value="Civil" className="text-white">Civil</SelectItem>
-                        <SelectItem value="EEE" className="text-white">EEE</SelectItem>
+                      <SelectContent className="bg-white border-gray-200">
+                        <SelectItem value="all">All Branches</SelectItem>
+                        <SelectItem value="CSE">CSE</SelectItem>
+                        <SelectItem value="ECE">ECE</SelectItem>
+                        <SelectItem value="Mechanical">Mechanical</SelectItem>
+                        <SelectItem value="Civil">Civil</SelectItem>
+                        <SelectItem value="EEE">EEE</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -478,40 +368,40 @@ export default function AnalyticsPage() {
 
               {/* Key Metrics */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                <Card className="bg-slate-800/90 backdrop-blur-sm border border-slate-700/50 p-4 shadow-xl hover:shadow-2xl hover:border-cyan-500/50 transition-all">
+                <Card className="bg-white border border-gray-200 p-4 shadow-sm hover:shadow-md transition-all">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-gray-400 mb-1">Total Students</p>
-                      <p className="text-2xl font-bold text-white drop-shadow-[0_0_10px_rgba(59,130,246,0.6)]">{stats.totalStudents.toLocaleString()}</p>
+                      <p className="text-sm text-gray-600 mb-1">Total Students</p>
+                      <p className="text-2xl font-bold text-gray-900">{stats.totalStudents.toLocaleString()}</p>
                     </div>
-                    <Users className="w-10 h-10 text-cyan-400 opacity-70 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
+                    <Users className="w-10 h-10 text-blue-600" />
                   </div>
                 </Card>
-                <Card className="bg-slate-800/90 backdrop-blur-sm border border-slate-700/50 p-4 shadow-xl hover:shadow-2xl hover:border-green-500/50 transition-all">
+                <Card className="bg-white border border-gray-200 p-4 shadow-sm hover:shadow-md transition-all">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-gray-400 mb-1">Placed Students</p>
-                      <p className="text-2xl font-bold text-green-400 drop-shadow-[0_0_10px_rgba(34,197,94,0.6)]">{stats.placedStudents}</p>
+                      <p className="text-sm text-gray-600 mb-1">Placed Students</p>
+                      <p className="text-2xl font-bold text-green-600">{stats.placedStudents}</p>
                     </div>
-                    <Briefcase className="w-10 h-10 text-green-400 opacity-70 drop-shadow-[0_0_8px_rgba(34,197,94,0.5)]" />
+                    <Briefcase className="w-10 h-10 text-green-600" />
                   </div>
                 </Card>
-                <Card className="bg-slate-800/90 backdrop-blur-sm border border-slate-700/50 p-4 shadow-xl hover:shadow-2xl hover:border-purple-500/50 transition-all">
+                <Card className="bg-white border border-gray-200 p-4 shadow-sm hover:shadow-md transition-all">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-gray-400 mb-1">Placement Rate</p>
-                      <p className="text-2xl font-bold text-purple-400 drop-shadow-[0_0_10px_rgba(168,85,247,0.6)]">{stats.placementRate}%</p>
+                      <p className="text-sm text-gray-600 mb-1">Placement Rate</p>
+                      <p className="text-2xl font-bold text-purple-600">{stats.placementRate}%</p>
                     </div>
-                    <TrendingUp className="w-10 h-10 text-purple-400 opacity-70 drop-shadow-[0_0_8px_rgba(168,85,247,0.5)]" />
+                    <TrendingUp className="w-10 h-10 text-purple-600" />
                   </div>
                 </Card>
-                <Card className="bg-slate-800/90 backdrop-blur-sm border border-slate-700/50 p-4 shadow-xl hover:shadow-2xl hover:border-blue-500/50 transition-all">
+                <Card className="bg-white border border-gray-200 p-4 shadow-sm hover:shadow-md transition-all">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-gray-400 mb-1">Avg. Package</p>
-                      <p className="text-2xl font-bold text-blue-400 drop-shadow-[0_0_10px_rgba(59,130,246,0.6)]">{stats.averagePackage} LPA</p>
+                      <p className="text-sm text-gray-600 mb-1">Avg. Package</p>
+                      <p className="text-2xl font-bold text-blue-600">{stats.averagePackage} LPA</p>
                     </div>
-                    <Award className="w-10 h-10 text-blue-400 opacity-70 drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
+                    <Award className="w-10 h-10 text-blue-600" />
                   </div>
                 </Card>
               </div>
@@ -526,14 +416,14 @@ export default function AnalyticsPage() {
                   return (
                     <Card
                       key={sectionKey}
-                      className="bg-slate-800/90 backdrop-blur-sm border border-slate-700/50 p-4 cursor-pointer hover:shadow-2xl hover:border-cyan-500/50 transition-all hover:scale-[1.02] shadow-xl"
+                      className="bg-white border border-gray-200 p-4 cursor-pointer hover:shadow-md transition-all shadow-sm"
                       onClick={() => handleChartClick(sectionKey)}
                     >
                       <div className="flex items-center gap-3 mb-3">
-                        <div className="p-2 bg-cyan-500/20 rounded-lg border border-cyan-500/30">
-                          <Icon className="w-5 h-5 text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.6)]" />
+                        <div className="p-2 bg-blue-100 rounded-lg">
+                          <Icon className="w-5 h-5 text-blue-600" />
                         </div>
-                        <h3 className="text-sm font-bold text-white line-clamp-2 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">{section.title}</h3>
+                        <h3 className="text-sm font-bold text-gray-900 line-clamp-2">{section.title}</h3>
                       </div>
                       <ResponsiveContainer width="100%" height={180}>
                         {section.chartData && section.chartData.length > 0 ? (
@@ -587,35 +477,32 @@ export default function AnalyticsPage() {
 
       {/* Chart Details Modal */}
       <Dialog open={selectedChart !== null} onOpenChange={() => setSelectedChart(null)}>
-        <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto bg-slate-900 border-slate-700">
+        <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto bg-white border-gray-200">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-white drop-shadow-[0_0_15px_rgba(59,130,246,0.8)]">{chartDetails?.title}</DialogTitle>
+            <DialogTitle className="text-2xl font-bold text-gray-900">{chartDetails?.title}</DialogTitle>
           </DialogHeader>
 
           {chartDetails && (
             <Tabs defaultValue="overview" className="w-full">
-              <TabsList className={`grid w-full ${selectedChart === 'servicenow-modules' ? 'grid-cols-5' : 'grid-cols-4'} bg-slate-800 border-slate-700`}>
-                <TabsTrigger value="overview" className="text-gray-300 data-[state=active]:text-white data-[state=active]:bg-slate-700 data-[state=active]:drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]">Overview</TabsTrigger>
-                <TabsTrigger value="data" className="text-gray-300 data-[state=active]:text-white data-[state=active]:bg-slate-700 data-[state=active]:drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]">Data Breakdown</TabsTrigger>
-                <TabsTrigger value="chart" className="text-gray-300 data-[state=active]:text-white data-[state=active]:bg-slate-700 data-[state=active]:drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]">Detailed Chart</TabsTrigger>
-                {selectedChart === 'servicenow-modules' && (
-                  <TabsTrigger value="aicte-riseup" className="text-gray-300 data-[state=active]:text-white data-[state=active]:bg-slate-700 data-[state=active]:drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]">AICTE / RiseUp</TabsTrigger>
-                )}
-                <TabsTrigger value="export" className="text-gray-300 data-[state=active]:text-white data-[state=active]:bg-slate-700 data-[state=active]:drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]">Export</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-4 bg-gray-100 border-gray-200">
+                <TabsTrigger value="overview">Overview</TabsTrigger>
+                <TabsTrigger value="data">Data Breakdown</TabsTrigger>
+                <TabsTrigger value="chart">Detailed Chart</TabsTrigger>
+                <TabsTrigger value="export">Export</TabsTrigger>
               </TabsList>
 
               <TabsContent value="overview" className="space-y-4">
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {Object.entries(chartDetails.summary || {}).map(([key, value]: [string, any]) => (
-                    <Card key={key} className="p-4 bg-slate-800/90 border-slate-700/50">
-                      <p className="text-sm text-gray-400 mb-1 capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}</p>
-                      <p className="text-2xl font-bold text-white drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]">{typeof value === 'object' ? JSON.stringify(value) : value}</p>
+                    <Card key={key} className="p-4 bg-white border-gray-200">
+                      <p className="text-sm text-gray-600 mb-1 capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}</p>
+                      <p className="text-2xl font-bold text-gray-900">{typeof value === 'object' ? JSON.stringify(value) : value}</p>
                     </Card>
                   ))}
                 </div>
-                <Card className="p-4 bg-slate-800/90 border-slate-700/50">
-                  <h4 className="font-semibold mb-2 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">Description</h4>
-                  <p className="text-sm text-gray-300">
+                <Card className="p-4 bg-white border-gray-200">
+                  <h4 className="font-semibold mb-2 text-gray-900">Description</h4>
+                  <p className="text-sm text-gray-600">
                     Comprehensive analytics and insights for {chartDetails.title.toLowerCase()}.
                     View detailed breakdowns, trends, and export data for further analysis.
                   </p>
@@ -623,15 +510,15 @@ export default function AnalyticsPage() {
               </TabsContent>
 
               <TabsContent value="data" className="space-y-4">
-                <Card className="p-4 bg-slate-800/90 border-slate-700/50">
-                  <h4 className="font-semibold mb-4 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">Complete Data Table</h4>
+                <Card className="p-4 bg-slate-800 border-slate-700/50">
+                  <h4 className="font-semibold mb-4 text-gray-900 ">Complete Data Table</h4>
                   <div className="overflow-x-auto">
                     <table className="w-full text-sm">
                       <thead>
                         <tr className="border-b border-slate-700">
                           {chartDetails.chartData && chartDetails.chartData.length > 0 &&
                             Object.keys(chartDetails.chartData[0]).map((key) => (
-                              <th key={key} className="text-left p-2 capitalize text-gray-300">{key}</th>
+                              <th key={key} className="text-left p-2 capitalize text-gray-700">{key}</th>
                             ))
                           }
                         </tr>
@@ -640,7 +527,7 @@ export default function AnalyticsPage() {
                         {chartDetails.chartData?.map((item: any, index: number) => (
                           <tr key={index} className="border-b border-slate-700 hover:bg-slate-700/50">
                             {Object.values(item).map((val: any, i: number) => (
-                              <td key={i} className="p-2 text-gray-200">{val}</td>
+                              <td key={i} className="p-2 text-gray-600">{val}</td>
                             ))}
                           </tr>
                         ))}
@@ -651,8 +538,8 @@ export default function AnalyticsPage() {
               </TabsContent>
 
               <TabsContent value="chart" className="space-y-4">
-                <Card className="p-4 bg-slate-800/90 border-slate-700/50">
-                  <h4 className="font-semibold mb-4 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">Interactive Chart</h4>
+                <Card className="p-4 bg-slate-800 border-slate-700/50">
+                  <h4 className="font-semibold mb-4 text-gray-900 ">Interactive Chart</h4>
                   <ResponsiveContainer width="100%" height={400}>
                     {chartDetails.chartData && chartDetails.chartData.length > 0 && (
                       chartDetails.chartData[0].month ? (
@@ -696,18 +583,9 @@ export default function AnalyticsPage() {
                 </Card>
               </TabsContent>
 
-              {selectedChart === 'servicenow-modules' && (
-                <TabsContent value="aicte-riseup" className="space-y-4">
-                  <div className="bg-white/90 p-4 rounded-lg">
-                    <AICTERiseUpContent />
-                  </div>
-                </TabsContent>
-              )}
-
-
               <TabsContent value="export" className="space-y-4">
-                <Card className="p-4 bg-slate-800/90 border-slate-700/50">
-                  <h4 className="font-semibold mb-4 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">Export Options</h4>
+                <Card className="p-4 bg-white border-gray-200">
+                  <h4 className="font-semibold mb-4 text-gray-900">Export Options</h4>
                   <div className="space-y-3">
                     <Button
                       onClick={() => {

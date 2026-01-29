@@ -23,7 +23,7 @@ export default function MidMarksSyllabusPage() {
   const [selectedYear, setSelectedYear] = useState("2025-26")
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="flex h-screen bg-gray-50">
       <AdminSidebar />
       <div className="flex-1 flex flex-col ml-72">
         <AdminHeader />
@@ -48,7 +48,7 @@ export default function MidMarksSyllabusPage() {
             </motion.div>
 
             {/* Year Selection & Search */}
-            <Card className="p-4 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+            <Card className="p-4 border border-gray-200 bg-white">
               <div className="flex items-center gap-4">
                 <label className="text-sm font-semibold text-gray-700">Academic Year:</label>
                 <select
@@ -77,7 +77,7 @@ export default function MidMarksSyllabusPage() {
 
             {/* Main Tabs */}
             <Tabs defaultValue="mid-marks" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-2 border-gray-100 shadow-lg">
+              <TabsList className="grid w-full grid-cols-4 bg-gray-100 border border-gray-200">
                 <TabsTrigger value="mid-marks">Mid Marks</TabsTrigger>
                 <TabsTrigger value="syllabus">Training Syllabus</TabsTrigger>
               </TabsList>
@@ -85,7 +85,7 @@ export default function MidMarksSyllabusPage() {
               {/* Mid Marks Tab */}
               <TabsContent value="mid-marks" className="space-y-6 mt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                  <Card className="p-6 border border-gray-200 bg-white">
                     <div className="flex items-center gap-3 mb-4">
                       <FileSpreadsheet className="w-6 h-6 text-blue-600" />
                       <h3 className="text-xl font-bold text-gray-900">Mid 1 Marks</h3>
@@ -96,7 +96,7 @@ export default function MidMarksSyllabusPage() {
                     </Button>
                   </Card>
 
-                  <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                  <Card className="p-6 border border-gray-200 bg-white">
                     <div className="flex items-center gap-3 mb-4">
                       <FileSpreadsheet className="w-6 h-6 text-green-600" />
                       <h3 className="text-xl font-bold text-gray-900">Mid 2 Marks</h3>
@@ -108,7 +108,7 @@ export default function MidMarksSyllabusPage() {
                   </Card>
                 </div>
 
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <h3 className="text-xl font-bold text-gray-900 mb-4">Pending Hours</h3>
                   <div className="overflow-x-auto">
                     <table className="w-full">
@@ -135,7 +135,7 @@ export default function MidMarksSyllabusPage() {
 
               {/* Training Syllabus Tab */}
               <TabsContent value="syllabus" className="space-y-6 mt-6">
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-xl font-bold text-gray-900">Training Syllabus</h3>
                     <Button className="gap-2">

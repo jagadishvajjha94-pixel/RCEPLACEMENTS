@@ -2,7 +2,7 @@
 
 import { Link, useNavigate, useLocation } from "react-router-dom"
 import { motion } from "framer-motion"
-import { LayoutGrid, Briefcase, Users, Settings, LogOut, TrendingUp, GraduationCap, BookCheck, Zap, Code, Image, Database, Bot } from "lucide-react"
+import { LayoutGrid, Briefcase, Users, Settings, LogOut, TrendingUp, GraduationCap, BookCheck, Zap, Code, Image, Database, Bot, Phone, BookOpen, HelpCircle, Link2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { AuthService } from "@/lib/auth-service"
 
@@ -14,10 +14,12 @@ const navItems = [
   { icon: Users, label: "Students", href: "/admin/students" },
   { icon: BookCheck, label: "Training & Assessments", href: "/admin/training-assessments" },
   { icon: Zap, label: "Boot Camps & Infosys", href: "/admin/bootcamp-infosys" },
-  { icon: Code, label: "Interview Prep", href: "/admin/interview-prep" },
-  { icon: GraduationCap, label: "Mid Marks & Syllabus", href: "/admin/mid-marks-syllabus" },
   { icon: Image, label: "Activities & Posters", href: "/admin/activities-posters" },
-  { icon: Database, label: "AICTE / RiseUp", href: "/admin/aicte-riseup" },
+  { icon: GraduationCap, label: "Career Guidance", href: "/admin/career-guidance" },
+  { icon: Phone, label: "Consultant & HR Data", href: "/admin/consultant-hr-data" },
+  { icon: BookOpen, label: "ServiceNow Modules", href: "/admin/servicenow-modules" },
+  { icon: HelpCircle, label: "T&P Help Desk", href: "/admin/help-desk" },
+  { icon: Link2, label: "LinkedIn & Soft Skills", href: "/admin/linkedin-softskills" },
 ]
 
 export function AdminSidebar() {

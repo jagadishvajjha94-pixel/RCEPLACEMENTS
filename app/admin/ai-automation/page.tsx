@@ -120,19 +120,19 @@ export default function AIAutomationPage() {
 
   if (!user || loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-900">
+      <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400" />
       </div>
     )
   }
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="flex h-screen bg-gray-50">
       <AdminSidebar />
       <div className="flex-1 flex flex-col ml-72">
         <AdminHeader />
         <main className="flex-1 overflow-y-auto pt-16">
-          <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
+          <div className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50">
             <div className="p-4 md:p-8">
               {/* Header */}
               <motion.div
@@ -142,12 +142,12 @@ export default function AIAutomationPage() {
               >
                 <div>
                   <div className="flex items-center gap-3 mb-2">
-                    <Bot className="w-8 h-8 text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.8)]" />
-                    <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(59,130,246,0.8)]">
+                    <Bot className="w-8 h-8 text-cyan-400 " />
+                    <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent ">
                       AI Automation Dashboard
                     </h1>
                   </div>
-                  <p className="text-gray-300 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">
+                  <p className="text-gray-700 ">
                     Automated daily updates, insights, and comprehensive reports
                   </p>
                 </div>
@@ -155,7 +155,7 @@ export default function AIAutomationPage() {
                   <Button
                     onClick={handleGenerateReport}
                     disabled={isGenerating}
-                    className="gap-2 bg-cyan-600 hover:bg-cyan-700 text-white"
+                    className="gap-2 bg-cyan-600 hover:bg-cyan-700 text-gray-900"
                   >
                     {isGenerating ? (
                       <>
@@ -172,7 +172,7 @@ export default function AIAutomationPage() {
                   <Button
                     onClick={loadReports}
                     variant="outline"
-                    className="gap-2 border-slate-700 text-gray-300 hover:bg-slate-800"
+                    className="gap-2 border-slate-700 text-gray-700 hover:bg-slate-800"
                   >
                     <RefreshCw className="w-4 h-4" />
                     Refresh
@@ -184,11 +184,11 @@ export default function AIAutomationPage() {
                 <>
                   {/* Latest Report Summary */}
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                    <Card className="bg-slate-800/90 backdrop-blur-sm border-slate-700/50 p-4 shadow-xl">
+                    <Card className="bg-slate-800  border-slate-700/50 p-4 shadow-sm">
                       <div className="flex items-center justify-between">
                         <div>
                           <p className="text-sm text-gray-400 mb-1">New Registrations</p>
-                          <p className="text-2xl font-bold text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.6)]">
+                          <p className="text-2xl font-bold text-cyan-400 ">
                             {latestReport.summary.newRegistrations}
                           </p>
                         </div>
@@ -196,11 +196,11 @@ export default function AIAutomationPage() {
                       </div>
                     </Card>
 
-                    <Card className="bg-slate-800/90 backdrop-blur-sm border-slate-700/50 p-4 shadow-xl">
+                    <Card className="bg-slate-800  border-slate-700/50 p-4 shadow-sm">
                       <div className="flex items-center justify-between">
                         <div>
                           <p className="text-sm text-gray-400 mb-1">Placements Today</p>
-                          <p className="text-2xl font-bold text-green-400 drop-shadow-[0_0_10px_rgba(34,197,94,0.6)]">
+                          <p className="text-2xl font-bold text-green-400 ">
                             {latestReport.summary.placementsToday}
                           </p>
                         </div>
@@ -208,11 +208,11 @@ export default function AIAutomationPage() {
                       </div>
                     </Card>
 
-                    <Card className="bg-slate-800/90 backdrop-blur-sm border-slate-700/50 p-4 shadow-xl">
+                    <Card className="bg-slate-800  border-slate-700/50 p-4 shadow-sm">
                       <div className="flex items-center justify-between">
                         <div>
                           <p className="text-sm text-gray-400 mb-1">Active Drives</p>
-                          <p className="text-2xl font-bold text-purple-400 drop-shadow-[0_0_10px_rgba(168,85,247,0.6)]">
+                          <p className="text-2xl font-bold text-purple-400 ">
                             {latestReport.summary.activeDrives}
                           </p>
                         </div>
@@ -220,11 +220,11 @@ export default function AIAutomationPage() {
                       </div>
                     </Card>
 
-                    <Card className="bg-slate-800/90 backdrop-blur-sm border-slate-700/50 p-4 shadow-xl">
+                    <Card className="bg-slate-800  border-slate-700/50 p-4 shadow-sm">
                       <div className="flex items-center justify-between">
                         <div>
                           <p className="text-sm text-gray-400 mb-1">Completion Rate</p>
-                          <p className="text-2xl font-bold text-blue-400 drop-shadow-[0_0_10px_rgba(59,130,246,0.6)]">
+                          <p className="text-2xl font-bold text-blue-400 ">
                             {latestReport.summary.completionRate.toFixed(1)}%
                           </p>
                         </div>
@@ -236,19 +236,19 @@ export default function AIAutomationPage() {
                   {/* Main Content Tabs */}
                   <Tabs defaultValue="overview" className="w-full">
                     <TabsList className="grid w-full grid-cols-5 bg-slate-800 border-slate-700">
-                      <TabsTrigger value="overview" className="text-gray-300 data-[state=active]:text-white data-[state=active]:bg-slate-700">Overview</TabsTrigger>
-                      <TabsTrigger value="trends" className="text-gray-300 data-[state=active]:text-white data-[state=active]:bg-slate-700">Trends</TabsTrigger>
-                      <TabsTrigger value="insights" className="text-gray-300 data-[state=active]:text-white data-[state=active]:bg-slate-700">AI Insights</TabsTrigger>
-                      <TabsTrigger value="branches" className="text-gray-300 data-[state=active]:text-white data-[state=active]:bg-slate-700">Branches</TabsTrigger>
-                      <TabsTrigger value="history" className="text-gray-300 data-[state=active]:text-white data-[state=active]:bg-slate-700">History</TabsTrigger>
+                      <TabsTrigger value="overview" className="text-gray-700 data-[state=active]:text-gray-900 data-[state=active]:bg-slate-700">Overview</TabsTrigger>
+                      <TabsTrigger value="trends" className="text-gray-700 data-[state=active]:text-gray-900 data-[state=active]:bg-slate-700">Trends</TabsTrigger>
+                      <TabsTrigger value="insights" className="text-gray-700 data-[state=active]:text-gray-900 data-[state=active]:bg-slate-700">AI Insights</TabsTrigger>
+                      <TabsTrigger value="branches" className="text-gray-700 data-[state=active]:text-gray-900 data-[state=active]:bg-slate-700">Branches</TabsTrigger>
+                      <TabsTrigger value="history" className="text-gray-700 data-[state=active]:text-gray-900 data-[state=active]:bg-slate-700">History</TabsTrigger>
                     </TabsList>
 
                     {/* Overview Tab */}
                     <TabsContent value="overview" className="space-y-6 mt-6">
                       <div className="grid lg:grid-cols-2 gap-6">
                         {/* Daily Activities */}
-                        <Card className="bg-slate-800/90 border-slate-700/50 p-6">
-                          <h3 className="text-xl font-bold text-white mb-4 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] flex items-center gap-2">
+                        <Card className="bg-slate-800 border-slate-700/50 p-6">
+                          <h3 className="text-xl font-bold text-gray-900 mb-4  flex items-center gap-2">
                             <Activity className="w-5 h-5 text-cyan-400" />
                             Daily Activities
                           </h3>
@@ -260,7 +260,7 @@ export default function AIAutomationPage() {
                               >
                                 <Clock className="w-4 h-4 text-cyan-400 mt-1 flex-shrink-0" />
                                 <div className="flex-1">
-                                  <p className="text-sm text-gray-300">{activity.activity}</p>
+                                  <p className="text-sm text-gray-700">{activity.activity}</p>
                                   <div className="flex items-center gap-2 mt-1">
                                     <Badge variant="outline" className="text-xs border-slate-600 text-gray-400">
                                       {activity.category}
@@ -281,8 +281,8 @@ export default function AIAutomationPage() {
                         </Card>
 
                         {/* Alerts & Recommendations */}
-                        <Card className="bg-slate-800/90 border-slate-700/50 p-6">
-                          <h3 className="text-xl font-bold text-white mb-4 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] flex items-center gap-2">
+                        <Card className="bg-slate-800 border-slate-700/50 p-6">
+                          <h3 className="text-xl font-bold text-gray-900 mb-4  flex items-center gap-2">
                             <AlertTriangle className="w-5 h-5 text-yellow-400" />
                             Alerts & Recommendations
                           </h3>
@@ -301,7 +301,7 @@ export default function AIAutomationPage() {
                                         : "bg-blue-500/10 border-blue-500/30"
                                       }`}
                                   >
-                                    <p className="text-sm font-medium text-white">{alert.type}</p>
+                                    <p className="text-sm font-medium text-gray-900">{alert.type}</p>
                                     <p className="text-xs text-gray-400 mt-1">{alert.message}</p>
                                   </div>
                                 ))}
@@ -318,7 +318,7 @@ export default function AIAutomationPage() {
                                     className="flex items-start gap-2 p-3 bg-slate-700/50 rounded-lg border border-slate-600/50"
                                   >
                                     <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                                    <p className="text-sm text-gray-300">{rec}</p>
+                                    <p className="text-sm text-gray-700">{rec}</p>
                                   </div>
                                 ))}
                               </div>
@@ -331,8 +331,8 @@ export default function AIAutomationPage() {
                     {/* Trends Tab */}
                     <TabsContent value="trends" className="space-y-6 mt-6">
                       <div className="grid lg:grid-cols-2 gap-6">
-                        <Card className="bg-slate-800/90 border-slate-700/50 p-6">
-                          <h3 className="text-xl font-bold text-white mb-4 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">
+                        <Card className="bg-slate-800 border-slate-700/50 p-6">
+                          <h3 className="text-xl font-bold text-gray-900 mb-4 ">
                             Registration Trend (7 Days)
                           </h3>
                           <ResponsiveContainer width="100%" height={300}>
@@ -355,8 +355,8 @@ export default function AIAutomationPage() {
                           </ResponsiveContainer>
                         </Card>
 
-                        <Card className="bg-slate-800/90 border-slate-700/50 p-6">
-                          <h3 className="text-xl font-bold text-white mb-4 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">
+                        <Card className="bg-slate-800 border-slate-700/50 p-6">
+                          <h3 className="text-xl font-bold text-gray-900 mb-4 ">
                             Placement Trend (7 Days)
                           </h3>
                           <ResponsiveContainer width="100%" height={300}>
@@ -379,8 +379,8 @@ export default function AIAutomationPage() {
                           </ResponsiveContainer>
                         </Card>
 
-                        <Card className="bg-slate-800/90 border-slate-700/50 p-6 lg:col-span-2">
-                          <h3 className="text-xl font-bold text-white mb-4 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">
+                        <Card className="bg-slate-800 border-slate-700/50 p-6 lg:col-span-2">
+                          <h3 className="text-xl font-bold text-gray-900 mb-4 ">
                             Drive Activity (7 Days)
                           </h3>
                           <ResponsiveContainer width="100%" height={300}>
@@ -403,8 +403,8 @@ export default function AIAutomationPage() {
                     {/* AI Insights Tab */}
                     <TabsContent value="insights" className="space-y-6 mt-6">
                       <div className="grid lg:grid-cols-2 gap-6">
-                        <Card className="bg-slate-800/90 border-slate-700/50 p-6">
-                          <h3 className="text-xl font-bold text-white mb-4 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] flex items-center gap-2">
+                        <Card className="bg-slate-800 border-slate-700/50 p-6">
+                          <h3 className="text-xl font-bold text-gray-900 mb-4  flex items-center gap-2">
                             <Award className="w-5 h-5 text-yellow-400" />
                             Top Performing Branches
                           </h3>
@@ -422,8 +422,8 @@ export default function AIAutomationPage() {
                           </ResponsiveContainer>
                         </Card>
 
-                        <Card className="bg-slate-800/90 border-slate-700/50 p-6">
-                          <h3 className="text-xl font-bold text-white mb-4 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)] flex items-center gap-2">
+                        <Card className="bg-slate-800 border-slate-700/50 p-6">
+                          <h3 className="text-xl font-bold text-gray-900 mb-4  flex items-center gap-2">
                             <Briefcase className="w-5 h-5 text-blue-400" />
                             Top Companies
                           </h3>
@@ -446,26 +446,26 @@ export default function AIAutomationPage() {
 
                     {/* Branches Tab */}
                     <TabsContent value="branches" className="space-y-6 mt-6">
-                      <Card className="bg-slate-800/90 border-slate-700/50 p-6">
-                        <h3 className="text-xl font-bold text-white mb-4 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">
+                      <Card className="bg-slate-800 border-slate-700/50 p-6">
+                        <h3 className="text-xl font-bold text-gray-900 mb-4 ">
                           Branch-wise Statistics
                         </h3>
                         <div className="overflow-x-auto">
                           <table className="w-full text-sm">
                             <thead>
                               <tr className="border-b border-slate-700">
-                                <th className="text-left p-3 text-gray-300">Branch</th>
-                                <th className="text-right p-3 text-gray-300">Total Students</th>
-                                <th className="text-right p-3 text-gray-300">Placed</th>
-                                <th className="text-right p-3 text-gray-300">Pending</th>
-                                <th className="text-right p-3 text-gray-300">Placement Rate</th>
+                                <th className="text-left p-3 text-gray-700">Branch</th>
+                                <th className="text-right p-3 text-gray-700">Total Students</th>
+                                <th className="text-right p-3 text-gray-700">Placed</th>
+                                <th className="text-right p-3 text-gray-700">Pending</th>
+                                <th className="text-right p-3 text-gray-700">Placement Rate</th>
                               </tr>
                             </thead>
                             <tbody>
                               {latestReport.branchWiseStats.map((branch, index) => (
                                 <tr key={index} className="border-b border-slate-700 hover:bg-slate-700/50">
-                                  <td className="p-3 font-medium text-white">{branch.branch}</td>
-                                  <td className="p-3 text-right text-gray-300">{branch.totalStudents}</td>
+                                  <td className="p-3 font-medium text-gray-900">{branch.branch}</td>
+                                  <td className="p-3 text-right text-gray-700">{branch.totalStudents}</td>
                                   <td className="p-3 text-right text-green-400 font-semibold">{branch.placed}</td>
                                   <td className="p-3 text-right text-yellow-400">{branch.pending}</td>
                                   <td className="p-3 text-right">
@@ -491,8 +491,8 @@ export default function AIAutomationPage() {
 
                     {/* History Tab */}
                     <TabsContent value="history" className="space-y-6 mt-6">
-                      <Card className="bg-slate-800/90 border-slate-700/50 p-6">
-                        <h3 className="text-xl font-bold text-white mb-4 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">
+                      <Card className="bg-slate-800 border-slate-700/50 p-6">
+                        <h3 className="text-xl font-bold text-gray-900 mb-4 ">
                           Report History
                         </h3>
                         <div className="space-y-3">
@@ -506,7 +506,7 @@ export default function AIAutomationPage() {
                                   <BarChart3 className="w-5 h-5 text-cyan-400" />
                                 </div>
                                 <div>
-                                  <p className="font-semibold text-white">
+                                  <p className="font-semibold text-gray-900">
                                     Report - {new Date(report.date).toLocaleDateString('en-US', {
                                       year: 'numeric',
                                       month: 'long',
@@ -523,7 +523,7 @@ export default function AIAutomationPage() {
                                   onClick={() => handleViewReport(report)}
                                   variant="outline"
                                   size="sm"
-                                  className="border-slate-600 text-gray-300 hover:bg-slate-700"
+                                  className="border-slate-600 text-gray-700 hover:bg-slate-700"
                                 >
                                   View Details
                                 </Button>
@@ -531,7 +531,7 @@ export default function AIAutomationPage() {
                                   onClick={() => handleDownloadReport(report)}
                                   variant="outline"
                                   size="sm"
-                                  className="border-slate-600 text-gray-300 hover:bg-slate-700"
+                                  className="border-slate-600 text-gray-700 hover:bg-slate-700"
                                 >
                                   <Download className="w-4 h-4" />
                                 </Button>
@@ -544,9 +544,9 @@ export default function AIAutomationPage() {
                   </Tabs>
                 </>
               ) : (
-                <Card className="bg-slate-800/90 border-slate-700/50 p-12 text-center">
+                <Card className="bg-slate-800 border-slate-700/50 p-12 text-center">
                   <Bot className="w-16 h-16 text-cyan-400 mx-auto mb-4 opacity-50" />
-                  <h3 className="text-2xl font-bold text-white mb-2">No Reports Available</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">No Reports Available</h3>
                   <p className="text-gray-400 mb-6">Generate your first AI automation report to get started</p>
                   <Button
                     onClick={handleGenerateReport}
@@ -574,9 +574,9 @@ export default function AIAutomationPage() {
 
       {/* Report Details Modal */}
       <Dialog open={showReportModal} onOpenChange={setShowReportModal}>
-        <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto bg-slate-900 border-slate-700">
+        <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto bg-white border-slate-700">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-white drop-shadow-[0_0_15px_rgba(59,130,246,0.8)]">
+            <DialogTitle className="text-2xl font-bold text-gray-900 ">
               Detailed Report - {selectedReport && new Date(selectedReport.date).toLocaleDateString()}
             </DialogTitle>
           </DialogHeader>
@@ -584,10 +584,10 @@ export default function AIAutomationPage() {
           {selectedReport && (
             <Tabs defaultValue="summary" className="w-full">
               <TabsList className="grid w-full grid-cols-4 bg-slate-800 border-slate-700">
-                <TabsTrigger value="summary" className="text-gray-300 data-[state=active]:text-white data-[state=active]:bg-slate-700">Summary</TabsTrigger>
-                <TabsTrigger value="trends" className="text-gray-300 data-[state=active]:text-white data-[state=active]:bg-slate-700">Trends</TabsTrigger>
-                <TabsTrigger value="insights" className="text-gray-300 data-[state=active]:text-white data-[state=active]:bg-slate-700">Insights</TabsTrigger>
-                <TabsTrigger value="raw" className="text-gray-300 data-[state=active]:text-white data-[state=active]:bg-slate-700">Raw Data</TabsTrigger>
+                <TabsTrigger value="summary" className="text-gray-700 data-[state=active]:text-gray-900 data-[state=active]:bg-slate-700">Summary</TabsTrigger>
+                <TabsTrigger value="trends" className="text-gray-700 data-[state=active]:text-gray-900 data-[state=active]:bg-slate-700">Trends</TabsTrigger>
+                <TabsTrigger value="insights" className="text-gray-700 data-[state=active]:text-gray-900 data-[state=active]:bg-slate-700">Insights</TabsTrigger>
+                <TabsTrigger value="raw" className="text-gray-700 data-[state=active]:text-gray-900 data-[state=active]:bg-slate-700">Raw Data</TabsTrigger>
               </TabsList>
 
               <TabsContent value="summary" className="space-y-4 mt-4">
@@ -595,7 +595,7 @@ export default function AIAutomationPage() {
                   {Object.entries(selectedReport.summary).map(([key, value]: [string, any]) => (
                     <Card key={key} className="p-4 bg-slate-800 border-slate-700">
                       <p className="text-sm text-gray-400 mb-1 capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}</p>
-                      <p className="text-2xl font-bold text-white drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]">
+                      <p className="text-2xl font-bold text-gray-900 ">
                         {typeof value === 'number' ? value.toLocaleString() : value}
                       </p>
                     </Card>
@@ -606,7 +606,7 @@ export default function AIAutomationPage() {
               <TabsContent value="trends" className="space-y-4 mt-4">
                 <div className="grid lg:grid-cols-2 gap-4">
                   <Card className="p-4 bg-slate-800 border-slate-700">
-                    <h4 className="font-semibold mb-4 text-white">Registration Trend</h4>
+                    <h4 className="font-semibold mb-4 text-gray-900">Registration Trend</h4>
                     <ResponsiveContainer width="100%" height={250}>
                       <LineChart data={selectedReport.trends.registrationTrend}>
                         <CartesianGrid strokeDasharray="3 3" stroke="#475569" />
@@ -619,7 +619,7 @@ export default function AIAutomationPage() {
                   </Card>
 
                   <Card className="p-4 bg-slate-800 border-slate-700">
-                    <h4 className="font-semibold mb-4 text-white">Placement Trend</h4>
+                    <h4 className="font-semibold mb-4 text-gray-900">Placement Trend</h4>
                     <ResponsiveContainer width="100%" height={250}>
                       <LineChart data={selectedReport.trends.placementTrend}>
                         <CartesianGrid strokeDasharray="3 3" stroke="#475569" />
@@ -636,11 +636,11 @@ export default function AIAutomationPage() {
               <TabsContent value="insights" className="space-y-4 mt-4">
                 <div className="grid lg:grid-cols-2 gap-4">
                   <Card className="p-4 bg-slate-800 border-slate-700">
-                    <h4 className="font-semibold mb-4 text-white">Top Branches</h4>
+                    <h4 className="font-semibold mb-4 text-gray-900">Top Branches</h4>
                     <div className="space-y-2">
                       {selectedReport.insights.topPerformingBranches.map((branch, index) => (
                         <div key={index} className="flex items-center justify-between p-2 bg-slate-700/50 rounded">
-                          <span className="text-white">{branch.branch}</span>
+                          <span className="text-gray-900">{branch.branch}</span>
                           <Badge className="bg-cyan-500/20 text-cyan-400">{branch.placementRate.toFixed(1)}%</Badge>
                         </div>
                       ))}
@@ -648,11 +648,11 @@ export default function AIAutomationPage() {
                   </Card>
 
                   <Card className="p-4 bg-slate-800 border-slate-700">
-                    <h4 className="font-semibold mb-4 text-white">Top Companies</h4>
+                    <h4 className="font-semibold mb-4 text-gray-900">Top Companies</h4>
                     <div className="space-y-2">
                       {selectedReport.insights.topCompanies.map((company, index) => (
                         <div key={index} className="flex items-center justify-between p-2 bg-slate-700/50 rounded">
-                          <span className="text-white">{company.company}</span>
+                          <span className="text-gray-900">{company.company}</span>
                           <Badge className="bg-green-500/20 text-green-400">{company.offers} offers</Badge>
                         </div>
                       ))}
@@ -663,7 +663,7 @@ export default function AIAutomationPage() {
 
               <TabsContent value="raw" className="space-y-4 mt-4">
                 <Card className="p-4 bg-slate-800 border-slate-700">
-                  <pre className="text-xs text-gray-300 overflow-x-auto">
+                  <pre className="text-xs text-gray-700 overflow-x-auto">
                     {JSON.stringify(selectedReport, null, 2)}
                   </pre>
                 </Card>

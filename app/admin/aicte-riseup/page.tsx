@@ -6,7 +6,7 @@ import AICTERiseUpContent from "@/components/aicte-riseup-content"
 
 export default function AICTERiseUpPage() {
   return (
-    <div className="flex h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="flex h-screen bg-gray-50">
       <AdminSidebar />
       <div className="flex-1 flex flex-col ml-72">
         <AdminHeader />

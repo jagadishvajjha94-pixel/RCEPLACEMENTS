@@ -70,11 +70,11 @@ export default function FeedbackPage() {
             ← Back to Dashboard
           </Link>
           <h1 className="text-4xl font-bold mb-2">Feedback & Suggestions</h1>
-          <p className="text-muted-foreground">Share your feedback anonymously to help us improve</p>
+          <p className="text-gray-600">Share your feedback anonymously to help us improve</p>
         </motion.div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-6 bg-slate-100/90 dark:bg-slate-800/90 shadow-sm border border-slate-200/60 dark:border-slate-700/60">
+          <TabsList className="grid w-full grid-cols-2 mb-6 bg-slate-100 shadow-sm border border-slate-200/60">
             <TabsTrigger value="submit">Submit Feedback</TabsTrigger>
             <TabsTrigger value="view">View My Feedback</TabsTrigger>
           </TabsList>
@@ -87,7 +87,7 @@ export default function FeedbackPage() {
               transition={{ delay: 0.2 }}
             >
               {/* Feedback Form */}
-              <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 lg:col-span-2 shadow-sm">
+              <Card className="bg-white border border-slate-200/70 p-6 lg:col-span-2 shadow-sm">
                 <h2 className="text-2xl font-bold mb-6">Submit Feedback</h2>
 
                 <div className="space-y-6">
@@ -100,8 +100,8 @@ export default function FeedbackPage() {
                           onClick={() => setCategory(cat)}
                           className={`p-3 rounded-lg border-2 transition-all capitalize font-semibold ${
                             category === cat
-                              ? "border-blue-400 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 shadow-md"
-                              : "border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
+                              ? "border-blue-400 bg-blue-50 text-blue-700 shadow-md"
+                              : "border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 hover:border-slate-300"
                           }`}
                         >
                           {cat}
@@ -123,13 +123,13 @@ export default function FeedbackPage() {
                             className={`w-8 h-8 ${
                               star <= ratings[category] 
                                 ? "fill-accent text-accent" 
-                                : "text-muted-foreground"
+                                : "text-gray-600"
                             }`}
                           />
                         </button>
                       ))}
                       {ratings[category] > 0 && (
-                        <span className="ml-2 text-sm text-muted-foreground">
+                        <span className="ml-2 text-sm text-gray-600">
                           {ratings[category]} / 5
                         </span>
                       )}
@@ -144,12 +144,12 @@ export default function FeedbackPage() {
                   placeholder="Share your thoughts, suggestions, or concerns..."
                   className="w-full px-4 py-3 rounded-lg bg-input border border-border focus:border-primary outline-none resize-none h-32"
                 />
-                <p className="text-xs text-muted-foreground mt-2">Your feedback will be submitted anonymously</p>
+                <p className="text-xs text-gray-600 mt-2">Your feedback will be submitted anonymously</p>
               </div>
 
               <Button 
                 onClick={handleSubmit} 
-                className="w-full bg-blue-500 hover:bg-blue-600 text-white gap-2 h-12 shadow-md font-semibold"
+                className="w-full bg-blue-500 hover:bg-blue-600 text-gray-900 gap-2 h-12 shadow-md font-semibold"
                 disabled={submitting || !feedback.trim() || ratings[category] === 0}
               >
                     <Send className="w-4 h-4" />
@@ -159,12 +159,12 @@ export default function FeedbackPage() {
               </Card>
 
               {/* Info Sidebar */}
-              <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 shadow-sm">
+              <Card className="bg-white border border-slate-200/70 p-6 shadow-sm">
                 <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
                   <MessageSquare className="w-5 h-5 text-accent" />
                   About Feedback
                 </h3>
-                <div className="space-y-4 text-sm text-muted-foreground">
+                <div className="space-y-4 text-sm text-gray-600">
                   <div>
                     <p className="font-semibold text-foreground mb-1">Privacy</p>
                     <p>Your identity remains completely anonymous. We only see your feedback, not your details.</p>
@@ -183,10 +183,10 @@ export default function FeedbackPage() {
           </TabsContent>
 
           <TabsContent value="view">
-            <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 shadow-sm">
+            <Card className="bg-white border border-slate-200/70 p-6 shadow-sm">
               <h2 className="text-2xl font-bold mb-6">My Submitted Feedback</h2>
               <div className="space-y-4">
-                <p className="text-muted-foreground">Your feedback history will appear here</p>
+                <p className="text-gray-600">Your feedback history will appear here</p>
               </div>
             </Card>
           </TabsContent>

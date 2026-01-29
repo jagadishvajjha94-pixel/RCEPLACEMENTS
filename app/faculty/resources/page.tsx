@@ -146,10 +146,10 @@ export default function ResourcesPage() {
   }
 
   const categoryColors = {
-    exam: "bg-blue-500/20 text-blue-700 dark:text-blue-300",
-    mid: "bg-purple-500/20 text-purple-700 dark:text-purple-300",
-    interview: "bg-green-500/20 text-green-700 dark:text-green-300",
-    company: "bg-orange-500/20 text-orange-700 dark:text-orange-300",
+    exam: "bg-blue-500/20 text-blue-700",
+    mid: "bg-purple-500/20 text-purple-700",
+    interview: "bg-green-500/20 text-green-700",
+    company: "bg-orange-500/20 text-orange-700",
   }
 
   return (
@@ -164,7 +164,7 @@ export default function ResourcesPage() {
           <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
             Resources
           </h1>
-          <p className="text-muted-foreground">Upload and manage exam, mid, interview, and company-related materials for students</p>
+          <p className="text-gray-600">Upload and manage exam, mid, interview, and company-related materials for students</p>
         </div>
         <Button 
           onClick={() => {
@@ -172,7 +172,7 @@ export default function ResourcesPage() {
             setEditingResource(null)
             setShowForm(true)
           }}
-          className="gap-2 bg-blue-500 hover:bg-blue-600 text-white"
+          className="gap-2 bg-blue-500 hover:bg-blue-600 text-gray-900"
         >
           <Plus className="w-4 h-4" />
           Upload Resource
@@ -181,7 +181,7 @@ export default function ResourcesPage() {
 
       {/* Category Tabs */}
       <Tabs value={selectedCategory} onValueChange={(v) => setSelectedCategory(v as any)}>
-        <TabsList className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-2 border-gray-100 shadow-lg mb-6">
+        <TabsList className="grid w-full grid-cols-4 bg-gray-100 border border-gray-200 mb-6">
           <TabsTrigger value="exam" className="gap-2">
             <GraduationCap className="w-4 h-4" />
             Exam Related
@@ -202,14 +202,14 @@ export default function ResourcesPage() {
 
         <TabsContent value={selectedCategory} className="space-y-4">
           {loading ? (
-            <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 text-center shadow-sm">
+            <Card className="bg-white border border-slate-200/70 p-6 text-center shadow-sm">
               <p>Loading resources...</p>
             </Card>
           ) : filteredResources.length === 0 ? (
-            <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-12 text-center shadow-sm">
-              <FileText className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground text-lg">No resources found for this category</p>
-              <p className="text-muted-foreground text-sm mt-2">Upload a resource to get started</p>
+            <Card className="bg-white border border-slate-200/70 p-12 text-center shadow-sm">
+              <FileText className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+              <p className="text-gray-600 text-lg">No resources found for this category</p>
+              <p className="text-gray-600 text-sm mt-2">Upload a resource to get started</p>
             </Card>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -222,7 +222,7 @@ export default function ResourcesPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.05 }}
                   >
-                    <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 hover:shadow-lg transition-all duration-300 shadow-sm">
+                    <Card className="bg-white border border-slate-200/70 p-6 hover:shadow-sm transition-all duration-300 shadow-sm">
                       <div className="flex items-start justify-between mb-4">
                         <div className={`p-3 rounded-lg ${categoryColors[resource.category]}`}>
                           <Icon className="w-6 h-6" />
@@ -231,7 +231,7 @@ export default function ResourcesPage() {
                           <Button
                             size="sm"
                             variant="outline"
-                            className="bg-slate-50 dark:bg-slate-800/50"
+                            className="bg-slate-50"
                             onClick={() => handleEditResource(resource)}
                           >
                             <Edit2 className="w-4 h-4" />
@@ -239,7 +239,7 @@ export default function ResourcesPage() {
                           <Button
                             size="sm"
                             variant="outline"
-                            className="text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 bg-transparent"
+                            className="text-red-600 hover:bg-red-50 bg-transparent"
                             onClick={() => handleDeleteResource(resource.id)}
                           >
                             <Trash2 className="w-4 h-4" />
@@ -247,7 +247,7 @@ export default function ResourcesPage() {
                         </div>
                       </div>
                       <h3 className="text-lg font-bold mb-2">{resource.title}</h3>
-                      <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{resource.description}</p>
+                      <p className="text-sm text-gray-600 mb-4 line-clamp-2">{resource.description}</p>
                       <div className="flex flex-wrap gap-2 mb-4">
                         {resource.tags.map((tag) => (
                           <Badge key={tag} variant="outline" className="text-xs">
@@ -255,7 +255,7 @@ export default function ResourcesPage() {
                           </Badge>
                         ))}
                       </div>
-                      <div className="flex items-center justify-between text-xs text-muted-foreground mb-4">
+                      <div className="flex items-center justify-between text-xs text-gray-600 mb-4">
                         <div className="flex items-center gap-1">
                           <User className="w-3 h-3" />
                           <span>{resource.uploadedBy}</span>
@@ -268,7 +268,7 @@ export default function ResourcesPage() {
                       {resource.fileUrl && (
                         <Button
                           variant="outline"
-                          className="w-full gap-2 bg-slate-50 dark:bg-slate-800/50"
+                          className="w-full gap-2 bg-slate-50"
                           onClick={() => window.open(resource.fileUrl, "_blank")}
                         >
                           <Download className="w-4 h-4" />
@@ -298,7 +298,7 @@ export default function ResourcesPage() {
                 <div>
                   <label className="text-sm font-semibold mb-2 block">Category</label>
                   <Tabs value={resourceForm.category} onValueChange={(v) => setResourceForm({ ...resourceForm, category: v as any })}>
-                    <TabsList className="bg-slate-100/90 dark:bg-slate-800/90 mb-4">
+                    <TabsList className="bg-slate-100 mb-4">
                       <TabsTrigger value="exam">Exam Related</TabsTrigger>
                       <TabsTrigger value="mid">Mid Related</TabsTrigger>
                       <TabsTrigger value="interview">Interview Related</TabsTrigger>
@@ -369,7 +369,7 @@ export default function ResourcesPage() {
                   </div>
                 </div>
                 <div className="flex gap-2 pt-4">
-                  <Button type="submit" className="flex-1 bg-blue-500 hover:bg-blue-600 text-white">
+                  <Button type="submit" className="flex-1 bg-blue-500 hover:bg-blue-600 text-gray-900">
                     {editingResource ? "Update Resource" : "Upload Resource"}
                   </Button>
                   <Button type="button" variant="outline" className="flex-1" onClick={() => setShowForm(false)}>

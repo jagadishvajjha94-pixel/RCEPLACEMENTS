@@ -197,7 +197,7 @@ export default function StudentPlacementsPage() {
               <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-2">
                 Placement & Internship Drives
               </h1>
-              <p className="text-muted-foreground">
+              <p className="text-gray-600">
                 Browse active drives, register for opportunities, and track your applications
               </p>
             </motion.div>
@@ -222,15 +222,15 @@ export default function StudentPlacementsPage() {
                   color: "from-orange-500 to-red-500",
                 },
               ].map((stat, index) => (
-                <Card key={index} className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-4 shadow-sm">
-                  <p className="text-sm text-muted-foreground mb-1">{stat.label}</p>
+                <Card key={index} className="bg-white border border-slate-200/70 p-4 shadow-sm">
+                  <p className="text-sm text-gray-600 mb-1">{stat.label}</p>
                   <p className="text-3xl font-bold">{stat.value}</p>
                 </Card>
               ))}
             </motion.div>
 
             <Tabs defaultValue="active" className="w-full">
-              <TabsList className="bg-slate-100/90 dark:bg-slate-800/90 mb-6 shadow-sm border border-slate-200/60 dark:border-slate-700/60">
+              <TabsList className="bg-slate-100 mb-6 shadow-sm border border-slate-200/60">
                 <TabsTrigger value="active">Active Drives</TabsTrigger>
                 <TabsTrigger value="applied">My Applications</TabsTrigger>
                 <TabsTrigger value="offers">Offers Received</TabsTrigger>
@@ -242,11 +242,11 @@ export default function StudentPlacementsPage() {
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 rounded-lg p-6 mb-8 shadow-sm"
+                  className="bg-white border border-slate-200/70 rounded-lg p-6 mb-8 shadow-sm"
                 >
                   <div className="flex flex-col md:flex-row gap-4">
                     <div className="flex-1 relative">
-                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600 w-5 h-5" />
                       <Input
                         placeholder="Search companies or roles..."
                         value={searchQuery}
@@ -288,18 +288,18 @@ export default function StudentPlacementsPage() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.05 }}
                       >
-                        <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 hover:shadow-xl transition-all duration-300 h-full flex flex-col shadow-sm">
+                        <Card className="bg-white border border-slate-200/70 p-6 hover:shadow-sm transition-all duration-300 h-full flex flex-col shadow-sm">
                           <div className="mb-4">
                             <div className="flex items-start justify-between mb-2">
                               <div className="flex-1">
                                 <h3 className="text-xl font-bold mb-1">{drive.companyName}</h3>
-                                <p className="text-sm text-muted-foreground">{drive.position}</p>
+                                <p className="text-sm text-gray-600">{drive.position}</p>
                               </div>
                               <Badge
                                 className={
                                   applied
-                                    ? "bg-green-500/20 text-green-700 dark:text-green-300"
-                                    : "bg-blue-500/20 text-blue-700 dark:text-blue-300"
+                                    ? "bg-green-500/20 text-green-700"
+                                    : "bg-blue-500/20 text-blue-700"
                                 }
                               >
                                 {applied ? "Applied" : "Open"}
@@ -308,8 +308,8 @@ export default function StudentPlacementsPage() {
                             <Badge
                               className={
                                 drive.type === "placement"
-                                  ? "bg-purple-500/20 text-purple-700 dark:text-purple-300"
-                                  : "bg-orange-500/20 text-orange-700 dark:text-orange-300"
+                                  ? "bg-purple-500/20 text-purple-700"
+                                  : "bg-orange-500/20 text-orange-700"
                               }
                             >
                               {drive.type}
@@ -336,7 +336,7 @@ export default function StudentPlacementsPage() {
                               </span>
                             </div>
                             {drive.eligibilityCriteria.minCGPA && drive.eligibilityCriteria.minCGPA > 0 && (
-                              <div className="text-xs text-muted-foreground">
+                              <div className="text-xs text-gray-600">
                                 Min CGPA: {drive.eligibilityCriteria.minCGPA}
                               </div>
                             )}
@@ -377,8 +377,8 @@ export default function StudentPlacementsPage() {
 
                 {filteredDrives.length === 0 && (
                   <Card className="glass-lg p-12 text-center">
-                    <AlertCircle className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-                    <p className="text-muted-foreground text-lg">No drives found matching your filters</p>
+                    <AlertCircle className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+                    <p className="text-gray-600 text-lg">No drives found matching your filters</p>
                   </Card>
                 )}
               </TabsContent>
@@ -387,10 +387,10 @@ export default function StudentPlacementsPage() {
               <TabsContent value="applied">
                 <div className="space-y-4">
                   {myRegistrations.length === 0 ? (
-                    <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-12 text-center shadow-sm">
-                      <FileText className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-                      <p className="text-muted-foreground text-lg">No applications yet</p>
-                      <p className="text-sm text-muted-foreground mt-2">Start applying to drives to see them here</p>
+                    <Card className="bg-white border border-slate-200/70 p-12 text-center shadow-sm">
+                      <FileText className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+                      <p className="text-gray-600 text-lg">No applications yet</p>
+                      <p className="text-sm text-gray-600 mt-2">Start applying to drives to see them here</p>
                     </Card>
                   ) : (
                     myRegistrations.map((registration) => {
@@ -398,20 +398,20 @@ export default function StudentPlacementsPage() {
                       if (!drive) return null
 
                       return (
-                        <Card key={registration.id} className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 shadow-sm">
+                        <Card key={registration.id} className="bg-white border border-slate-200/70 p-6 shadow-sm">
                           <div className="flex justify-between items-start mb-4">
                             <div>
                               <h3 className="text-xl font-bold">{drive.companyName}</h3>
-                              <p className="text-muted-foreground">{drive.position}</p>
-                              <p className="text-sm text-muted-foreground mt-1">
+                              <p className="text-gray-600">{drive.position}</p>
+                              <p className="text-sm text-gray-600 mt-1">
                                 Applied on {new Date(registration.submittedAt).toLocaleDateString()}
                               </p>
                             </div>
                             <Badge
                               className={
                                 registration.hasOffer
-                                  ? "bg-green-500/20 text-green-700 dark:text-green-300"
-                                  : "bg-orange-500/20 text-orange-700 dark:text-orange-300"
+                                  ? "bg-green-500/20 text-green-700"
+                                  : "bg-orange-500/20 text-orange-700"
                               }
                             >
                               {registration.hasOffer ? "Offer Received" : "Pending"}
@@ -450,10 +450,10 @@ export default function StudentPlacementsPage() {
               <TabsContent value="offers">
                 <div className="space-y-4">
                   {myRegistrations.filter((r) => r.hasOffer).length === 0 ? (
-                    <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-12 text-center shadow-sm">
-                      <Award className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-                      <p className="text-muted-foreground text-lg">No offers yet</p>
-                      <p className="text-sm text-muted-foreground mt-2">
+                    <Card className="bg-white border border-slate-200/70 p-12 text-center shadow-sm">
+                      <Award className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+                      <p className="text-gray-600 text-lg">No offers yet</p>
+                      <p className="text-sm text-gray-600 mt-2">
                         Keep applying and upload offer documents when you receive them
                       </p>
                     </Card>
@@ -465,17 +465,17 @@ export default function StudentPlacementsPage() {
                         if (!drive) return null
 
                         return (
-                          <Card key={registration.id} className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950 dark:to-emerald-950 shadow-sm">
+                          <Card key={registration.id} className="bg-white border border-slate-200/70 p-6 bg-gradient-to-br from-green-50 to-emerald-50 shadow-sm">
                             <div className="flex items-start gap-4">
                               <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
                                 <CheckCircle className="w-6 h-6 text-green-600" />
                               </div>
                               <div className="flex-1">
                                 <h3 className="text-xl font-bold mb-1">{drive.companyName}</h3>
-                                <p className="text-muted-foreground mb-2">{drive.position}</p>
+                                <p className="text-gray-600 mb-2">{drive.position}</p>
                                 <div className="flex items-center gap-4 text-sm">
                                   <span className="font-semibold text-green-600">{drive.package}</span>
-                                  <span className="text-muted-foreground">
+                                  <span className="text-gray-600">
                                     Offer received on {new Date(registration.submittedAt).toLocaleDateString()}
                                   </span>
                                 </div>
@@ -494,14 +494,14 @@ export default function StudentPlacementsPage() {
       <AnimatePresence>
         {showApplicationForm && selectedDrive && (
           <motion.div
-            className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 z-50"
+            className="fixed inset-0 bg-black/60  flex items-center justify-center p-4 z-50"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setShowApplicationForm(false)}
           >
             <motion.div
-              className="bg-white rounded-2xl max-w-2xl w-full p-8 shadow-2xl max-h-[90vh] overflow-y-auto border border-border"
+              className="bg-white rounded-2xl max-w-2xl w-full p-8 shadow-sm max-h-[90vh] overflow-y-auto border border-border"
               onClick={(e) => e.stopPropagation()}
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -510,7 +510,7 @@ export default function StudentPlacementsPage() {
               <div className="flex justify-between items-center mb-6">
                 <div>
                   <h2 className="text-3xl font-bold">Register for {selectedDrive?.companyName}</h2>
-                  <p className="text-muted-foreground">{selectedDrive?.position}</p>
+                  <p className="text-gray-600">{selectedDrive?.position}</p>
                 </div>
                 <Button variant="ghost" size="icon" onClick={() => setShowApplicationForm(false)}>
                   <X className="w-5 h-5" />
@@ -657,14 +657,14 @@ export default function StudentPlacementsPage() {
       <AnimatePresence>
         {showOfferUpload && selectedRegistration && (
           <motion.div
-            className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 z-50"
+            className="fixed inset-0 bg-black/60  flex items-center justify-center p-4 z-50"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setShowOfferUpload(false)}
           >
             <motion.div
-              className="bg-white rounded-2xl max-w-lg w-full p-8 shadow-2xl"
+              className="bg-white rounded-2xl max-w-lg w-full p-8 shadow-sm"
               onClick={(e) => e.stopPropagation()}
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -681,26 +681,26 @@ export default function StudentPlacementsPage() {
                 <div>
                   <label className="text-sm font-semibold mb-2 block">Offer Letter</label>
                   <div className="border-2 border-dashed border-border rounded-lg p-6 text-center hover:bg-muted/50 transition-colors cursor-pointer">
-                    <Upload className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
-                    <p className="text-sm text-muted-foreground">Click to upload or drag and drop</p>
-                    <p className="text-xs text-muted-foreground mt-1">PDF, DOC, or image files</p>
+                    <Upload className="w-8 h-8 text-gray-600 mx-auto mb-2" />
+                    <p className="text-sm text-gray-600">Click to upload or drag and drop</p>
+                    <p className="text-xs text-gray-600 mt-1">PDF, DOC, or image files</p>
                   </div>
                 </div>
 
                 <div>
                   <label className="text-sm font-semibold mb-2 block">Email Confirmation</label>
                   <div className="border-2 border-dashed border-border rounded-lg p-6 text-center hover:bg-muted/50 transition-colors cursor-pointer">
-                    <Upload className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
-                    <p className="text-sm text-muted-foreground">Click to upload or drag and drop</p>
-                    <p className="text-xs text-muted-foreground mt-1">PDF or image files</p>
+                    <Upload className="w-8 h-8 text-gray-600 mx-auto mb-2" />
+                    <p className="text-sm text-gray-600">Click to upload or drag and drop</p>
+                    <p className="text-xs text-gray-600 mt-1">PDF or image files</p>
                   </div>
                 </div>
 
                 <div>
                   <label className="text-sm font-semibold mb-2 block">LOI (Optional)</label>
                   <div className="border-2 border-dashed border-border rounded-lg p-6 text-center hover:bg-muted/50 transition-colors cursor-pointer">
-                    <Upload className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
-                    <p className="text-sm text-muted-foreground">Click to upload or drag and drop</p>
+                    <Upload className="w-8 h-8 text-gray-600 mx-auto mb-2" />
+                    <p className="text-sm text-gray-600">Click to upload or drag and drop</p>
                   </div>
                 </div>
 

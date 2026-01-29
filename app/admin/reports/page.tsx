@@ -232,7 +232,7 @@ export default function ReportsPage() {
 
   if (!mounted || !user) {
     return (
-      <div className="flex h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      <div className="flex h-screen bg-gray-50">
         <AdminSidebar />
         <div className="flex-1 flex flex-col ml-72">
           <AdminHeader />
@@ -247,7 +247,7 @@ export default function ReportsPage() {
   }
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="flex h-screen bg-gray-50">
       <AdminSidebar />
       <div className="flex-1 flex flex-col ml-72">
         <AdminHeader />
@@ -269,7 +269,7 @@ export default function ReportsPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="border-2 border-gray-100 bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-xl"
+              className="border border-gray-200 bg-white rounded-xl p-6 shadow-sm"
             >
               <div className="flex items-center gap-2 mb-4">
                 <Filter className="w-5 h-5 text-blue-600" />
@@ -282,7 +282,7 @@ export default function ReportsPage() {
                     <SelectTrigger className="w-full">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-white dark:bg-slate-900 border-2 border-gray-200 shadow-xl z-[100] opacity-100">
+                    <SelectContent className="bg-white border border-gray-200 shadow-sm z-[100] opacity-100">
                       <SelectItem value="campus-placement-summary">Campus Placement Summary</SelectItem>
                       <SelectItem value="department-wise">Department Wise</SelectItem>
                       <SelectItem value="year-wise">Year Wise</SelectItem>
@@ -296,7 +296,7 @@ export default function ReportsPage() {
                     <SelectTrigger className="w-full">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-white dark:bg-slate-900 border-2 border-gray-200 shadow-xl z-[100] opacity-100">
+                    <SelectContent className="bg-white border border-gray-200 shadow-sm z-[100] opacity-100">
                       <SelectItem value="2025">2025</SelectItem>
                       <SelectItem value="2024">2024</SelectItem>
                       <SelectItem value="2023">2023</SelectItem>
@@ -310,7 +310,7 @@ export default function ReportsPage() {
                     <SelectTrigger className="w-full">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-white dark:bg-slate-900 border-2 border-gray-200 shadow-xl z-[100] opacity-100">
+                    <SelectContent className="bg-white border border-gray-200 shadow-sm z-[100] opacity-100">
                       <SelectItem value="all">All Campuses</SelectItem>
                       <SelectItem value="main">Main Campus</SelectItem>
                       <SelectItem value="branch1">Branch Campus 1</SelectItem>
@@ -324,7 +324,7 @@ export default function ReportsPage() {
                     <SelectTrigger className="w-full">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-white dark:bg-slate-900 border-2 border-gray-200 shadow-xl z-[100] opacity-100">
+                    <SelectContent className="bg-white border border-gray-200 shadow-sm z-[100] opacity-100">
                       <SelectItem value="all">All Departments</SelectItem>
                       <SelectItem value="CSE">CSE</SelectItem>
                       <SelectItem value="ECE">ECE</SelectItem>
@@ -340,7 +340,7 @@ export default function ReportsPage() {
                     <SelectTrigger className="w-full">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-white dark:bg-slate-900 border-2 border-gray-200 shadow-xl z-[100] opacity-100">
+                    <SelectContent className="bg-white border border-gray-200 shadow-sm z-[100] opacity-100">
                       <SelectItem value="all">All Degrees</SelectItem>
                       <SelectItem value="B.Tech">B.Tech</SelectItem>
                       <SelectItem value="M.Tech">M.Tech</SelectItem>
@@ -404,7 +404,7 @@ export default function ReportsPage() {
                   whileHover={{ y: -4 }}
                   className="cursor-pointer"
                 >
-                  <Card className="border-2 border-gray-100 bg-white/80 backdrop-blur-sm p-6 hover:shadow-xl transition-all">
+                  <Card className="border border-gray-200 bg-white p-6 hover:shadow-sm transition-all">
                     <div className="flex items-center justify-between mb-4">
                       <div className="p-3 bg-blue-100 rounded-xl">
                         <Building2 className="w-6 h-6 text-blue-600" />
@@ -419,7 +419,7 @@ export default function ReportsPage() {
                   whileHover={{ y: -4 }}
                   className="cursor-pointer"
                 >
-                  <Card className="border-2 border-gray-100 bg-white/80 backdrop-blur-sm p-6 hover:shadow-xl transition-all">
+                  <Card className="border border-gray-200 bg-white p-6 hover:shadow-sm transition-all">
                     <div className="flex items-center justify-between mb-4">
                       <div className="p-3 bg-green-100 rounded-xl">
                         <Users className="w-6 h-6 text-green-600" />
@@ -434,7 +434,7 @@ export default function ReportsPage() {
                   whileHover={{ y: -4 }}
                   className="cursor-pointer"
                 >
-                  <Card className="border-2 border-gray-100 bg-white/80 backdrop-blur-sm p-6 hover:shadow-xl transition-all">
+                  <Card className="border border-gray-200 bg-white p-6 hover:shadow-sm transition-all">
                     <div className="flex items-center justify-between mb-4">
                       <div className="p-3 bg-purple-100 rounded-xl">
                         <Users className="w-6 h-6 text-purple-600" />
@@ -449,7 +449,7 @@ export default function ReportsPage() {
                   whileHover={{ y: -4 }}
                   className="cursor-pointer"
                 >
-                  <Card className="border-2 border-gray-100 bg-white/80 backdrop-blur-sm p-6 hover:shadow-xl transition-all">
+                  <Card className="border border-gray-200 bg-white p-6 hover:shadow-sm transition-all">
                     <div className="flex items-center justify-between mb-4">
                       <div className="p-3 bg-emerald-100 rounded-xl">
                         <CheckCircle2 className="w-6 h-6 text-emerald-600" />
@@ -464,7 +464,7 @@ export default function ReportsPage() {
                   whileHover={{ y: -4 }}
                   className="cursor-pointer"
                 >
-                  <Card className="border-2 border-gray-100 bg-white/80 backdrop-blur-sm p-6 hover:shadow-xl transition-all">
+                  <Card className="border border-gray-200 bg-white p-6 hover:shadow-sm transition-all">
                     <div className="flex items-center justify-between mb-4">
                       <div className="p-3 bg-orange-100 rounded-xl">
                         <TrendingUp className="w-6 h-6 text-orange-600" />
@@ -482,7 +482,7 @@ export default function ReportsPage() {
               <>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {/* Placement Rate by Campus */}
-                  <Card className="border-2 border-gray-100 bg-white/80 backdrop-blur-sm p-6 shadow-xl">
+                  <Card className="border border-gray-200 bg-white p-6 shadow-sm">
                     <div className="flex items-center justify-between mb-6">
                       <h3 className="text-lg font-bold text-gray-900">Placement Rate by Campus</h3>
                       <div className="flex gap-2">
@@ -528,7 +528,7 @@ export default function ReportsPage() {
                   </Card>
 
                   {/* Department Wise Distribution */}
-                  <Card className="border-2 border-gray-100 bg-white/80 backdrop-blur-sm p-6 shadow-xl">
+                  <Card className="border border-gray-200 bg-white p-6 shadow-sm">
                     <div className="flex items-center justify-between mb-6">
                       <h3 className="text-lg font-bold text-gray-900">Overall Department wise Distribution</h3>
                       <div className="flex gap-2">
@@ -579,7 +579,7 @@ export default function ReportsPage() {
                 </div>
 
                 {/* Overall Campus Salary/Stipend Chart */}
-                <Card className="border-2 border-gray-100 bg-white/80 backdrop-blur-sm p-6 shadow-xl">
+                <Card className="border border-gray-200 bg-white p-6 shadow-sm">
                   <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-4">
                       <h3 className="text-lg font-bold text-gray-900">Overall Campus Statistics</h3>
@@ -653,7 +653,7 @@ export default function ReportsPage() {
                 </Card>
               </>
             ) : (
-              <Card className="border-2 border-gray-100 bg-white/80 backdrop-blur-sm p-12 text-center shadow-xl">
+              <Card className="border border-gray-200 bg-white p-12 text-center shadow-sm">
                 <BarChart3 className="w-16 h-16 text-gray-400 mx-auto mb-4" />
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Report View</h3>
                 <p className="text-gray-600 mb-4">Detailed reports will be displayed here based on selected filters.</p>
@@ -674,14 +674,14 @@ export default function ReportsPage() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 z-50"
+                  className="fixed inset-0 bg-black/60  flex items-center justify-center p-4 z-50"
                   onClick={handleCloseExpandedChart}
                 >
                   <motion.div
                     initial={{ scale: 0.9, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     exit={{ scale: 0.9, opacity: 0 }}
-                    className="bg-white dark:bg-slate-900 rounded-2xl max-w-6xl w-full p-8 shadow-2xl max-h-[90vh] overflow-y-auto"
+                    className="bg-white rounded-2xl max-w-6xl w-full p-8 shadow-sm max-h-[90vh] overflow-y-auto"
                     onClick={(e) => e.stopPropagation()}
                   >
                     <div className="flex items-center justify-between mb-6">

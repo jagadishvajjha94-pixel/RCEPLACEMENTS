@@ -61,7 +61,7 @@ export default function StudentLayout({
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               onClick={() => setIsRightSidebarOpen(true)}
-              className="fixed right-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-lg flex items-center justify-center transition-colors"
+              className="fixed right-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-blue-600 hover:bg-blue-700 text-gray-900 shadow-sm flex items-center justify-center transition-colors"
             >
               <ChevronLeft className="w-5 h-5" />
             </motion.button>
@@ -86,7 +86,7 @@ export default function StudentLayout({
                   animate={{ x: 0 }}
                   exit={{ x: "100%" }}
                   transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                  className="fixed right-0 top-0 h-screen w-80 bg-white border-l border-gray-200 overflow-y-auto z-50 shadow-2xl lg:relative lg:z-auto lg:shadow-none"
+                  className="fixed right-0 top-0 h-screen w-80 bg-white border-l border-gray-200 overflow-y-auto z-50 shadow-sm lg:relative lg:z-auto lg:shadow-none"
                 >
             <div className="p-6 space-y-6">
                     {/* Header with Logout and Close Button */}
@@ -128,7 +128,7 @@ export default function StudentLayout({
                     onClick={() => navigate("/student/profile")}
                     className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center border-2 border-white shadow-sm hover:bg-blue-700 transition-colors cursor-pointer"
                   >
-                    <Plus className="w-4 h-4 text-white" />
+                    <Plus className="w-4 h-4 text-gray-900" />
                   </button>
                 </div>
                 

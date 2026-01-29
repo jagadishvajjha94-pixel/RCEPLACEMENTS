@@ -32,7 +32,7 @@ export default function HelpDeskPage() {
   const batches = ["22-26", "23-27", "24-28", "25-29", "26-30"]
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="flex h-screen bg-gray-50">
       <AdminSidebar />
       <div className="flex-1 flex flex-col ml-72">
         <AdminHeader />
@@ -57,7 +57,7 @@ export default function HelpDeskPage() {
             </motion.div>
 
             {/* Batch Selection & Search */}
-            <Card className="p-4 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+            <Card className="p-4 border border-gray-200 bg-white">
               <div className="flex items-center gap-4">
                 <label className="text-sm font-semibold text-gray-700">Batch:</label>
                 <select
@@ -86,7 +86,7 @@ export default function HelpDeskPage() {
 
             {/* Main Tabs */}
             <Tabs defaultValue="general" className="w-full">
-              <TabsList className="grid w-full grid-cols-5 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-2 border-gray-100 shadow-lg">
+              <TabsList className="grid w-full grid-cols-4 bg-gray-100 border border-gray-200">
                 <TabsTrigger value="general">General</TabsTrigger>
                 <TabsTrigger value="phase1">Phase 1: Registration</TabsTrigger>
                 <TabsTrigger value="phase2">Phase 2: Communication</TabsTrigger>
@@ -135,7 +135,7 @@ export default function HelpDeskPage() {
                   </Card>
                 </div>
 
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <h3 className="text-xl font-bold text-gray-900 mb-4">Proposals & Reports</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {["Registration Proposal", "Communication Check Report", "Counselling Report", "Mock Interview Campaign", "SDE Mock Interviews", "GD Mock Interviews", "JAM Mock Interviews", "PI Mock Interviews"].map((item, idx) => (
@@ -149,7 +149,7 @@ export default function HelpDeskPage() {
                   </div>
                 </Card>
 
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <h3 className="text-xl font-bold text-gray-900 mb-4">Pending List</h3>
                   <p className="text-sm text-gray-600 mb-4">Students not attended with reasons and expected dates</p>
                   <div className="overflow-x-auto">
@@ -179,7 +179,7 @@ export default function HelpDeskPage() {
 
               {/* Phase 1: Registration Tab */}
               <TabsContent value="phase1" className="space-y-6 mt-6">
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-xl font-bold text-gray-900">Phase 1 – Help Desk Registration</h3>
                     <Button className="gap-2">
@@ -205,7 +205,7 @@ export default function HelpDeskPage() {
 
               {/* Phase 2: Communication Check Tab */}
               <TabsContent value="phase2" className="space-y-6 mt-6">
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <h3 className="text-xl font-bold text-gray-900 mb-4">Phase 2 – Communication Check</h3>
                   <p className="text-sm text-gray-600 mb-4">
                     Branch wise consolidated data with verbal and non-verbal communication metrics (rated 1-5)
@@ -247,7 +247,7 @@ export default function HelpDeskPage() {
 
               {/* Phase 3: Counselling Tab */}
               <TabsContent value="phase3" className="space-y-6 mt-6">
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <h3 className="text-xl font-bold text-gray-900 mb-4">Phase 3 – Counselling</h3>
                   <div className="space-y-4">
                     <div className="p-4 border border-gray-200 rounded-lg">
@@ -282,7 +282,7 @@ export default function HelpDeskPage() {
 
               {/* Phase 4: Mock Interviews Tab */}
               <TabsContent value="phase4" className="space-y-6 mt-6">
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <h3 className="text-xl font-bold text-gray-900 mb-4">Phase 4 – Mock Interviews</h3>
                   <div className="space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

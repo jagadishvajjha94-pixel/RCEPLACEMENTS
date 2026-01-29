@@ -149,23 +149,23 @@ export default function ReportsPage() {
           <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
             Reports & Analytics
           </h1>
-          <p className="text-muted-foreground">Comprehensive performance analytics for academics, training, and assignments</p>
+          <p className="text-gray-600">Comprehensive performance analytics for academics, training, and assignments</p>
         </div>
-        <Button className="gap-2 bg-blue-500 hover:bg-blue-600 text-white">
+        <Button className="gap-2 bg-blue-500 hover:bg-blue-600 text-gray-900">
           <Download className="w-4 h-4" />
           Export Report
         </Button>
       </motion.div>
 
       {/* Filters */}
-      <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 shadow-sm">
+      <Card className="bg-white border border-slate-200/70 p-6 shadow-sm">
         <div className="grid md:grid-cols-4 gap-4">
           <div>
             <label className="text-sm font-semibold mb-2 block">Branch</label>
             <select
               value={selectedBranch}
               onChange={(e) => setSelectedBranch(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700"
+              className="w-full px-3 py-2 rounded-lg bg-slate-50 border border-slate-200"
             >
               {filterOptions.branches.map((b) => (
                 <option key={b} value={b}>
@@ -179,7 +179,7 @@ export default function ReportsPage() {
             <select
               value={selectedSection}
               onChange={(e) => setSelectedSection(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700"
+              className="w-full px-3 py-2 rounded-lg bg-slate-50 border border-slate-200"
             >
               {filterOptions.sections.map((s) => (
                 <option key={s} value={s}>
@@ -193,7 +193,7 @@ export default function ReportsPage() {
             <select
               value={selectedYear}
               onChange={(e) => setSelectedYear(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700"
+              className="w-full px-3 py-2 rounded-lg bg-slate-50 border border-slate-200"
             >
               {filterOptions.years.map((y) => (
                 <option key={y} value={y}>
@@ -203,7 +203,7 @@ export default function ReportsPage() {
             </select>
           </div>
           <div className="flex items-end">
-            <Button className="w-full gap-2 bg-blue-500 hover:bg-blue-600 text-white">
+            <Button className="w-full gap-2 bg-blue-500 hover:bg-blue-600 text-gray-900">
               <Filter className="w-4 h-4" />
               Apply Filters
             </Button>
@@ -213,7 +213,7 @@ export default function ReportsPage() {
 
       {/* View Type Tabs */}
       <Tabs value={viewType} onValueChange={(v) => setViewType(v as any)}>
-        <TabsList className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-2 border-gray-100 shadow-lg mb-6">
+        <TabsList className="grid w-full grid-cols-4 bg-gray-100 border border-gray-200 mb-6">
           <TabsTrigger value="branch">Branch-wise</TabsTrigger>
           <TabsTrigger value="section">Section-wise</TabsTrigger>
           <TabsTrigger value="student">Student-wise</TabsTrigger>
@@ -222,7 +222,7 @@ export default function ReportsPage() {
         {/* Branch-wise Analytics */}
         <TabsContent value="branch" className="space-y-6">
           <div className="grid md:grid-cols-2 gap-6">
-            <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 shadow-sm">
+            <Card className="bg-white border border-slate-200/70 p-6 shadow-sm">
               <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
                 <TrendingUp className="w-5 h-5" />
                 Branch-wise Performance Comparison
@@ -241,7 +241,7 @@ export default function ReportsPage() {
               </ResponsiveContainer>
             </Card>
 
-            <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 shadow-sm">
+            <Card className="bg-white border border-slate-200/70 p-6 shadow-sm">
               <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
                 <Users className="w-5 h-5" />
                 Student Distribution by Branch
@@ -268,7 +268,7 @@ export default function ReportsPage() {
             </Card>
           </div>
 
-          <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 shadow-sm">
+          <Card className="bg-white border border-slate-200/70 p-6 shadow-sm">
             <h3 className="text-lg font-bold mb-4">Branch-wise Performance Details</h3>
             <div className="overflow-x-auto">
               <table className="w-full">
@@ -283,7 +283,7 @@ export default function ReportsPage() {
                 </thead>
                 <tbody>
                   {branchWiseData.map((data) => (
-                    <tr key={data.branch} className="border-b hover:bg-slate-50 dark:hover:bg-slate-800">
+                    <tr key={data.branch} className="border-b hover:bg-slate-50">
                       <td className="p-2 font-semibold">{data.branch}</td>
                       <td className="p-2">{data.students}</td>
                       <td className="p-2">
@@ -305,7 +305,7 @@ export default function ReportsPage() {
 
         {/* Section-wise Analytics */}
         <TabsContent value="section" className="space-y-6">
-          <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 shadow-sm">
+          <Card className="bg-white border border-slate-200/70 p-6 shadow-sm">
             <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
               <TrendingUp className="w-5 h-5" />
               Section-wise Performance Comparison ({selectedBranch})
@@ -324,7 +324,7 @@ export default function ReportsPage() {
             </ResponsiveContainer>
           </Card>
 
-          <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 shadow-sm">
+          <Card className="bg-white border border-slate-200/70 p-6 shadow-sm">
             <h3 className="text-lg font-bold mb-4">Section-wise Performance Details</h3>
             <div className="overflow-x-auto">
               <table className="w-full">
@@ -339,7 +339,7 @@ export default function ReportsPage() {
                 </thead>
                 <tbody>
                   {sectionWiseData.map((data) => (
-                    <tr key={data.section} className="border-b hover:bg-slate-50 dark:hover:bg-slate-800">
+                    <tr key={data.section} className="border-b hover:bg-slate-50">
                       <td className="p-2 font-semibold">Section {data.section}</td>
                       <td className="p-2">{data.students}</td>
                       <td className="p-2">
@@ -361,7 +361,7 @@ export default function ReportsPage() {
 
         {/* Student-wise Analytics */}
         <TabsContent value="student" className="space-y-6">
-          <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 shadow-sm">
+          <Card className="bg-white border border-slate-200/70 p-6 shadow-sm">
             <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
               <Users className="w-5 h-5" />
               Student-wise Performance ({selectedBranch} - Section {selectedSection})
@@ -370,7 +370,7 @@ export default function ReportsPage() {
               {studentWiseData.map((student) => (
                 <Card
                   key={student.id}
-                  className="bg-slate-50 dark:bg-slate-800/50 p-4 hover:shadow-lg transition-all"
+                  className="bg-slate-50 p-4 hover:shadow-sm transition-all"
                 >
                   <div className="flex items-start gap-4">
                     <img
@@ -380,23 +380,23 @@ export default function ReportsPage() {
                     />
                     <div className="flex-1">
                       <h4 className="font-bold">{student.name}</h4>
-                      <p className="text-xs text-muted-foreground">{student.rollNumber}</p>
+                      <p className="text-xs text-gray-600">{student.rollNumber}</p>
                       {student.performance && (
                         <div className="mt-2 space-y-1">
                           <div className="flex items-center justify-between text-sm">
-                            <span className="text-muted-foreground">CGPA:</span>
+                            <span className="text-gray-600">CGPA:</span>
                             <Badge className="bg-blue-500/20 text-blue-700">
                               {student.performance.cgpa}
                             </Badge>
                           </div>
                           <div className="flex items-center justify-between text-sm">
-                            <span className="text-muted-foreground">Training:</span>
+                            <span className="text-gray-600">Training:</span>
                             <Badge className="bg-purple-500/20 text-purple-700">
                               {student.performance.trainingPerformance.averageScore}%
                             </Badge>
                           </div>
                           <div className="flex items-center justify-between text-sm">
-                            <span className="text-muted-foreground">Assignment:</span>
+                            <span className="text-gray-600">Assignment:</span>
                             <Badge className="bg-green-500/20 text-green-700">
                               {student.performance.assignmentPerformance.averageScore}%
                             </Badge>

@@ -156,7 +156,7 @@ export default function StudentApplicationsPage() {
       return <Badge variant="destructive">Expired</Badge>
     }
     if (registration.status === "submitted") {
-      return <Badge className="bg-green-500/20 text-green-700 dark:text-green-300">Submitted</Badge>
+      return <Badge className="bg-green-500/20 text-green-700">Submitted</Badge>
     }
     return <Badge variant="secondary">Pending</Badge>
   }
@@ -196,7 +196,7 @@ export default function StudentApplicationsPage() {
               <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-2">
                 My Applications
               </h1>
-              <p className="text-muted-foreground">
+              <p className="text-gray-600">
                 Track your placement applications and upload offer documents
               </p>
             </motion.div>
@@ -209,7 +209,7 @@ export default function StudentApplicationsPage() {
             >
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex-1 relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600 w-5 h-5" />
                   <Input
                     placeholder="Search by company name or roll number..."
                     value={searchTerm}
@@ -230,7 +230,7 @@ export default function StudentApplicationsPage() {
                       className={`px-4 py-2 rounded-lg font-medium transition-all ${
                         filterStatus === filter.value
                           ? "bg-accent text-accent-foreground"
-                          : "bg-muted hover:bg-muted/80"
+                          : "bg-muted hover:bg-muted"
                       }`}
                     >
                       <Filter className="inline w-4 h-4 mr-2" />
@@ -248,9 +248,9 @@ export default function StudentApplicationsPage() {
               </div>
             ) : filteredRegistrations.length === 0 ? (
               <Card className="glass-lg p-12 text-center">
-                <Briefcase className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
+                <Briefcase className="w-16 h-16 mx-auto mb-4 text-gray-600" />
                 <h3 className="text-xl font-bold mb-2">No Applications Found</h3>
-                <p className="text-muted-foreground mb-4">You haven't applied to any drives yet</p>
+                <p className="text-gray-600 mb-4">You haven't applied to any drives yet</p>
                 <Button onClick={() => navigate("/student/drives")} className="gap-2 bg-accent text-accent-foreground">
                   Browse Drives
                 </Button>
@@ -265,7 +265,7 @@ export default function StudentApplicationsPage() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                     >
-                      <Card className="glass-lg p-6 hover:shadow-xl transition-all">
+                      <Card className="glass-lg p-6 hover:shadow-sm transition-all">
                         <div className="flex flex-col md:flex-row justify-between gap-4">
                           <div className="flex-1">
                             <div className="flex items-start justify-between mb-4">
@@ -274,14 +274,14 @@ export default function StudentApplicationsPage() {
                                   <h3 className="text-2xl font-bold">{drive?.companyName || "Unknown Company"}</h3>
                                   {getStatusBadge(registration)}
                                   {registration.hasOffer && (
-                                    <Badge className="bg-green-500/20 text-green-700 dark:text-green-300">
+                                    <Badge className="bg-green-500/20 text-green-700">
                                       <CheckCircle className="w-3 h-3 mr-1" />
                                       Offer Received
                                     </Badge>
                                   )}
                                 </div>
-                                <p className="text-lg text-muted-foreground">{drive?.position || "Position"}</p>
-                                <p className="text-sm text-muted-foreground mt-1">
+                                <p className="text-lg text-gray-600">{drive?.position || "Position"}</p>
+                                <p className="text-sm text-gray-600 mt-1">
                                   Applied on {new Date(registration.submittedAt).toLocaleDateString()}
                                 </p>
                               </div>
@@ -289,7 +289,7 @@ export default function StudentApplicationsPage() {
 
                             <div className="grid md:grid-cols-2 gap-4 mb-4">
                               <div>
-                                <p className="text-sm font-medium text-muted-foreground mb-1">Registration Status</p>
+                                <p className="text-sm font-medium text-gray-600 mb-1">Registration Status</p>
                                 <p className="font-semibold">
                                   {registration.status === "submitted" ? (
                                     <span className="text-green-600 flex items-center gap-2">
@@ -310,12 +310,12 @@ export default function StudentApplicationsPage() {
                                 </p>
                               </div>
                               <div>
-                                <p className="text-sm font-medium text-muted-foreground mb-1">Offer Status</p>
+                                <p className="text-sm font-medium text-gray-600 mb-1">Offer Status</p>
                                 <p className="font-semibold">
                                   {registration.hasOffer ? (
                                     <span className="text-green-600">Offer Received</span>
                                   ) : (
-                                    <span className="text-muted-foreground">No Offer Yet</span>
+                                    <span className="text-gray-600">No Offer Yet</span>
                                   )}
                                 </p>
                               </div>
@@ -349,7 +349,7 @@ export default function StudentApplicationsPage() {
                                   Update Documents
                                 </Button>
                                 {registration.offerDocuments && (
-                                  <div className="space-y-1 text-xs text-muted-foreground">
+                                  <div className="space-y-1 text-xs text-gray-600">
                                     {registration.offerDocuments.offerLetter && (
                                       <div className="flex items-center gap-1">
                                         <FileCheck className="w-3 h-3" />
@@ -410,7 +410,7 @@ export default function StudentApplicationsPage() {
 
               <div className="space-y-6">
                 <div>
-                  <p className="text-sm text-muted-foreground mb-4">
+                  <p className="text-sm text-gray-600 mb-4">
                     Upload your offer-related documents. All fields are optional, but uploading documents helps track
                     your placement status.
                   </p>

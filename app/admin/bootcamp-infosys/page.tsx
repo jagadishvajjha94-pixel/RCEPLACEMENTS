@@ -31,7 +31,7 @@ export default function BootcampInfosysPage() {
   ]
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="flex h-screen bg-gray-50">
       <AdminSidebar />
       <div className="flex-1 flex flex-col ml-72">
         <AdminHeader />
@@ -56,7 +56,7 @@ export default function BootcampInfosysPage() {
             </motion.div>
 
             {/* Year Selection & Search */}
-            <Card className="p-4 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+            <Card className="p-4 border border-gray-200 bg-white">
               <div className="flex items-center gap-4">
                 <label className="text-sm font-semibold text-gray-700">Academic Year:</label>
                 <select
@@ -85,7 +85,7 @@ export default function BootcampInfosysPage() {
 
             {/* Main Tabs */}
             <Tabs defaultValue="bootcamp" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-2 border-gray-100 shadow-lg">
+              <TabsList className="grid w-full grid-cols-4 bg-gray-100 border border-gray-200">
                 <TabsTrigger value="bootcamp">Boot Camp</TabsTrigger>
                 <TabsTrigger value="infosys">Infosys-Specific</TabsTrigger>
               </TabsList>
@@ -94,7 +94,7 @@ export default function BootcampInfosysPage() {
               <TabsContent value="bootcamp" className="space-y-6 mt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {["Boot Camp Reports", "56 Schedule Sheets", "Assessment Report", "BC Attendance", "BC Assessment", "BC Topic Covered"].map((item, idx) => (
-                    <Card key={idx} className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm hover:shadow-xl transition-all">
+                    <Card key={idx} className="p-6 border border-gray-200 bg-white hover:shadow-sm transition-all">
                       <div className="flex items-center gap-3 mb-4">
                         <FileText className="w-6 h-6 text-blue-600" />
                         <h3 className="text-lg font-bold text-gray-900">{item}</h3>
@@ -113,7 +113,7 @@ export default function BootcampInfosysPage() {
                   ))}
                 </div>
 
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <h3 className="text-xl font-bold text-gray-900 mb-4">Mock Rank Sheets</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {["Mock Rank 1-100", "Mock Rank 101-200", "Mock Rank 201-324"].map((rank, idx) => (
@@ -127,7 +127,7 @@ export default function BootcampInfosysPage() {
                   </div>
                 </Card>
 
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <h3 className="text-xl font-bold text-gray-900 mb-4">Syllabus Boot Camp</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {bootcampSyllabi.map((syllabus, idx) => (
@@ -149,7 +149,7 @@ export default function BootcampInfosysPage() {
               <TabsContent value="infosys" className="space-y-6 mt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {["Infosys Photos", "Old Papers", "Batch-wise Data (22-26)", "Assessment", "Attendance", "Syllabus"].map((item, idx) => (
-                    <Card key={idx} className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm hover:shadow-xl transition-all">
+                    <Card key={idx} className="p-6 border border-gray-200 bg-white hover:shadow-sm transition-all">
                       <div className="flex items-center gap-3 mb-4">
                         <FileText className="w-6 h-6 text-orange-600" />
                         <h3 className="text-lg font-bold text-gray-900">{item}</h3>
@@ -168,7 +168,7 @@ export default function BootcampInfosysPage() {
                   ))}
                 </div>
 
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <h3 className="text-xl font-bold text-gray-900 mb-4">Infosys Batch Data</h3>
                   <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
                     {["22", "23", "24", "25", "26"].map((batch) => (

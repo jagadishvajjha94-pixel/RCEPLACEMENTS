@@ -143,14 +143,14 @@ export default function TrainingsPage() {
           <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-2">
             Training Programs
           </h1>
-          <p className="text-muted-foreground">Manage and track training progress with calendar</p>
+          <p className="text-gray-600">Manage and track training progress with calendar</p>
         </div>
         <Button 
           onClick={() => {
             setTrainingForm({ title: "", topic: "", date: "", time: "", location: "", instructor: "", branch: "CSE", section: "A", year: "3rd" })
             setShowNewTraining(true)
           }}
-          className="gap-2 bg-blue-500 hover:bg-blue-600 text-white"
+          className="gap-2 bg-blue-500 hover:bg-blue-600 text-gray-900"
         >
           <Plus className="w-4 h-4" />
           New Training
@@ -165,8 +165,8 @@ export default function TrainingsPage() {
             onClick={() => setActiveTab(tab)}
             className={`px-4 py-2 rounded-lg font-semibold transition-all ${
               activeTab === tab 
-                ? "bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 shadow-md" 
-                : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
+                ? "bg-blue-50 text-blue-700 shadow-md" 
+                : "bg-slate-100 text-slate-700 hover:bg-slate-200"
             }`}
           >
             {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -187,23 +187,23 @@ export default function TrainingsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.05 }}
           >
-            <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 hover:shadow-lg transition-all duration-300 h-full flex flex-col shadow-sm">
+            <Card className="bg-white border border-slate-200/70 p-6 hover:shadow-sm transition-all duration-300 h-full flex flex-col shadow-sm">
               <div className="mb-4">
                 <div className="flex items-start justify-between mb-2">
                   <h3 className="text-lg font-bold">{training.title}</h3>
                   <Badge
                     className={
                       training.status === "completed"
-                        ? "bg-green-500/20 text-green-700 dark:text-green-300"
+                        ? "bg-green-500/20 text-green-700"
                         : training.status === "ongoing"
-                          ? "bg-blue-500/20 text-blue-700 dark:text-blue-300"
-                          : "bg-gray-500/20 text-gray-700 dark:text-gray-300"
+                          ? "bg-blue-500/20 text-blue-700"
+                          : "bg-gray-500/20 text-gray-700"
                     }
                   >
                     {training.status.charAt(0).toUpperCase() + training.status.slice(1)}
                   </Badge>
                 </div>
-                <p className="text-sm text-muted-foreground mb-3">{training.instructor}</p>
+                <p className="text-sm text-gray-600 mb-3">{training.instructor}</p>
               </div>
 
               {/* Stats */}
@@ -230,7 +230,7 @@ export default function TrainingsPage() {
                   <span className="text-xs font-medium">Progress</span>
                   <span className="text-xs font-semibold">{training.progress || 0}%</span>
                 </div>
-                <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-3">
+                <div className="w-full bg-slate-200 rounded-full h-3">
                   <div
                     className={`${getProgressColor(training.progress || 0)} rounded-full h-3 transition-all duration-500`}
                     style={{ width: `${training.progress || 0}%` }}
@@ -242,7 +242,7 @@ export default function TrainingsPage() {
               <div className="flex gap-2 mt-auto">
                 <Button 
                   size="sm" 
-                  className="flex-1 gap-2 bg-blue-500 hover:bg-blue-600 text-white"
+                  className="flex-1 gap-2 bg-blue-500 hover:bg-blue-600 text-gray-900"
                   onClick={() => {
                     setSelectedTraining(training)
                     setTrainingForm({
@@ -265,7 +265,7 @@ export default function TrainingsPage() {
                 <Button 
                   size="sm" 
                   variant="outline" 
-                  className="flex-1 bg-slate-50 dark:bg-slate-800/50"
+                  className="flex-1 bg-slate-50"
                   onClick={() => {
                     setSelectedTraining(training)
                     setShowDetails(true)
@@ -348,7 +348,7 @@ export default function TrainingsPage() {
                 <select
                   value={trainingForm.branch}
                   onChange={(e) => setTrainingForm({ ...trainingForm, branch: e.target.value })}
-                  className="w-full px-4 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700"
+                  className="w-full px-4 py-2 rounded-lg bg-slate-50 border border-slate-200"
                 >
                   {["CSE", "ECE", "Mechanical", "Civil", "EEE", "AIDS", "AI/ML", "Cybersecurity", "IoT", "ServiceNow"].map(b => (
                     <option key={b} value={b}>{b}</option>
@@ -360,7 +360,7 @@ export default function TrainingsPage() {
                 <select
                   value={trainingForm.section}
                   onChange={(e) => setTrainingForm({ ...trainingForm, section: e.target.value })}
-                  className="w-full px-4 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700"
+                  className="w-full px-4 py-2 rounded-lg bg-slate-50 border border-slate-200"
                 >
                   {["A", "B", "C"].map(s => (
                     <option key={s} value={s}>{s}</option>
@@ -372,7 +372,7 @@ export default function TrainingsPage() {
                 <select
                   value={trainingForm.year}
                   onChange={(e) => setTrainingForm({ ...trainingForm, year: e.target.value })}
-                  className="w-full px-4 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700"
+                  className="w-full px-4 py-2 rounded-lg bg-slate-50 border border-slate-200"
                 >
                   {["1st", "2nd", "3rd", "4th"].map(y => (
                     <option key={y} value={y}>{y}</option>
@@ -384,7 +384,7 @@ export default function TrainingsPage() {
               <Button type="button" variant="outline" className="flex-1" onClick={() => setShowNewTraining(false)}>
                 Cancel
               </Button>
-              <Button type="submit" className="flex-1 bg-blue-500 hover:bg-blue-600 text-white">
+              <Button type="submit" className="flex-1 bg-blue-500 hover:bg-blue-600 text-gray-900">
                 Create Training
               </Button>
             </div>
@@ -455,7 +455,7 @@ export default function TrainingsPage() {
               <Button type="button" variant="outline" className="flex-1" onClick={() => setShowUpdate(false)}>
                 Cancel
               </Button>
-              <Button type="submit" className="flex-1 bg-blue-500 hover:bg-blue-600 text-white">
+              <Button type="submit" className="flex-1 bg-blue-500 hover:bg-blue-600 text-gray-900">
                 Update Training
               </Button>
             </div>
@@ -472,23 +472,23 @@ export default function TrainingsPage() {
           {selectedTraining && (
             <div className="space-y-6 mt-4">
               {/* Training Info */}
-              <Card className="p-6 bg-slate-50 dark:bg-slate-800/50">
+              <Card className="p-6 bg-slate-50">
                 <h3 className="text-lg font-bold mb-4">Training Information</h3>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm text-muted-foreground">Topic</p>
+                    <p className="text-sm text-gray-600">Topic</p>
                     <p className="font-semibold">{selectedTraining.topic}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Instructor</p>
+                    <p className="text-sm text-gray-600">Instructor</p>
                     <p className="font-semibold">{selectedTraining.instructor}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Date & Time</p>
+                    <p className="text-sm text-gray-600">Date & Time</p>
                     <p className="font-semibold">{new Date(selectedTraining.date).toLocaleDateString()} at {selectedTraining.time}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Location</p>
+                    <p className="text-sm text-gray-600">Location</p>
                     <p className="font-semibold">{selectedTraining.location}</p>
                   </div>
                 </div>
@@ -502,7 +502,7 @@ export default function TrainingsPage() {
                 </h3>
                 <div className="grid grid-cols-7 gap-2 mb-4">
                   {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-                    <div key={day} className="text-center text-sm font-semibold text-muted-foreground">{day}</div>
+                    <div key={day} className="text-center text-sm font-semibold text-gray-600">{day}</div>
                   ))}
                   {getCalendarDays().map((date, index) => {
                     const dateStr = date.toISOString().split('T')[0]
@@ -512,8 +512,8 @@ export default function TrainingsPage() {
                         key={index}
                         className={`p-2 text-center text-sm rounded-lg border ${
                           hasCompletion
-                            ? "bg-green-100 dark:bg-green-900/30 border-green-300 dark:border-green-700"
-                            : "bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700"
+                            ? "bg-green-100 border-green-300"
+                            : "bg-slate-50 border-slate-200"
                         }`}
                       >
                         {date.getDate()}
@@ -525,7 +525,7 @@ export default function TrainingsPage() {
               </Card>
 
               {/* Add Syllabus Completion */}
-              <Card className="p-6 bg-blue-50 dark:bg-blue-900/20">
+              <Card className="p-6 bg-blue-50">
                 <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
                   <Upload className="w-5 h-5" />
                   Upload Topic Completion
@@ -548,7 +548,7 @@ export default function TrainingsPage() {
                       className="min-h-[100px]"
                     />
                   </div>
-                  <Button onClick={handleAddSyllabusCompletion} className="bg-blue-500 hover:bg-blue-600 text-white">
+                  <Button onClick={handleAddSyllabusCompletion} className="bg-blue-500 hover:bg-blue-600 text-gray-900">
                     <Upload className="w-4 h-4 mr-2" />
                     Upload Completion
                   </Button>
@@ -564,11 +564,11 @@ export default function TrainingsPage() {
                   </h3>
                   <div className="space-y-3">
                     {selectedTraining.syllabusCompleted.map((completion, index) => (
-                      <div key={index} className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+                      <div key={index} className="p-4 bg-green-50 rounded-lg border border-green-200">
                         <p className="font-semibold mb-2">{new Date(completion.date).toLocaleDateString()}</p>
                         <div className="flex flex-wrap gap-2">
                           {completion.topics.map((topic, i) => (
-                            <Badge key={i} className="bg-green-500/20 text-green-700 dark:text-green-300">
+                            <Badge key={i} className="bg-green-500/20 text-green-700">
                               {topic}
                             </Badge>
                           ))}

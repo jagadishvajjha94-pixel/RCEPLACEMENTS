@@ -40,7 +40,7 @@ export default function LinkedInSoftSkillsPage() {
   ])
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="flex h-screen bg-gray-50">
       <AdminSidebar />
       <div className="flex-1 flex flex-col ml-72">
         <AdminHeader />
@@ -65,7 +65,7 @@ export default function LinkedInSoftSkillsPage() {
             </motion.div>
 
             {/* Year Selection & Search */}
-            <Card className="p-4 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+            <Card className="p-4 border border-gray-200 bg-white">
               <div className="flex items-center gap-4">
                 <label className="text-sm font-semibold text-gray-700">Year Range:</label>
                 <select
@@ -94,7 +94,7 @@ export default function LinkedInSoftSkillsPage() {
 
             {/* Main Tabs */}
             <Tabs defaultValue="linkedin" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-2 border-gray-100 shadow-lg">
+              <TabsList className="grid w-full grid-cols-4 bg-gray-100 border border-gray-200">
                 <TabsTrigger value="linkedin">LinkedIn Profiles</TabsTrigger>
                 <TabsTrigger value="softskills">Soft Skills & Communication</TabsTrigger>
               </TabsList>
@@ -102,7 +102,7 @@ export default function LinkedInSoftSkillsPage() {
               {/* LinkedIn Profiles Tab */}
               <TabsContent value="linkedin" className="space-y-6 mt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                  <Card className="p-6 border border-gray-200 bg-white">
                     <div className="flex items-center gap-3 mb-4">
                       <Linkedin className="w-6 h-6 text-blue-600" />
                       <h3 className="text-xl font-bold text-gray-900">Form Responses</h3>
@@ -116,7 +116,7 @@ export default function LinkedInSoftSkillsPage() {
                     </Button>
                   </Card>
 
-                  <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                  <Card className="p-6 border border-gray-200 bg-white">
                     <div className="flex items-center gap-3 mb-4">
                       <FileSpreadsheet className="w-6 h-6 text-green-600" />
                       <h3 className="text-xl font-bold text-gray-900">Main Data</h3>
@@ -131,7 +131,7 @@ export default function LinkedInSoftSkillsPage() {
                   </Card>
                 </div>
 
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-xl font-bold text-gray-900">Student Data</h3>
                     <Button className="gap-2">
@@ -180,7 +180,7 @@ export default function LinkedInSoftSkillsPage() {
                   </div>
                 </Card>
 
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <h3 className="text-xl font-bold text-gray-900 mb-4">Pivot Tables</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div className="p-4 border border-gray-200 rounded-lg">
@@ -207,7 +207,7 @@ export default function LinkedInSoftSkillsPage() {
               <TabsContent value="softskills" className="space-y-6 mt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {["PPT on Benefits of LinkedIn", "Mock Preparation", "1-1 Interaction", "Accenture Interview", "Aptitude", "Communication Skills"].map((item, idx) => (
-                    <Card key={idx} className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm hover:shadow-xl transition-all">
+                    <Card key={idx} className="p-6 border border-gray-200 bg-white hover:shadow-sm transition-all">
                       <div className="flex items-center gap-3 mb-4">
                         <Presentation className="w-6 h-6 text-purple-600" />
                         <h3 className="text-lg font-bold text-gray-900">{item}</h3>
@@ -226,7 +226,7 @@ export default function LinkedInSoftSkillsPage() {
                   ))}
                 </div>
 
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <h3 className="text-xl font-bold text-gray-900 mb-4">Soft Skills Review & Feedback</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-3">

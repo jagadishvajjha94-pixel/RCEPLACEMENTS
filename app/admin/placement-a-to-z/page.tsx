@@ -28,7 +28,7 @@ export default function PlacementAToZPage() {
   const branches = ["CSE", "ECE", "MECH", "CIVIL", "EEE", "AI&ML", "CS", "IOT", "AI&DS", "MBA"]
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="flex h-screen bg-gray-50">
       <AdminSidebar />
       <div className="flex-1 flex flex-col ml-72">
         <AdminHeader />
@@ -53,7 +53,7 @@ export default function PlacementAToZPage() {
             </motion.div>
 
             {/* Year Selection */}
-            <Card className="p-4 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+            <Card className="p-4 border border-gray-200 bg-white">
               <div className="flex items-center gap-4">
                 <label className="text-sm font-semibold text-gray-700">Academic Year:</label>
                 <select
@@ -70,7 +70,7 @@ export default function PlacementAToZPage() {
 
             {/* Main Tabs */}
             <Tabs defaultValue="offers" className="w-full">
-              <TabsList className="grid w-full grid-cols-6 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-2 border-gray-100 shadow-lg">
+              <TabsList className="grid w-full grid-cols-4 bg-gray-100 border border-gray-200">
                 <TabsTrigger value="offers">Offers</TabsTrigger>
                 <TabsTrigger value="consolidated">Consolidated</TabsTrigger>
                 <TabsTrigger value="statements">Statements</TabsTrigger>
@@ -83,7 +83,7 @@ export default function PlacementAToZPage() {
               <TabsContent value="offers" className="space-y-6 mt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {branches.map((branch) => (
-                    <Card key={branch} className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm hover:shadow-xl transition-all">
+                    <Card key={branch} className="p-6 border border-gray-200 bg-white hover:shadow-sm transition-all">
                       <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-3">
                           <Folder className="w-8 h-8 text-blue-600" />
@@ -108,7 +108,7 @@ export default function PlacementAToZPage() {
 
               {/* Consolidated Tab */}
               <TabsContent value="consolidated" className="space-y-6 mt-6">
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <FileSpreadsheet className="w-6 h-6 text-green-600" />
@@ -138,7 +138,7 @@ export default function PlacementAToZPage() {
               {/* Statements Tab */}
               <TabsContent value="statements" className="space-y-6 mt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                  <Card className="p-6 border border-gray-200 bg-white">
                     <div className="flex items-center gap-3 mb-4">
                       <Award className="w-6 h-6 text-purple-600" />
                       <h3 className="text-xl font-bold text-gray-900">Placement Statement</h3>
@@ -152,7 +152,7 @@ export default function PlacementAToZPage() {
                     </Button>
                   </Card>
 
-                  <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                  <Card className="p-6 border border-gray-200 bg-white">
                     <div className="flex items-center gap-3 mb-4">
                       <Briefcase className="w-6 h-6 text-orange-600" />
                       <h3 className="text-xl font-bold text-gray-900">Internship Statement</h3>
@@ -170,7 +170,7 @@ export default function PlacementAToZPage() {
 
               {/* Reports Tab */}
               <TabsContent value="reports" className="space-y-6 mt-6">
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <div className="flex items-center gap-3 mb-4">
                     <BarChart3 className="w-6 h-6 text-blue-600" />
                     <h3 className="text-xl font-bold text-gray-900">Placement Reports</h3>
@@ -204,7 +204,7 @@ export default function PlacementAToZPage() {
               <TabsContent value="internship" className="space-y-6 mt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {branches.map((branch) => (
-                    <Card key={branch} className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm hover:shadow-xl transition-all">
+                    <Card key={branch} className="p-6 border border-gray-200 bg-white hover:shadow-sm transition-all">
                       <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-3">
                           <Folder className="w-8 h-8 text-green-600" />
@@ -226,7 +226,7 @@ export default function PlacementAToZPage() {
                   ))}
                 </div>
 
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <h3 className="text-xl font-bold text-gray-900 mb-4">Internship Selected Data</h3>
                   <p className="text-sm text-gray-600 mb-4">
                     Student details + Company Name, Stipend, Internship Title, On/Off Campus, Duration, HR Contact Details
@@ -241,7 +241,7 @@ export default function PlacementAToZPage() {
               {/* Student Data Tab */}
               <TabsContent value="student-data" className="space-y-6 mt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                  <Card className="p-6 border border-gray-200 bg-white">
                     <h3 className="text-xl font-bold text-gray-900 mb-4">Student Selected Data</h3>
                     <p className="text-sm text-gray-600 mb-4">
                       Company name, Website, Interview Date, Date info received, LOI/Offer Received, Joining Date
@@ -252,7 +252,7 @@ export default function PlacementAToZPage() {
                     </Button>
                   </Card>
 
-                  <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                  <Card className="p-6 border border-gray-200 bg-white">
                     <h3 className="text-xl font-bold text-gray-900 mb-4">Specific vs Regular</h3>
                     <p className="text-sm text-gray-600 mb-4">
                       Track specific batch placements vs regular placements
@@ -270,7 +270,7 @@ export default function PlacementAToZPage() {
                   </Card>
                 </div>
 
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <h3 className="text-xl font-bold text-gray-900 mb-4">Multiple Offer Data</h3>
                   <p className="text-sm text-gray-600 mb-4">
                     Track students with multiple offers: Company1, Company2, Company3, Company4, Company5
@@ -281,7 +281,7 @@ export default function PlacementAToZPage() {
                   </Button>
                 </Card>
 
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <h3 className="text-xl font-bold text-gray-900 mb-4">PAN Card Details</h3>
                   <p className="text-sm text-gray-600 mb-4">
                     Track PAN status for Specific, Regular & ServiceNow batches

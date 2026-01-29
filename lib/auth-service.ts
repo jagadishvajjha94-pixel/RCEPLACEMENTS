@@ -3,7 +3,7 @@ export interface User {
   id: string
   email: string
   password: string
-  role: "student" | "faculty" | "admin"
+  role: "student" | "faculty" | "admin" | "placement-drives" | "career-guidance" | "training-assessments" | "servicenow" | "help-desk"
   name: string
   profile?: StudentProfile
 }
@@ -36,6 +36,37 @@ export class AuthService {
         password: "admin123",
         role: "admin",
         name: "Admin User",
+      })
+      // Add default users for each section
+      this.registerUser({
+        email: "placement@rce.edu",
+        password: "placement123",
+        role: "placement-drives",
+        name: "Placement Drives Manager",
+      })
+      this.registerUser({
+        email: "career@rce.edu",
+        password: "career123",
+        role: "career-guidance",
+        name: "Career Guidance Manager",
+      })
+      this.registerUser({
+        email: "training@rce.edu",
+        password: "training123",
+        role: "training-assessments",
+        name: "Training & Assessments Manager",
+      })
+      this.registerUser({
+        email: "servicenow@rce.edu",
+        password: "servicenow123",
+        role: "servicenow",
+        name: "ServiceNow Manager",
+      })
+      this.registerUser({
+        email: "helpdesk@rce.edu",
+        password: "helpdesk123",
+        role: "help-desk",
+        name: "Help Desk Manager",
       })
     }
   }

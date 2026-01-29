@@ -203,7 +203,7 @@ export default function AssignmentsPage() {
           <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
             Assignments
           </h1>
-          <p className="text-muted-foreground">Create and track student assignments with AI grading</p>
+          <p className="text-gray-600">Create and track student assignments with AI grading</p>
         </div>
         <Button
           onClick={() => {
@@ -211,7 +211,7 @@ export default function AssignmentsPage() {
             setEditingAssignment(null)
             setShowForm(true)
           }}
-          className="gap-2 bg-purple-500 hover:bg-purple-600 text-white"
+          className="gap-2 bg-purple-500 hover:bg-purple-600 text-gray-900"
         >
           <Plus className="w-4 h-4" />
           New Assignment
@@ -225,7 +225,7 @@ export default function AssignmentsPage() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 rounded-lg p-6 mb-8 shadow-sm"
+            className="bg-white border border-slate-200/70 rounded-lg p-6 mb-8 shadow-sm"
           >
             <h3 className="text-lg font-bold mb-4">{editingAssignment ? "Edit Assignment" : "Create New Assignment"}</h3>
             <form onSubmit={editingAssignment ? handleUpdateAssignment : handleCreateAssignment} className="space-y-4">
@@ -284,7 +284,7 @@ export default function AssignmentsPage() {
               <div>
                 <label className="text-sm font-semibold mb-2 block">Question Type</label>
                 <Tabs value={assignmentForm.questionType} onValueChange={(v) => setAssignmentForm({ ...assignmentForm, questionType: v as any })}>
-                  <TabsList className="bg-slate-100/90 dark:bg-slate-800/90 mb-4">
+                  <TabsList className="bg-slate-100 mb-4">
                     <TabsTrigger value="coding">
                       <Code className="w-4 h-4 mr-2" />
                       Coding
@@ -301,10 +301,10 @@ export default function AssignmentsPage() {
                   <h4 className="font-semibold mb-2">Added Questions ({assignmentForm.questions.length})</h4>
                   <div className="space-y-2 max-h-60 overflow-y-auto">
                     {assignmentForm.questions.map((q, idx) => (
-                      <div key={idx} className="p-3 bg-slate-50 dark:bg-slate-800 rounded-lg flex justify-between items-start">
+                      <div key={idx} className="p-3 bg-slate-50 rounded-lg flex justify-between items-start">
                         <div className="flex-1">
                           <p className="text-sm font-medium">{q.question.substring(0, 50)}...</p>
-                          <p className="text-xs text-muted-foreground">Type: {q.type} | Marks: {q.marks}</p>
+                          <p className="text-xs text-gray-600">Type: {q.type} | Marks: {q.marks}</p>
                         </div>
                         <Button
                           type="button"
@@ -452,7 +452,7 @@ export default function AssignmentsPage() {
               </div>
 
               <div className="flex gap-2 pt-4">
-                <Button type="submit" className="flex-1 bg-purple-500 hover:bg-purple-600 text-white">
+                <Button type="submit" className="flex-1 bg-purple-500 hover:bg-purple-600 text-gray-900">
                   {editingAssignment ? "Update Assignment" : "Create Assignment"}
                 </Button>
                 <Button type="button" variant="outline" className="flex-1" onClick={() => setShowForm(false)}>
@@ -473,10 +473,10 @@ export default function AssignmentsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.05 }}
           >
-            <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 hover:shadow-lg transition-all duration-300 shadow-sm">
+            <Card className="bg-white border border-slate-200/70 p-6 hover:shadow-sm transition-all duration-300 shadow-sm">
               <div className="flex items-start justify-between gap-4">
                 <div className="flex items-start gap-4 flex-1">
-                  <div className="p-3 rounded-lg bg-purple-100 dark:bg-purple-900/30 text-purple-600">
+                  <div className="p-3 rounded-lg bg-purple-100 text-purple-600">
                     <FileText className="w-6 h-6" />
                   </div>
                   <div className="flex-1">
@@ -485,14 +485,14 @@ export default function AssignmentsPage() {
                       <Badge
                         className={
                           assignment.status === "active"
-                            ? "bg-blue-500/20 text-blue-700 dark:text-blue-300"
-                            : "bg-gray-500/20 text-gray-700 dark:text-gray-300"
+                            ? "bg-blue-500/20 text-blue-700"
+                            : "bg-gray-500/20 text-gray-700"
                         }
                       >
                         {assignment.status === "active" ? "Active" : "Closed"}
                       </Badge>
                     </div>
-                    <p className="text-sm text-muted-foreground mb-3">{assignment.description}</p>
+                    <p className="text-sm text-gray-600 mb-3">{assignment.description}</p>
                     <div className="grid md:grid-cols-3 gap-4 text-sm">
                       <div className="flex items-center gap-2">
                         <Calendar className="w-4 h-4 text-purple-600" />
@@ -516,14 +516,14 @@ export default function AssignmentsPage() {
                     size="sm"
                     variant="outline"
                     onClick={() => handleEditAssignment(assignment)}
-                    className="bg-slate-50 dark:bg-slate-800/50"
+                    className="bg-slate-50"
                   >
                     <Edit2 className="w-4 h-4" />
                   </Button>
                   <Button
                     size="sm"
                     variant="outline"
-                    className="text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 bg-transparent"
+                    className="text-red-600 hover:bg-red-50 bg-transparent"
                     onClick={() => handleDeleteAssignment(assignment.id)}
                   >
                     <Trash2 className="w-4 h-4" />
@@ -531,7 +531,7 @@ export default function AssignmentsPage() {
                   <Button
                     size="sm"
                     variant="outline"
-                    className="bg-blue-50 dark:bg-blue-900/30 text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-900/50"
+                    className="bg-blue-50 text-blue-600 hover:bg-blue-100"
                     onClick={() => handleAIGrade(assignment.id)}
                   >
                     <Sparkles className="w-4 h-4 mr-1" />

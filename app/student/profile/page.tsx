@@ -152,7 +152,7 @@ export default function StudentProfile() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-x-hidden">
+    <div className="min-h-screen bg-gray-50 overflow-x-hidden">
       <div className="container mx-auto px-4 py-8 max-w-4xl w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -168,13 +168,13 @@ export default function StudentProfile() {
             Back to Dashboard
           </Button>
 
-          <Card className="border-0 shadow-2xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm p-8">
+          <Card className="border-0 shadow-sm bg-white p-8">
             <div className="flex justify-between items-start mb-8">
               <div>
                 <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2">
                   My Profile
                 </h1>
-                <p className="text-muted-foreground">Manage your personal information</p>
+                <p className="text-gray-600">Manage your personal information</p>
               </div>
               {!editing ? (
                 <Button
@@ -200,7 +200,7 @@ export default function StudentProfile() {
             </div>
 
             {success && (
-              <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-300 px-4 py-3 rounded-lg mb-6">
+              <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6">
                 ✓ Profile updated successfully!
               </div>
             )}
@@ -229,12 +229,12 @@ export default function StudentProfile() {
                   {editing && (
                     <div className="flex-1">
                       <label className="text-sm font-semibold mb-2 block">Upload Profile Picture</label>
-                      <div className="border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg p-4 text-center hover:border-primary transition-colors">
-                        <Upload className="w-6 h-6 mx-auto mb-2 text-muted-foreground" />
-                        <p className="text-sm text-muted-foreground mb-1">
+                      <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-primary transition-colors">
+                        <Upload className="w-6 h-6 mx-auto mb-2 text-gray-600" />
+                        <p className="text-sm text-gray-600 mb-1">
                           {profilePictureFile ? profilePictureFile.name : "Click to upload or drag and drop"}
                         </p>
-                        <p className="text-xs text-muted-foreground mb-3">PNG, JPG, or JPEG (Max 5MB)</p>
+                        <p className="text-xs text-gray-600 mb-3">PNG, JPG, or JPEG (Max 5MB)</p>
                         <Input
                           type="file"
                           accept="image/png,image/jpeg,image/jpg"
@@ -273,20 +273,20 @@ export default function StudentProfile() {
                       value={profileData.name}
                       onChange={(e) => setProfileData({ ...profileData, name: e.target.value })}
                       disabled={!editing}
-                      className={!editing ? "bg-slate-50 dark:bg-slate-800" : ""}
+                      className={!editing ? "bg-slate-50" : ""}
                     />
                   </div>
                   <div>
                     <label className="text-sm font-semibold mb-2 block">Email</label>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600 w-4 h-4" />
                       <Input
                         value={profileData.email}
                         disabled
-                        className="pl-10 bg-slate-50 dark:bg-slate-800"
+                        className="pl-10 bg-slate-50"
                       />
                     </div>
-                    <p className="text-xs text-muted-foreground mt-1">Email cannot be changed</p>
+                    <p className="text-xs text-gray-600 mt-1">Email cannot be changed</p>
                   </div>
                 </div>
               </div>
@@ -304,7 +304,7 @@ export default function StudentProfile() {
                       value={profileData.rollNumber}
                       onChange={(e) => setProfileData({ ...profileData, rollNumber: e.target.value })}
                       disabled={!editing}
-                      className={!editing ? "bg-slate-50 dark:bg-slate-800" : ""}
+                      className={!editing ? "bg-slate-50" : ""}
                     />
                   </div>
                   <div>
@@ -317,7 +317,7 @@ export default function StudentProfile() {
                       value={profileData.cgpa}
                       onChange={(e) => setProfileData({ ...profileData, cgpa: e.target.value })}
                       disabled={!editing}
-                      className={!editing ? "bg-slate-50 dark:bg-slate-800" : ""}
+                      className={!editing ? "bg-slate-50" : ""}
                     />
                   </div>
                   <div>
@@ -325,7 +325,7 @@ export default function StudentProfile() {
                     <Input
                       value={profileData.branch}
                       disabled
-                      className="bg-slate-50 dark:bg-slate-800"
+                      className="bg-slate-50"
                     />
                   </div>
                   <div>
@@ -333,7 +333,7 @@ export default function StudentProfile() {
                     <Input
                       value={profileData.section}
                       disabled
-                      className="bg-slate-50 dark:bg-slate-800"
+                      className="bg-slate-50"
                     />
                   </div>
                   <div>
@@ -341,7 +341,7 @@ export default function StudentProfile() {
                     <Input
                       value={profileData.year}
                       disabled
-                      className="bg-slate-50 dark:bg-slate-800"
+                      className="bg-slate-50"
                     />
                   </div>
                 </div>
@@ -357,40 +357,40 @@ export default function StudentProfile() {
                   <div>
                     <label className="text-sm font-semibold mb-2 block">Phone Number</label>
                     <div className="relative">
-                      <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                      <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600 w-4 h-4" />
                       <Input
                         type="tel"
                         placeholder="+91 XXXXXXXXXX"
                         value={profileData.phone}
                         onChange={(e) => setProfileData({ ...profileData, phone: e.target.value })}
                         disabled={!editing}
-                        className={`pl-10 ${!editing ? "bg-slate-50 dark:bg-slate-800" : ""}`}
+                        className={`pl-10 ${!editing ? "bg-slate-50" : ""}`}
                       />
                     </div>
                   </div>
                   <div>
                     <label className="text-sm font-semibold mb-2 block">LinkedIn Profile</label>
                     <div className="relative">
-                      <Linkedin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                      <Linkedin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600 w-4 h-4" />
                       <Input
                         placeholder="https://linkedin.com/in/yourprofile"
                         value={profileData.linkedin}
                         onChange={(e) => setProfileData({ ...profileData, linkedin: e.target.value })}
                         disabled={!editing}
-                        className={`pl-10 ${!editing ? "bg-slate-50 dark:bg-slate-800" : ""}`}
+                        className={`pl-10 ${!editing ? "bg-slate-50" : ""}`}
                       />
                     </div>
                   </div>
                   <div className="md:col-span-2">
                     <label className="text-sm font-semibold mb-2 block">GitHub Profile</label>
                     <div className="relative">
-                      <Github className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                      <Github className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600 w-4 h-4" />
                       <Input
                         placeholder="https://github.com/yourusername"
                         value={profileData.github}
                         onChange={(e) => setProfileData({ ...profileData, github: e.target.value })}
                         disabled={!editing}
-                        className={`pl-10 ${!editing ? "bg-slate-50 dark:bg-slate-800" : ""}`}
+                        className={`pl-10 ${!editing ? "bg-slate-50" : ""}`}
                       />
                     </div>
                   </div>
@@ -410,7 +410,7 @@ export default function StudentProfile() {
                         <Badge
                           key={index}
                           variant="secondary"
-                          className="px-3 py-1 text-sm bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300"
+                          className="px-3 py-1 text-sm bg-blue-100 text-blue-700"
                         >
                           {tech}
                           {editing && (
@@ -469,7 +469,7 @@ export default function StudentProfile() {
                     </div>
                   )}
                   {!editing && profileData.technologies.length === 0 && (
-                    <p className="text-sm text-muted-foreground">No technologies added yet. Edit profile to add technologies.</p>
+                    <p className="text-sm text-gray-600">No technologies added yet. Edit profile to add technologies.</p>
                   )}
                 </div>
               </div>
@@ -482,11 +482,11 @@ export default function StudentProfile() {
                 </h2>
                 <div className="space-y-4">
                   {resumeUrl && !resumeFile && (
-                    <div className="flex items-center gap-4 p-4 bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-lg">
+                    <div className="flex items-center gap-4 p-4 bg-green-50 border border-green-200 rounded-lg">
                       <FileText className="w-8 h-8 text-green-600" />
                       <div className="flex-1">
                         <p className="font-semibold text-sm">Current Resume</p>
-                        <p className="text-xs text-muted-foreground">Resume uploaded successfully</p>
+                        <p className="text-xs text-gray-600">Resume uploaded successfully</p>
                       </div>
                       <Button
                         variant="outline"
@@ -500,12 +500,12 @@ export default function StudentProfile() {
                   {editing && (
                     <div>
                       <label className="text-sm font-semibold mb-2 block">Upload Updated Resume</label>
-                      <div className="border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg p-6 text-center hover:border-primary transition-colors">
-                        <Upload className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
-                        <p className="text-sm text-muted-foreground mb-1">
+                      <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-primary transition-colors">
+                        <Upload className="w-8 h-8 mx-auto mb-2 text-gray-600" />
+                        <p className="text-sm text-gray-600 mb-1">
                           {resumeFile ? resumeFile.name : "Click to upload or drag and drop"}
                         </p>
-                        <p className="text-xs text-muted-foreground mb-3">PDF or DOC (Max 5MB)</p>
+                        <p className="text-xs text-gray-600 mb-3">PDF or DOC (Max 5MB)</p>
                         <Input
                           type="file"
                           accept=".pdf,.doc,.docx"

@@ -82,7 +82,7 @@ export default function StudentsPage() {
 
   if (!user) {
     return (
-      <div className="flex h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      <div className="flex h-screen bg-gray-50">
         <AdminSidebar />
         <div className="flex-1 flex flex-col ml-72">
           <AdminHeader />
@@ -97,7 +97,7 @@ export default function StudentsPage() {
   }
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="flex h-screen bg-gray-50">
       <AdminSidebar />
       <div className="flex-1 flex flex-col ml-72">
         <AdminHeader />
@@ -126,7 +126,7 @@ export default function StudentsPage() {
             </motion.div>
 
             {/* Filters */}
-            <Card className="p-4 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+            <Card className="p-4 border border-gray-200 bg-white">
               <div className="flex items-center gap-4">
                 <div className="flex-1 max-w-md">
                   <div className="relative">
@@ -144,7 +144,7 @@ export default function StudentsPage() {
                   <SelectTrigger className="w-[150px]">
                     <SelectValue placeholder="All Branches" />
                   </SelectTrigger>
-                  <SelectContent className="bg-white dark:bg-slate-900 border-2 border-gray-200 shadow-xl z-[100] opacity-100">
+                  <SelectContent className="bg-white border border-gray-200 shadow-sm z-[100] opacity-100">
                     <SelectItem value="all">All Branches</SelectItem>
                     <SelectItem value="CSE">CSE</SelectItem>
                     <SelectItem value="ECE">ECE</SelectItem>
@@ -157,7 +157,7 @@ export default function StudentsPage() {
                   <SelectTrigger className="w-[150px]">
                     <SelectValue placeholder="All Years" />
                   </SelectTrigger>
-                  <SelectContent className="bg-white dark:bg-slate-900 border-2 border-gray-200 shadow-xl z-[100] opacity-100">
+                  <SelectContent className="bg-white border border-gray-200 shadow-sm z-[100] opacity-100">
                     <SelectItem value="all">All Years</SelectItem>
                     <SelectItem value="2025">2025</SelectItem>
                     <SelectItem value="2024">2024</SelectItem>
@@ -168,7 +168,7 @@ export default function StudentsPage() {
             </Card>
 
             {/* Students Table */}
-            <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+            <Card className="p-6 border border-gray-200 bg-white">
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>

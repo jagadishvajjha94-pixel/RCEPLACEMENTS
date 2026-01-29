@@ -144,7 +144,7 @@ export default function InterviewPrepPage() {
           <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             Interview Preparation
           </h1>
-          <p className="text-muted-foreground">Master coding problems and prepare for technical interviews</p>
+          <p className="text-gray-600">Master coding problems and prepare for technical interviews</p>
         </motion.div>
 
         {/* Main Content */}
@@ -157,7 +157,7 @@ export default function InterviewPrepPage() {
           {/* Coding Problems */}
           <div className="lg:col-span-2">
             <Tabs defaultValue="problems" className="w-full">
-              <TabsList className="bg-slate-100/90 dark:bg-slate-800/90 mb-4 shadow-sm border border-slate-200/60 dark:border-slate-700/60">
+              <TabsList className="bg-slate-100 mb-4 shadow-sm border border-slate-200/60">
                 <TabsTrigger value="problems">Coding Problems</TabsTrigger>
                 <TabsTrigger value="concepts">DSA Concepts</TabsTrigger>
                 <TabsTrigger value="company">Company Specific</TabsTrigger>
@@ -173,19 +173,19 @@ export default function InterviewPrepPage() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
                   >
-                    <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 hover:shadow-lg transition-all shadow-sm">
+                    <Card className="bg-white border border-slate-200/70 p-6 hover:shadow-sm transition-all shadow-sm">
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-2">
                             <Code className="w-5 h-5 text-accent" />
                             <h3 className="text-lg font-bold">{problem.title}</h3>
                           </div>
-                          <div className="flex gap-2 text-sm text-muted-foreground">
+                          <div className="flex gap-2 text-sm text-gray-600">
                             <span
                               className={`px-2 py-1 rounded ${
                                 problem.difficulty === "Easy"
-                                  ? "bg-green-500/20 text-green-700 dark:text-green-300"
-                                  : "bg-orange-500/20 text-orange-700 dark:text-orange-300"
+                                  ? "bg-green-500/20 text-green-700"
+                                  : "bg-orange-500/20 text-orange-700"
                               }`}
                             >
                               {problem.difficulty}
@@ -196,7 +196,7 @@ export default function InterviewPrepPage() {
                           {(problem.solved || isSolved) && <div className="text-green-500 text-xl">✓</div>}
                       </div>
                       <Button 
-                        className="w-full bg-blue-500 hover:bg-blue-600 text-white gap-2 shadow-md"
+                        className="w-full bg-blue-500 hover:bg-blue-600 text-gray-900 gap-2 shadow-md"
                         onClick={() => {
                             // Track that student is practicing this technology
                             handleProblemSolved(problem.id, problem.language)
@@ -216,12 +216,12 @@ export default function InterviewPrepPage() {
               </TabsContent>
 
               <TabsContent value="concepts" className="space-y-4">
-                <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 shadow-sm">
+                <Card className="bg-white border border-slate-200/70 p-6 shadow-sm">
                   <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
                     <BookOpen className="w-5 h-5 text-accent" />
                     Data Structures & Algorithms
                   </h3>
-                  <p className="text-sm text-muted-foreground mb-4">
+                  <p className="text-sm text-gray-600 mb-4">
                     Practice DSA concepts with free Google Books and online resources
                   </p>
                   <div className="grid sm:grid-cols-2 gap-3 mb-6">
@@ -238,7 +238,7 @@ export default function InterviewPrepPage() {
                       <Button 
                         key={concept.name} 
                         variant="outline" 
-                        className="justify-start bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-700/50 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300"
+                        className="justify-start bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700"
                         onClick={() => window.open(concept.book, '_blank')}
                       >
                         <BookOpen className="w-4 h-4 mr-2" />
@@ -280,25 +280,25 @@ export default function InterviewPrepPage() {
 
               <TabsContent value="company" className="space-y-4">
                 {loading ? (
-                  <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 shadow-sm">
-                    <p className="text-muted-foreground">Loading company-specific materials...</p>
+                  <Card className="bg-white border border-slate-200/70 p-6 shadow-sm">
+                    <p className="text-gray-600">Loading company-specific materials...</p>
                   </Card>
                 ) : companyPrep.length === 0 ? (
-                  <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 shadow-sm">
+                  <Card className="bg-white border border-slate-200/70 p-6 shadow-sm">
                     <h3 className="text-lg font-bold mb-4">Company-Specific Questions</h3>
-                    <p className="text-muted-foreground">No company-specific materials uploaded yet. Check back later.</p>
+                    <p className="text-gray-600">No company-specific materials uploaded yet. Check back later.</p>
                   </Card>
                 ) : (
                   <div className="space-y-4">
                     {companyPrep.map((prep) => (
-                      <Card key={prep.id} className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 hover:shadow-lg transition-all shadow-sm">
+                      <Card key={prep.id} className="bg-white border border-slate-200/70 p-6 hover:shadow-sm transition-all shadow-sm">
                         <div className="flex items-start justify-between mb-4">
                           <div className="flex items-center gap-3">
                             <Building2 className="w-6 h-6 text-primary" />
                             <div>
                               <h3 className="text-xl font-bold">{prep.company}</h3>
                               {prep.description && (
-                                <p className="text-sm text-muted-foreground mt-1">{prep.description}</p>
+                                <p className="text-sm text-gray-600 mt-1">{prep.description}</p>
                               )}
                             </div>
                           </div>
@@ -340,7 +340,7 @@ export default function InterviewPrepPage() {
           {/* Resources Sidebar */}
           <div>
             {/* Study Progress */}
-            <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 shadow-sm">
+            <Card className="bg-white border border-slate-200/70 p-6 shadow-sm">
               <h3 className="text-lg font-bold mb-6 flex items-center gap-2">
                 <BookOpen className="w-5 h-5 text-accent" />
                 Your Progress
@@ -358,7 +358,7 @@ export default function InterviewPrepPage() {
                       animate={{ width: "65%" }}
                       transition={{ duration: 1, ease: "easeOut" }}
                     >
-                      <span className="text-xs font-bold text-white">65%</span>
+                      <span className="text-xs font-bold text-gray-900">65%</span>
                     </motion.div>
                   </div>
                 </div>
@@ -374,7 +374,7 @@ export default function InterviewPrepPage() {
                       animate={{ width: "45%" }}
                       transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
                     >
-                      <span className="text-xs font-bold text-white">45%</span>
+                      <span className="text-xs font-bold text-gray-900">45%</span>
                     </motion.div>
                   </div>
                 </div>
@@ -390,7 +390,7 @@ export default function InterviewPrepPage() {
                       animate={{ width: "78%" }}
                       transition={{ duration: 1, ease: "easeOut", delay: 0.4 }}
                     >
-                      <span className="text-xs font-bold text-white">78%</span>
+                      <span className="text-xs font-bold text-gray-900">78%</span>
                     </motion.div>
                   </div>
                 </div>
@@ -413,7 +413,7 @@ export default function InterviewPrepPage() {
                       whileHover={{ scale: 1.02 }}
                     >
                       <div
-                        className={`bg-gradient-to-br ${resource.color} p-4 rounded-lg text-white hover:shadow-lg transition-all`}
+                        className={`bg-gradient-to-br ${resource.color} p-4 rounded-lg text-gray-900 hover:shadow-sm transition-all`}
                       >
                         <p className="font-bold text-sm">{resource.name}</p>
                         <p className="text-xs opacity-90 mt-1">{resource.description}</p>

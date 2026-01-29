@@ -48,7 +48,7 @@ export default function SupportPage() {
         {/* Header */}
         <motion.div className="mb-8" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
           <h1 className="text-4xl font-bold mb-2">Support Center</h1>
-          <p className="text-muted-foreground">Get help with placements, interviews, and more</p>
+          <p className="text-gray-600">Get help with placements, interviews, and more</p>
         </motion.div>
 
         <div className="grid lg:grid-cols-3 gap-6">
@@ -78,14 +78,14 @@ export default function SupportPage() {
                   <Button
                     onClick={handleAskChatbot}
                     disabled={loading || !question.trim()}
-                    className="bg-primary hover:bg-primary/90"
+                    className="bg-primary hover:bg-primary"
                   >
                     {loading ? "Thinking..." : "Ask"}
                   </Button>
                 </div>
 
                 {error && (
-                  <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded-lg text-red-600 dark:text-red-400 text-sm">
+                  <div className="bg-red-50 p-3 rounded-lg text-red-600 text-sm">
                     {error}
                   </div>
                 )}
@@ -131,14 +131,14 @@ export default function SupportPage() {
                   <Mail className="w-4 h-4 mt-1 text-accent" />
                   <div>
                     <p className="font-medium">Email</p>
-                    <p className="text-muted-foreground">placement@college.edu</p>
+                    <p className="text-gray-600">placement@college.edu</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
                   <Phone className="w-4 h-4 mt-1 text-accent" />
                   <div>
                     <p className="font-medium">Phone</p>
-                    <p className="text-muted-foreground">+91-XXXXX-XXXXX</p>
+                    <p className="text-gray-600">+91-XXXXX-XXXXX</p>
                   </div>
                 </div>
               </div>

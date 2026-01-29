@@ -351,7 +351,7 @@ function ResumePreview({ data, templateId }: { data: ResumeData; templateId: str
 
   const renderTemplate3 = () => (
     <div className="bg-gradient-to-br from-purple-50 to-pink-50 text-gray-900 p-8 space-y-6" style={{ fontFamily: 'Georgia, serif', minHeight: '400px' }}>
-      <div className="bg-white rounded-lg shadow-lg p-6">
+      <div className="bg-white rounded-lg shadow-sm p-6">
         <h1 className="text-4xl font-bold text-purple-600 mb-3 text-center">{data.personalInfo.name || "Your Name"}</h1>
         <div className="flex justify-center flex-wrap gap-4 text-sm text-gray-700 mb-4">
           {data.personalInfo.email ? <span>📧 {data.personalInfo.email}</span> : <span className="text-gray-400">📧 email@example.com</span>}
@@ -1030,13 +1030,13 @@ export default function ResumeBuilderPage() {
               <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                 AI Resume Builder
               </h1>
-              <p className="text-muted-foreground">Create, edit, and optimize your resume with AI assistance</p>
+              <p className="text-gray-600">Create, edit, and optimize your resume with AI assistance</p>
             </div>
             <div className="flex gap-2">
               <Button
                 variant="outline"
                 onClick={() => setShowPreview(true)}
-                className="gap-2 bg-slate-50 dark:bg-slate-800/50"
+                className="gap-2 bg-slate-50"
               >
                 <Eye className="w-4 h-4" />
                 Preview Resume
@@ -1044,7 +1044,7 @@ export default function ResumeBuilderPage() {
               <Button
                 variant="outline"
                 onClick={() => document.getElementById("resume-upload")?.click()}
-                className="gap-2 bg-slate-50 dark:bg-slate-800/50"
+                className="gap-2 bg-slate-50"
               >
                 <Upload className="w-4 h-4" />
                 Upload
@@ -1058,7 +1058,7 @@ export default function ResumeBuilderPage() {
               />
               <Button
                 onClick={handleSaveResume}
-                className="gap-2 bg-blue-500 hover:bg-blue-600 text-white"
+                className="gap-2 bg-blue-500 hover:bg-blue-600 text-gray-900"
               >
                 <Save className="w-4 h-4" />
                 Save as PDF
@@ -1066,7 +1066,7 @@ export default function ResumeBuilderPage() {
               <Button
                 onClick={handleExportPDF}
                 variant="outline"
-                className="gap-2 bg-slate-50 dark:bg-slate-800/50"
+                className="gap-2 bg-slate-50"
               >
                 <Download className="w-4 h-4" />
                 Export PDF
@@ -1078,7 +1078,7 @@ export default function ResumeBuilderPage() {
         <div className="grid lg:grid-cols-4 gap-6">
           {/* Left Sidebar - Sections */}
           <div className="lg:col-span-1 space-y-4">
-            <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-4 shadow-sm">
+            <Card className="bg-white border border-slate-200/70 p-4 shadow-sm">
               <h3 className="font-semibold mb-4 flex items-center gap-2">
                 <Layout className="w-4 h-4" />
                 Sections
@@ -1099,8 +1099,8 @@ export default function ResumeBuilderPage() {
                       key={section.id}
                       onClick={() => setCurrentSection(section.id as any)}
                       className={`w-full text-left px-3 py-2 rounded-lg transition-all flex items-center gap-2 ${currentSection === section.id
-                          ? "bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-semibold"
-                          : "bg-slate-50 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
+                          ? "bg-blue-50 text-blue-700 font-semibold"
+                          : "bg-slate-50 text-slate-700 hover:bg-slate-100"
                         }`}
                     >
                       <Icon className="w-4 h-4" />
@@ -1112,7 +1112,7 @@ export default function ResumeBuilderPage() {
             </Card>
 
             {/* Template Selection */}
-            <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-4 shadow-sm">
+            <Card className="bg-white border border-slate-200/70 p-4 shadow-sm">
               <h3 className="font-semibold mb-4 flex items-center gap-2">
                 <Layout className="w-4 h-4" />
                 Templates
@@ -1120,23 +1120,23 @@ export default function ResumeBuilderPage() {
               <Button
                 variant="outline"
                 onClick={() => setShowTemplateModal(true)}
-                className="w-full gap-2 bg-slate-50 dark:bg-slate-800/50"
+                className="w-full gap-2 bg-slate-50"
               >
                 <Eye className="w-4 h-4" />
                 Select Template
               </Button>
               {selectedTemplate && (
-                <p className="text-xs text-muted-foreground mt-2">
+                <p className="text-xs text-gray-600 mt-2">
                   {resumeTemplates.find(t => t.id === selectedTemplate)?.name}
                 </p>
               )}
             </Card>
 
             {/* AI Generate Button */}
-            <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-4 shadow-sm">
+            <Card className="bg-white border border-slate-200/70 p-4 shadow-sm">
               <Button
                 onClick={handleAIGenerate}
-                className="w-full gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white"
+                className="w-full gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-gray-900"
               >
                 <Sparkles className="w-4 h-4" />
                 AI Generate Resume
@@ -1146,7 +1146,7 @@ export default function ResumeBuilderPage() {
 
           {/* Main Content - Resume Editor */}
           <div className="lg:col-span-2">
-            <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 shadow-sm min-h-[600px]">
+            <Card className="bg-white border border-slate-200/70 p-6 shadow-sm min-h-[600px]">
               {currentSection === "personal" && (
                 <div className="space-y-4">
                   <h2 className="text-2xl font-bold mb-4">Personal Information</h2>
@@ -1232,7 +1232,7 @@ export default function ResumeBuilderPage() {
                     placeholder="Write a compelling career objective (at least 50 characters for better ATS score)..."
                     className="min-h-[200px]"
                   />
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-gray-600">
                     {resumeData.objective.length} characters
                   </p>
                 </div>
@@ -1242,13 +1242,13 @@ export default function ResumeBuilderPage() {
                 <div className="space-y-4">
                   <div className="flex items-center justify-between mb-4">
                     <h2 className="text-2xl font-bold">Education</h2>
-                    <Button onClick={handleAddEducation} size="sm" className="gap-2 bg-blue-500 hover:bg-blue-600 text-white">
+                    <Button onClick={handleAddEducation} size="sm" className="gap-2 bg-blue-500 hover:bg-blue-600 text-gray-900">
                       <Plus className="w-4 h-4" />
                       Add Education
                     </Button>
                   </div>
                   {resumeData.education.map((edu) => (
-                    <Card key={edu.id} className="p-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                    <Card key={edu.id} className="p-4 bg-slate-50 border border-slate-200">
                       <div className="flex justify-between items-start mb-4">
                         <h3 className="font-semibold">Education Entry</h3>
                         <Button
@@ -1306,7 +1306,7 @@ export default function ResumeBuilderPage() {
                     </Card>
                   ))}
                   {resumeData.education.length === 0 && (
-                    <div className="text-center py-12 text-muted-foreground">
+                    <div className="text-center py-12 text-gray-600">
                       <GraduationCap className="w-12 h-12 mx-auto mb-4 opacity-50" />
                       <p>No education entries yet. Click "Add Education" to get started.</p>
                     </div>
@@ -1318,13 +1318,13 @@ export default function ResumeBuilderPage() {
                 <div className="space-y-4">
                   <div className="flex items-center justify-between mb-4">
                     <h2 className="text-2xl font-bold">Work Experience</h2>
-                    <Button onClick={handleAddExperience} size="sm" className="gap-2 bg-blue-500 hover:bg-blue-600 text-white">
+                    <Button onClick={handleAddExperience} size="sm" className="gap-2 bg-blue-500 hover:bg-blue-600 text-gray-900">
                       <Plus className="w-4 h-4" />
                       Add Experience
                     </Button>
                   </div>
                   {resumeData.experience.map((exp) => (
-                    <Card key={exp.id} className="p-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                    <Card key={exp.id} className="p-4 bg-slate-50 border border-slate-200">
                       <div className="flex justify-between items-start mb-4">
                         <h3 className="font-semibold">Experience Entry</h3>
                         <Button
@@ -1369,7 +1369,7 @@ export default function ResumeBuilderPage() {
                             placeholder="Describe your responsibilities and achievements (at least 20 characters)..."
                             className="min-h-[100px]"
                           />
-                          <p className="text-xs text-muted-foreground mt-1">
+                          <p className="text-xs text-gray-600 mt-1">
                             {exp.description.length} characters
                           </p>
                         </div>
@@ -1377,7 +1377,7 @@ export default function ResumeBuilderPage() {
                     </Card>
                   ))}
                   {resumeData.experience.length === 0 && (
-                    <div className="text-center py-12 text-muted-foreground">
+                    <div className="text-center py-12 text-gray-600">
                       <Briefcase className="w-12 h-12 mx-auto mb-4 opacity-50" />
                       <p>No work experience yet. Click "Add Experience" to get started.</p>
                     </div>
@@ -1389,13 +1389,13 @@ export default function ResumeBuilderPage() {
                 <div className="space-y-4">
                   <div className="flex items-center justify-between mb-4">
                     <h2 className="text-2xl font-bold">Projects</h2>
-                    <Button onClick={handleAddProject} size="sm" className="gap-2 bg-blue-500 hover:bg-blue-600 text-white">
+                    <Button onClick={handleAddProject} size="sm" className="gap-2 bg-blue-500 hover:bg-blue-600 text-gray-900">
                       <Plus className="w-4 h-4" />
                       Add Project
                     </Button>
                   </div>
                   {resumeData.projects.map((proj) => (
-                    <Card key={proj.id} className="p-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                    <Card key={proj.id} className="p-4 bg-slate-50 border border-slate-200">
                       <div className="flex justify-between items-start mb-4">
                         <h3 className="font-semibold">Project Entry</h3>
                         <Button
@@ -1447,7 +1447,7 @@ export default function ResumeBuilderPage() {
                     </Card>
                   ))}
                   {resumeData.projects.length === 0 && (
-                    <div className="text-center py-12 text-muted-foreground">
+                    <div className="text-center py-12 text-gray-600">
                       <Code className="w-12 h-12 mx-auto mb-4 opacity-50" />
                       <p>No projects yet. Click "Add Project" to get started.</p>
                     </div>
@@ -1477,7 +1477,7 @@ export default function ResumeBuilderPage() {
                           input.value = ""
                         }
                       }}
-                      className="bg-blue-500 hover:bg-blue-600 text-white"
+                      className="bg-blue-500 hover:bg-blue-600 text-gray-900"
                     >
                       Add
                     </Button>
@@ -1486,7 +1486,7 @@ export default function ResumeBuilderPage() {
                     {resumeData.skills.map((skill, index) => (
                       <Badge
                         key={index}
-                        className="bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-3 py-1 flex items-center gap-2"
+                        className="bg-blue-100 text-blue-700 px-3 py-1 flex items-center gap-2"
                       >
                         {skill}
                         <button
@@ -1502,7 +1502,7 @@ export default function ResumeBuilderPage() {
                     ))}
                   </div>
                   {resumeData.skills.length === 0 && (
-                    <div className="text-center py-12 text-muted-foreground">
+                    <div className="text-center py-12 text-gray-600">
                       <Award className="w-12 h-12 mx-auto mb-4 opacity-50" />
                       <p>No skills added yet. Add at least 5 skills for better ATS matching.</p>
                     </div>
@@ -1514,13 +1514,13 @@ export default function ResumeBuilderPage() {
                 <div className="space-y-4">
                   <div className="flex items-center justify-between mb-4">
                     <h2 className="text-2xl font-bold">Certifications</h2>
-                    <Button onClick={handleAddCertification} size="sm" className="gap-2 bg-blue-500 hover:bg-blue-600 text-white">
+                    <Button onClick={handleAddCertification} size="sm" className="gap-2 bg-blue-500 hover:bg-blue-600 text-gray-900">
                       <Plus className="w-4 h-4" />
                       Add Certification
                     </Button>
                   </div>
                   {resumeData.certifications.map((cert) => (
-                    <Card key={cert.id} className="p-4 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                    <Card key={cert.id} className="p-4 bg-slate-50 border border-slate-200">
                       <div className="flex justify-between items-start mb-4">
                         <h3 className="font-semibold">Certification Entry</h3>
                         <Button
@@ -1561,7 +1561,7 @@ export default function ResumeBuilderPage() {
                     </Card>
                   ))}
                   {resumeData.certifications.length === 0 && (
-                    <div className="text-center py-12 text-muted-foreground">
+                    <div className="text-center py-12 text-gray-600">
                       <FileCheck className="w-12 h-12 mx-auto mb-4 opacity-50" />
                       <p>No certifications yet. Click "Add Certification" to get started.</p>
                     </div>
@@ -1574,18 +1574,18 @@ export default function ResumeBuilderPage() {
           {/* Right Sidebar - AI Suggestions & ATS Score */}
           <div className="lg:col-span-1 space-y-4">
             {/* ATS Score Card */}
-            <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-4 shadow-sm">
+            <Card className="bg-white border border-slate-200/70 p-4 shadow-sm">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-semibold flex items-center gap-2">
                   <TrendingUp className="w-4 h-4" />
                   ATS Score
                 </h3>
-                <Badge className={`${getScoreBadgeColor(atsScore)} text-white`}>
+                <Badge className={`${getScoreBadgeColor(atsScore)} text-gray-900`}>
                   {atsScore}/100
                 </Badge>
               </div>
               <div className="space-y-2">
-                <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-3">
+                <div className="w-full bg-slate-200 rounded-full h-3">
                   <div
                     className={`h-3 rounded-full transition-all duration-500 ${atsScore >= 80 ? "bg-green-500" :
                         atsScore >= 60 ? "bg-yellow-500" :
@@ -1597,14 +1597,14 @@ export default function ResumeBuilderPage() {
                 <p className={`text-sm font-semibold ${getScoreColor(atsScore)}`}>
                   {atsScore >= 80 ? "Excellent" : atsScore >= 60 ? "Good" : "Needs Improvement"}
                 </p>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-gray-600">
                   Real-time ATS compatibility score
                 </p>
               </div>
             </Card>
 
             {/* AI Suggestions */}
-            <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-4 shadow-sm">
+            <Card className="bg-white border border-slate-200/70 p-4 shadow-sm">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-semibold flex items-center gap-2">
                   <Sparkles className="w-4 h-4" />
@@ -1621,7 +1621,7 @@ export default function ResumeBuilderPage() {
               {showSuggestions && (
                 <div className="space-y-2 max-h-[400px] overflow-y-auto">
                   {aiSuggestions.length === 0 ? (
-                    <div className="text-center py-8 text-muted-foreground">
+                    <div className="text-center py-8 text-gray-600">
                       <CheckCircle className="w-8 h-8 mx-auto mb-2 opacity-50" />
                       <p className="text-sm">No suggestions at the moment</p>
                       <p className="text-xs">Keep editing to get AI feedback</p>
@@ -1631,10 +1631,10 @@ export default function ResumeBuilderPage() {
                       <div
                         key={index}
                         className={`p-3 rounded-lg border-l-4 ${suggestion.severity === "error"
-                            ? "bg-red-50 dark:bg-red-900/20 border-red-500"
+                            ? "bg-red-50 border-red-500"
                             : suggestion.severity === "warning"
-                              ? "bg-yellow-50 dark:bg-yellow-900/20 border-yellow-500"
-                              : "bg-blue-50 dark:bg-blue-900/20 border-blue-500"
+                              ? "bg-yellow-50 border-yellow-500"
+                              : "bg-blue-50 border-blue-500"
                           }`}
                       >
                         <div className="flex items-start gap-2">
@@ -1649,10 +1649,10 @@ export default function ResumeBuilderPage() {
                             <Badge
                               variant="outline"
                               className={`text-xs mb-1 ${suggestion.severity === "error"
-                                  ? "border-red-500 text-red-700 dark:text-red-300"
+                                  ? "border-red-500 text-red-700"
                                   : suggestion.severity === "warning"
-                                    ? "border-yellow-500 text-yellow-700 dark:text-yellow-300"
-                                    : "border-blue-500 text-blue-700 dark:text-blue-300"
+                                    ? "border-yellow-500 text-yellow-700"
+                                    : "border-blue-500 text-blue-700"
                                 }`}
                             >
                               {suggestion.type.toUpperCase()}
@@ -1668,7 +1668,7 @@ export default function ResumeBuilderPage() {
             </Card>
 
             {/* Quick Actions */}
-            <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-4 shadow-sm">
+            <Card className="bg-white border border-slate-200/70 p-4 shadow-sm">
               <h3 className="font-semibold mb-4 flex items-center gap-2">
                 <Wand2 className="w-4 h-4" />
                 Quick Actions
@@ -1676,7 +1676,7 @@ export default function ResumeBuilderPage() {
               <div className="space-y-2">
                 <Button
                   variant="outline"
-                  className="w-full justify-start gap-2 bg-slate-50 dark:bg-slate-800/50"
+                  className="w-full justify-start gap-2 bg-slate-50"
                   onClick={() => {
                     // Real-time spell check - already running, show results
                     const spellingErrors = aiSuggestions.filter(s => s.type === "spelling")
@@ -1692,7 +1692,7 @@ export default function ResumeBuilderPage() {
                 </Button>
                 <Button
                   variant="outline"
-                  className="w-full justify-start gap-2 bg-slate-50 dark:bg-slate-800/50"
+                  className="w-full justify-start gap-2 bg-slate-50"
                   onClick={() => {
                     // Real-time grammar check - already running, show results
                     const grammarErrors = aiSuggestions.filter(s => s.type === "grammar")
@@ -1708,7 +1708,7 @@ export default function ResumeBuilderPage() {
                 </Button>
                 <Button
                   variant="outline"
-                  className="w-full justify-start gap-2 bg-slate-50 dark:bg-slate-800/50"
+                  className="w-full justify-start gap-2 bg-slate-50"
                   onClick={() => {
                     // Real-time alignment check - already running, show results
                     const alignmentIssues = aiSuggestions.filter(s => s.type === "alignment")
@@ -1739,8 +1739,8 @@ export default function ResumeBuilderPage() {
                 <Card
                   key={template.id}
                   className={`p-4 cursor-pointer transition-all border-2 ${selectedTemplate === template.id
-                      ? "border-blue-500 bg-blue-50 dark:bg-blue-900/30"
-                      : "border-slate-200 dark:border-slate-700 hover:border-blue-300"
+                      ? "border-blue-500 bg-blue-50"
+                      : "border-slate-200 hover:border-blue-300"
                     }`}
                   onClick={() => {
                     setSelectedTemplate(template.id)
@@ -1753,7 +1753,7 @@ export default function ResumeBuilderPage() {
                       <CheckCircle className="w-5 h-5 text-blue-500" />
                     )}
                   </div>
-                  <p className="text-sm text-muted-foreground mb-2">{template.description}</p>
+                  <p className="text-sm text-gray-600 mb-2">{template.description}</p>
                   <Badge variant="outline" className="text-xs">
                     {template.category}
                   </Badge>
@@ -1778,7 +1778,7 @@ export default function ResumeBuilderPage() {
                   </Badge>
                   <Button
                     onClick={handleExportPDF}
-                    className="gap-2 bg-blue-500 hover:bg-blue-600 text-white"
+                    className="gap-2 bg-blue-500 hover:bg-blue-600 text-gray-900"
                   >
                     <Download className="w-4 h-4" />
                     Download PDF
@@ -1789,12 +1789,12 @@ export default function ResumeBuilderPage() {
             <div className="p-6 overflow-y-auto">
               <div
                 id="resume-preview-content"
-                className="border-2 border-gray-300 rounded-lg overflow-hidden shadow-lg bg-white mx-auto"
+                className="border-2 border-gray-300 rounded-lg overflow-hidden shadow-sm bg-white mx-auto"
                 style={{ maxWidth: '210mm', minHeight: '297mm' }}
               >
                 <ResumePreview data={resumeData} templateId={selectedTemplate} />
               </div>
-              <p className="text-xs text-muted-foreground mt-4 text-center">
+              <p className="text-xs text-gray-600 mt-4 text-center">
                 Preview updates in real-time as you edit your resume. Click "Download PDF" to save your resume.
               </p>
             </div>

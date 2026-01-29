@@ -126,12 +126,12 @@ export default function ConsolidatedSheetPage() {
   }
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="flex h-screen bg-gray-50">
       <AdminSidebar />
       <div className="flex-1 flex flex-col ml-72">
         <AdminHeader />
         <main className="flex-1 overflow-y-auto pt-16">
-        <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
+        <div className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50">
           <div className="p-4 md:p-8 max-w-[1600px] mx-auto w-full">
             {/* Header */}
             <motion.div
@@ -143,7 +143,7 @@ export default function ConsolidatedSheetPage() {
                 <h1 className="text-4xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent mb-2">
                   Consolidated Sheet Generator
                 </h1>
-                <p className="text-muted-foreground">Generate and export placement/internship data with filters</p>
+                <p className="text-gray-600">Generate and export placement/internship data with filters</p>
               </div>
             </motion.div>
 
@@ -241,7 +241,7 @@ export default function ConsolidatedSheetPage() {
             {loading ? (
               <Card className="glass-lg p-12 text-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent mx-auto" />
-                <p className="mt-4 text-muted-foreground">Generating consolidated sheet...</p>
+                <p className="mt-4 text-gray-600">Generating consolidated sheet...</p>
               </Card>
             ) : sheet ? (
               <div className="space-y-4">
@@ -250,13 +250,13 @@ export default function ConsolidatedSheetPage() {
                     <h2 className="text-2xl font-bold">
                       {sheet.type.charAt(0).toUpperCase() + sheet.type.slice(1)} Sheet - {sheet.academicYear}
                     </h2>
-                    <p className="text-muted-foreground">
+                    <p className="text-gray-600">
                       {filteredStudents.length} student{filteredStudents.length !== 1 ? "s" : ""} found
                     </p>
                   </div>
                   <div className="flex gap-2">
                     <div className="relative">
-                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600 w-4 h-4" />
                       <Input
                         placeholder="Search students..."
                         value={searchTerm}
@@ -301,8 +301,8 @@ export default function ConsolidatedSheetPage() {
                               <span
                                 className={`px-2 py-1 rounded text-xs ${
                                   student.offerStatus === "Placed"
-                                    ? "bg-green-500/20 text-green-700 dark:text-green-300"
-                                    : "bg-amber-500/20 text-amber-700 dark:text-amber-300"
+                                    ? "bg-green-500/20 text-green-700"
+                                    : "bg-amber-500/20 text-amber-700"
                                 }`}
                               >
                                 {student.offerStatus || "Pending"}
@@ -324,9 +324,9 @@ export default function ConsolidatedSheetPage() {
               </div>
             ) : (
               <Card className="glass-lg p-12 text-center">
-                <FileSpreadsheet className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
+                <FileSpreadsheet className="w-16 h-16 mx-auto mb-4 text-gray-600" />
                 <h3 className="text-xl font-bold mb-2">No Sheet Generated</h3>
-                <p className="text-muted-foreground mb-4">
+                <p className="text-gray-600 mb-4">
                   Configure filters and click "Generate Sheet" to create a consolidated report
                 </p>
               </Card>

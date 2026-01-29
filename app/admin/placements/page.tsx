@@ -179,20 +179,20 @@ export default function AdminPlacementsPage() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case "active":
-        return "bg-green-500/20 text-green-700 dark:text-green-300"
+        return "bg-green-500/20 text-green-700"
       case "closed":
-        return "bg-red-500/20 text-red-700 dark:text-red-300"
+        return "bg-red-500/20 text-red-700"
       case "upcoming":
-        return "bg-blue-500/20 text-blue-700 dark:text-blue-300"
+        return "bg-blue-500/20 text-blue-700"
       default:
-        return "bg-gray-500/20 text-gray-700 dark:text-gray-300"
+        return "bg-gray-500/20 text-gray-700"
     }
   }
 
   const getTypeColor = (type: string) => {
     return type === "placement"
-      ? "bg-purple-500/20 text-purple-700 dark:text-purple-300"
-      : "bg-orange-500/20 text-orange-700 dark:text-orange-300"
+      ? "bg-purple-500/20 text-purple-700"
+      : "bg-orange-500/20 text-orange-700"
   }
 
   const getDaysLeft = (deadline: string) => {
@@ -224,7 +224,7 @@ export default function AdminPlacementsPage() {
                 <h1 className="text-4xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent mb-2">
                   Placement & Internship Drives
                 </h1>
-                <p className="text-muted-foreground">
+                <p className="text-gray-600">
                   Manage placement drives, track registrations, and monitor student placements
                 </p>
               </div>
@@ -245,7 +245,7 @@ export default function AdminPlacementsPage() {
             >
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex-1 relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600 w-4 h-4" />
                   <Input
                     placeholder="Search by company or position..."
                     value={searchTerm}
@@ -281,8 +281,8 @@ export default function AdminPlacementsPage() {
             <motion.div className="space-y-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               {filteredDrives.length === 0 ? (
                 <Card className="bg-white p-12 text-center shadow-md border border-gray-200">
-                  <Building className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-                  <p className="text-muted-foreground text-lg">No drives found</p>
+                  <Building className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+                  <p className="text-gray-600 text-lg">No drives found</p>
                   <Button onClick={() => setShowCreateForm(true)} className="mt-4 gap-2">
                     <Plus className="w-4 h-4" />
                     Create First Drive
@@ -301,7 +301,7 @@ export default function AdminPlacementsPage() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.05 }}
                     >
-                      <Card className="bg-white p-6 hover:shadow-lg transition-all duration-300 shadow-md border border-gray-200">
+                      <Card className="bg-white p-6 hover:shadow-sm transition-all duration-300 shadow-md border border-gray-200">
                         <div className="flex items-start justify-between gap-4">
                           <div className="flex-1">
                             <div className="flex items-center gap-3 mb-3 flex-wrap">
@@ -311,7 +311,7 @@ export default function AdminPlacementsPage() {
                               <span className="text-xs bg-muted px-2 py-1 rounded">#{drive.seriesNumber}</span>
                             </div>
                             <div className="flex items-center gap-2 mb-3">
-                              <p className="text-muted-foreground">{drive.position}</p>
+                              <p className="text-gray-600">{drive.position}</p>
                               {drive.jdFileUrl && (
                                 <Button
                                   size="sm"
@@ -352,14 +352,14 @@ export default function AdminPlacementsPage() {
                             </div>
                             {drive.eligibilityCriteria.branches && drive.eligibilityCriteria.branches.length > 0 && (
                               <div className="flex gap-2 flex-wrap">
-                                <span className="text-xs text-muted-foreground">Eligible:</span>
+                                <span className="text-xs text-gray-600">Eligible:</span>
                                 {drive.eligibilityCriteria.branches.map((branch) => (
-                                  <span key={branch} className="text-xs bg-blue-500/10 text-blue-700 dark:text-blue-300 px-2 py-1 rounded">
+                                  <span key={branch} className="text-xs bg-blue-500/10 text-blue-700 px-2 py-1 rounded">
                                     {branch}
                                   </span>
                                 ))}
                                 {drive.eligibilityCriteria.minCGPA && drive.eligibilityCriteria.minCGPA > 0 && (
-                                  <span className="text-xs bg-purple-500/10 text-purple-700 dark:text-purple-300 px-2 py-1 rounded">
+                                  <span className="text-xs bg-purple-500/10 text-purple-700 px-2 py-1 rounded">
                                     CGPA ≥ {drive.eligibilityCriteria.minCGPA}
                                   </span>
                                 )}
@@ -381,7 +381,7 @@ export default function AdminPlacementsPage() {
                               <Button size="sm" variant="outline">
                                 <Filter className="w-4 h-4" />
                               </Button>
-                              <div className="absolute right-0 mt-2 w-48 bg-background border rounded-lg shadow-lg p-2 hidden group-hover:block z-10">
+                              <div className="absolute right-0 mt-2 w-48 bg-background border rounded-lg shadow-sm p-2 hidden group-hover:block z-10">
                                 <button
                                   onClick={() => handleUpdateStatus(drive.id, "active")}
                                   className="w-full text-left px-3 py-2 hover:bg-muted rounded text-sm"
@@ -426,14 +426,14 @@ export default function AdminPlacementsPage() {
       <AnimatePresence>
         {showCreateForm && (
           <motion.div
-            className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 z-50 overflow-y-auto"
+            className="fixed inset-0 bg-black/60  flex items-center justify-center p-4 z-50 overflow-y-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setShowCreateForm(false)}
           >
             <motion.div
-              className="bg-background rounded-2xl max-w-4xl w-full p-8 shadow-2xl my-8"
+              className="bg-background rounded-2xl max-w-4xl w-full p-8 shadow-sm my-8"
               onClick={(e) => e.stopPropagation()}
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -495,7 +495,7 @@ export default function AdminPlacementsPage() {
                     onChange={(e) => setFormData({ ...formData, jdFileUrl: e.target.value })}
                     placeholder="https://drive.google.com/file/d/..."
                   />
-                  <p className="text-xs text-muted-foreground mt-1">
+                  <p className="text-xs text-gray-600 mt-1">
                     Upload JD file to Google Drive/Dropbox and paste the shareable link here
                   </p>
                 </div>
@@ -679,7 +679,7 @@ export default function AdminPlacementsPage() {
                       placeholder="Enter student IDs separated by commas (e.g., 21BCE001, 21BCE002)"
                       rows={2}
                     />
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-xs text-gray-600 mt-1">
                       Leave empty to allow all eligible students. Enter specific student IDs to restrict access.
                     </p>
                   </div>
@@ -703,14 +703,14 @@ export default function AdminPlacementsPage() {
       <AnimatePresence>
         {showViewModal && selectedDrive && (
           <motion.div
-            className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 z-50 overflow-y-auto"
+            className="fixed inset-0 bg-black/60  flex items-center justify-center p-4 z-50 overflow-y-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setShowViewModal(false)}
           >
             <motion.div
-              className="bg-background rounded-2xl max-w-5xl w-full p-8 shadow-2xl my-8 max-h-[90vh] overflow-y-auto"
+              className="bg-background rounded-2xl max-w-5xl w-full p-8 shadow-sm my-8 max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -719,7 +719,7 @@ export default function AdminPlacementsPage() {
               <div className="flex justify-between items-start mb-6">
                 <div>
                   <h2 className="text-3xl font-bold mb-2">{selectedDrive.companyName}</h2>
-                  <p className="text-muted-foreground">{selectedDrive.position}</p>
+                  <p className="text-gray-600">{selectedDrive.position}</p>
                 </div>
                 <Button variant="ghost" size="icon" onClick={() => setShowViewModal(false)}>
                   <X className="w-5 h-5" />
@@ -731,23 +731,23 @@ export default function AdminPlacementsPage() {
                   <h3 className="font-semibold mb-3">Drive Information</h3>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Package:</span>
+                      <span className="text-gray-600">Package:</span>
                       <span className="font-semibold">{selectedDrive.package}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Type:</span>
+                      <span className="text-gray-600">Type:</span>
                       <Badge className={getTypeColor(selectedDrive.type)}>{selectedDrive.type}</Badge>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Status:</span>
+                      <span className="text-gray-600">Status:</span>
                       <Badge className={getStatusColor(selectedDrive.status)}>{selectedDrive.status}</Badge>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Deadline:</span>
+                      <span className="text-gray-600">Deadline:</span>
                       <span>{new Date(selectedDrive.deadline).toLocaleDateString()}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Series Number:</span>
+                      <span className="text-gray-600">Series Number:</span>
                       <span>#{selectedDrive.seriesNumber}</span>
                     </div>
                   </div>
@@ -757,17 +757,17 @@ export default function AdminPlacementsPage() {
                   <h3 className="font-semibold mb-3">Registration Stats</h3>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Total Registrations:</span>
+                      <span className="text-gray-600">Total Registrations:</span>
                       <span className="font-semibold">{registrations.length}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Placed:</span>
+                      <span className="text-gray-600">Placed:</span>
                       <span className="font-semibold text-green-600">
                         {registrations.filter((r) => r.hasOffer).length}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Pending:</span>
+                      <span className="text-gray-600">Pending:</span>
                       <span className="font-semibold text-orange-600">
                         {registrations.filter((r) => !r.hasOffer).length}
                       </span>
@@ -787,7 +787,7 @@ export default function AdminPlacementsPage() {
               <div className="mb-6">
                 <h3 className="font-semibold mb-3">Job Description</h3>
                 <Card className="p-4">
-                  <p className="text-sm text-muted-foreground whitespace-pre-wrap">{selectedDrive.jobDescription}</p>
+                  <p className="text-sm text-gray-600 whitespace-pre-wrap">{selectedDrive.jobDescription}</p>
                 </Card>
               </div>
 
@@ -826,8 +826,8 @@ export default function AdminPlacementsPage() {
                 <div className="space-y-2 max-h-96 overflow-y-auto">
                   {registrations.length === 0 ? (
                     <Card className="p-8 text-center">
-                      <Users className="w-12 h-12 text-muted-foreground mx-auto mb-2" />
-                      <p className="text-muted-foreground">No registrations yet</p>
+                      <Users className="w-12 h-12 text-gray-600 mx-auto mb-2" />
+                      <p className="text-gray-600">No registrations yet</p>
                     </Card>
                   ) : (
                     registrations.map((reg) => (
@@ -835,10 +835,10 @@ export default function AdminPlacementsPage() {
                         <div className="flex justify-between items-start">
                           <div>
                             <p className="font-semibold">{reg.studentName}</p>
-                            <p className="text-sm text-muted-foreground">
+                            <p className="text-sm text-gray-600">
                               {reg.rollNumber} • {reg.branch} • {reg.year} Year • CGPA: {reg.cgpa}
                             </p>
-                            <p className="text-xs text-muted-foreground mt-1">
+                            <p className="text-xs text-gray-600 mt-1">
                               {reg.email} • {reg.phone}
                             </p>
                           </div>

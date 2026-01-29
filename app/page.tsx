@@ -64,7 +64,7 @@ const testimonials = [
 
 export default function Home() {
   return (
-    <div className="min-h-screen relative overflow-x-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-950">
+    <div className="min-h-screen relative overflow-x-hidden bg-gray-50">
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-x-hidden">
@@ -82,44 +82,21 @@ export default function Home() {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-sm border border-blue-400/30 text-blue-300 px-4 py-2 rounded-full text-sm font-medium shadow-lg"
+                className="inline-flex items-center gap-2 bg-blue-100 border border-blue-200 text-blue-700 px-4 py-2 rounded-full text-sm font-medium"
               >
-                <motion.div
-                  animate={{ rotate: [0, 360] }}
-                  transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "linear" as const }}
-                >
-                  <Star className="w-4 h-4 fill-blue-400" />
-                </motion.div>
-                <span className="text-blue-200 drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]">India's Leading College Placement Portal</span>
+                <Star className="w-4 h-4 fill-blue-600" />
+                <span>India's Leading College Placement Portal</span>
               </motion.div>
 
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="text-5xl md:text-7xl font-bold leading-tight"
+                className="text-5xl md:text-7xl font-bold leading-tight text-gray-900"
               >
-                <span className="text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">Reach the </span>
-                <motion.span
-                  className="bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-300 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(59,130,246,0.9)]"
-                  animate={{
-                    backgroundPosition: ["0%", "100%", "0%"],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Number.POSITIVE_INFINITY,
-                    ease: "linear" as const
-                  }}
-                  style={{
-                    backgroundSize: "200% auto"
-                  }}
-                >
-                  TOP
-                </motion.span>
+                Reach the TOP
                 <br />
-                <span className="bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-300 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(139,92,246,0.9)]">
-                  of Your Life
-                </span>
+                of Your Life
               </motion.h1>
 
               <motion.div
@@ -128,17 +105,12 @@ export default function Home() {
                 transition={{ delay: 0.5 }}
                 className="space-y-4"
               >
-                <div className="flex items-center justify-center gap-3 text-xl md:text-2xl font-semibold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.6)]">
-                  <motion.div
-                    animate={{ scale: [1, 1.2, 1], rotate: [0, 180, 360] }}
-                    transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" as const }}
-                  >
-                    <TrendingUp className="w-8 h-8 text-cyan-300 drop-shadow-[0_0_10px_rgba(34,211,238,0.8)]" />
-                  </motion.div>
+                <div className="flex items-center justify-center gap-3 text-xl md:text-2xl font-semibold text-gray-900">
+                  <TrendingUp className="w-8 h-8 text-blue-600" />
                   <span>Use our platform and</span>
                 </div>
-                <p className="text-xl md:text-2xl text-gray-100 font-medium leading-relaxed drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">
-                  <span className="text-cyan-300 font-bold drop-shadow-[0_0_12px_rgba(34,211,238,0.9)]">Step Up to Success!</span> Your journey to the top starts here.
+                <p className="text-xl md:text-2xl text-gray-700 font-medium leading-relaxed">
+                  <span className="text-blue-600 font-bold">Step Up to Success!</span> Your journey to the top starts here.
                   Connect with top companies and achieve your career dreams.
                 </p>
               </motion.div>
@@ -150,24 +122,14 @@ export default function Home() {
                 className="flex flex-wrap gap-4"
               >
                 <Link to="/login">
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Button size="lg" className="gap-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold hover:from-blue-600 hover:to-cyan-600 shadow-xl shadow-blue-500/50">
-                      Get Started <ArrowRight className="w-5 h-5" />
-                    </Button>
-                  </motion.div>
+                  <Button size="lg" className="gap-2 bg-blue-600 hover:bg-blue-700 text-gray-900 font-bold">
+                    Get Started <ArrowRight className="w-5 h-5" />
+                  </Button>
                 </Link>
                 <Link to="#features">
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Button size="lg" variant="outline" className="gap-2 bg-transparent border-2 border-white/30 text-white hover:bg-white/10 backdrop-blur-sm">
-                      Learn More
-                    </Button>
-                  </motion.div>
+                  <Button size="lg" variant="outline" className="gap-2 border-2 border-gray-300 text-gray-700 hover:bg-gray-100">
+                    Learn More
+                  </Button>
                 </Link>
               </motion.div>
             </motion.div>
@@ -182,7 +144,7 @@ export default function Home() {
           transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
         >
           <motion.div
-            className="w-6 h-10 border-2 border-blue-400 rounded-full flex items-start justify-center p-2 backdrop-blur-sm bg-white/5"
+            className="w-6 h-10 border-2 border-blue-600 rounded-full flex items-start justify-center p-2 bg-white"
             whileHover={{ scale: 1.1 }}
           >
             <motion.div
@@ -199,10 +161,10 @@ export default function Home() {
         <div className="container mx-auto max-w-7xl">
           <ScrollReveal direction="up">
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]">
-                By the <span className="bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-300 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(59,130,246,0.9)]">Numbers</span>
+              <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900 ">
+                By the <span className="bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-300 bg-clip-text text-transparent ">Numbers</span>
               </h2>
-              <p className="text-lg text-gray-200 drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">Join thousands of successful graduates</p>
+              <p className="text-lg text-gray-600 ">Join thousands of successful graduates</p>
             </div>
           </ScrollReveal>
 
@@ -215,11 +177,11 @@ export default function Home() {
         <div className="container mx-auto max-w-7xl">
           <ScrollReveal direction="up" delay={0.1}>
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]">
+              <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
                 Comprehensive{" "}
-                <span className="bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-300 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(139,92,246,0.9)]">Solutions</span>
+                <span className="text-blue-600">Solutions</span>
               </h2>
-              <p className="text-lg text-gray-200 max-w-2xl mx-auto drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                 Everything you need for career success in one platform
               </p>
             </div>
@@ -251,10 +213,10 @@ export default function Home() {
         <div className="container mx-auto max-w-7xl">
           <ScrollReveal direction="up">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]">
-                Success <span className="bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-300 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(34,211,238,0.9)]">Stories</span>
+              <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900 ">
+                Success <span className="bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-300 bg-clip-text text-transparent ">Stories</span>
               </h2>
-              <p className="text-lg text-gray-200 drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">Hear from our placed students</p>
+              <p className="text-lg text-gray-600 ">Hear from our placed students</p>
             </div>
           </ScrollReveal>
 
@@ -270,10 +232,10 @@ export default function Home() {
                       <Star key={i} className="w-4 h-4 fill-accent text-accent" />
                     ))}
                   </div>
-                  <p className="text-gray-100 mb-4 italic drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">"{testimonial.content}"</p>
+                  <p className="text-gray-700 mb-4 italic">"{testimonial.content}"</p>
                   <div>
-                    <p className="font-semibold text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]">{testimonial.name}</p>
-                    <p className="text-sm text-gray-200 drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]">{testimonial.role}</p>
+                    <p className="font-semibold text-gray-900">{testimonial.name}</p>
+                    <p className="text-sm text-gray-600">{testimonial.role}</p>
                   </div>
                 </motion.div>
               </ScrollReveal>
@@ -290,7 +252,7 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="glass-lg rounded-2xl p-12 text-center"
+            className="bg-white border border-gray-200 rounded-2xl p-12 text-center shadow-sm"
           >
             <motion.div
               animate={{ rotate: 360 }}
@@ -299,12 +261,12 @@ export default function Home() {
             >
               <Rocket className="w-12 h-12 text-accent" />
             </motion.div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]">Ready to Launch Your Career?</h2>
-            <p className="text-lg text-gray-200 mb-8 max-w-2xl mx-auto drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">Ready to Launch Your Career?</h2>
+            <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
               Join RCE Career Hub today and connect with top companies seeking talent like yours
             </p>
             <Link to="/login">
-              <Button size="lg" className="gap-2 bg-accent text-accent-foreground hover:bg-accent/90 hover-lift">
+              <Button size="lg" className="gap-2 bg-blue-600 hover:bg-blue-700 text-gray-900">
                 Start Your Journey <ArrowRight className="w-5 h-5" />
               </Button>
             </Link>

@@ -114,7 +114,7 @@ export default function AdminDashboard() {
 
   if (!user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600" />
       </div>
     )
@@ -178,14 +178,14 @@ export default function AdminDashboard() {
       className="cursor-pointer"
       onClick={onClick}
     >
-      <Card className={`${gradient} border-0 text-white overflow-hidden relative`}>
+      <Card className={`${gradient} border-0 text-gray-900 overflow-hidden relative`}>
         <div className="p-6 relative z-10">
           <div className="flex items-start justify-between mb-4">
-            <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
+            <div className="p-3 bg-white/20 rounded-xl ">
               <Icon className="w-6 h-6" />
             </div>
             {trend && (
-              <div className={`flex items-center gap-1 px-2 py-1 rounded-full bg-white/20 backdrop-blur-sm text-xs font-medium`}>
+              <div className={`flex items-center gap-1 px-2 py-1 rounded-full bg-white/20  text-xs font-medium`}>
                 {trend.isPositive ? (
                   <TrendingUp className="w-3 h-3" />
                 ) : (
@@ -196,8 +196,8 @@ export default function AdminDashboard() {
             )}
           </div>
           <h3 className="text-3xl font-bold mb-1">{value}</h3>
-          <p className="text-white/90 text-sm font-medium">{title}</p>
-          {subtitle && <p className="text-white/70 text-xs mt-1">{subtitle}</p>}
+          <p className="text-gray-900 text-sm font-medium">{title}</p>
+          {subtitle && <p className="text-gray-900/70 text-xs mt-1">{subtitle}</p>}
         </div>
         <div className="absolute bottom-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mb-16"></div>
       </Card>
@@ -205,7 +205,7 @@ export default function AdminDashboard() {
   )
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="flex h-screen bg-gray-50">
       <AdminSidebar />
       <div className="flex-1 flex flex-col ml-72">
         <AdminHeader />
@@ -284,7 +284,7 @@ export default function AdminDashboard() {
 
             {/* Secondary Metrics */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Card className="p-6 border-2 border-blue-100 bg-white/50 backdrop-blur-sm">
+              <Card className="p-6 border-2 border-blue-100 bg-white/50 ">
                 <div className="flex items-center justify-between mb-4">
                   <div className="p-3 bg-blue-100 rounded-xl">
                     <DollarSign className="w-6 h-6 text-blue-600" />
@@ -299,7 +299,7 @@ export default function AdminDashboard() {
                 <p className="text-sm text-gray-600">Average Salary</p>
               </Card>
 
-              <Card className="p-6 border-2 border-purple-100 bg-white/50 backdrop-blur-sm">
+              <Card className="p-6 border-2 border-purple-100 bg-white/50 ">
                 <div className="flex items-center justify-between mb-4">
                   <div className="p-3 bg-purple-100 rounded-xl">
                     <Award className="w-6 h-6 text-purple-600" />
@@ -314,7 +314,7 @@ export default function AdminDashboard() {
                 <p className="text-sm text-gray-600">Highest Package</p>
               </Card>
 
-              <Card className="p-6 border-2 border-orange-100 bg-white/50 backdrop-blur-sm">
+              <Card className="p-6 border-2 border-orange-100 bg-white/50 ">
                 <div className="flex items-center justify-between mb-4">
                   <div className="p-3 bg-orange-100 rounded-xl">
                     <Clock className="w-6 h-6 text-orange-600" />
@@ -333,7 +333,7 @@ export default function AdminDashboard() {
             {/* Charts Row */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Placement Trends */}
-              <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+              <Card className="p-6 border border-gray-200 bg-white">
                 <div className="flex items-center justify-between mb-6">
                   <div>
                     <h3 className="text-lg font-bold text-gray-900">Placement Trends</h3>
@@ -377,7 +377,7 @@ export default function AdminDashboard() {
               </Card>
 
               {/* Placement Status */}
-              <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+              <Card className="p-6 border border-gray-200 bg-white">
                 <div className="flex items-center justify-between mb-6">
                   <div>
                     <h3 className="text-lg font-bold text-gray-900">Placement Status</h3>
@@ -426,7 +426,7 @@ export default function AdminDashboard() {
             {/* Branch Performance & Top Companies */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Branch Performance */}
-              <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+              <Card className="p-6 border border-gray-200 bg-white">
                 <div className="flex items-center justify-between mb-6">
                   <div>
                     <h3 className="text-lg font-bold text-gray-900">Branch Performance</h3>
@@ -454,7 +454,7 @@ export default function AdminDashboard() {
               </Card>
 
               {/* Top Companies */}
-              <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+              <Card className="p-6 border border-gray-200 bg-white">
                 <div className="flex items-center justify-between mb-6">
                   <div>
                     <h3 className="text-lg font-bold text-gray-900">Top Companies</h3>
@@ -473,7 +473,7 @@ export default function AdminDashboard() {
                       onClick={() => navigate("/admin/placements")}
                     >
                       <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-bold">
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-gray-900 font-bold">
                           {index + 1}
                         </div>
                         <div>

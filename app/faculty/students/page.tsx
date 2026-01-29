@@ -147,7 +147,7 @@ export default function ManageStudentsPage() {
               <h1 className="text-4xl font-bold bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent mb-2">
                 Manage Students
               </h1>
-              <p className="text-muted-foreground">View and manage student records by branch, section, and year</p>
+              <p className="text-gray-600">View and manage student records by branch, section, and year</p>
             </motion.div>
 
             {/* Filters */}
@@ -160,7 +160,7 @@ export default function ManageStudentsPage() {
                 <div>
                   <label className="text-sm font-medium block mb-2">Search</label>
                   <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600 w-4 h-4" />
                     <Input
                       placeholder="Search by name or roll..."
                       value={searchTerm}
@@ -223,17 +223,17 @@ export default function ManageStudentsPage() {
             {/* Students List */}
             <motion.div className="space-y-4" variants={containerVariants} initial="hidden" animate="visible">
               {loading ? (
-                <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 text-center">
+                <Card className="bg-white border border-slate-200/70 p-6 text-center">
                   <p>Loading students...</p>
                 </Card>
               ) : filteredStudents.length === 0 ? (
-                <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 text-center">
-                  <p className="text-muted-foreground">No students found</p>
+                <Card className="bg-white border border-slate-200/70 p-6 text-center">
+                  <p className="text-gray-600">No students found</p>
                 </Card>
               ) : (
                 filteredStudents.map((student) => (
                   <motion.div key={student.id} variants={itemVariants}>
-                    <Card className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/70 dark:border-slate-700/70 p-6 hover:shadow-lg transition-all duration-300 shadow-sm">
+                    <Card className="bg-white border border-slate-200/70 p-6 hover:shadow-sm transition-all duration-300 shadow-sm">
                       <div className="flex items-start justify-between gap-4">
                         <div className="flex-1">
                           <div className="flex items-center gap-3 mb-3">
@@ -241,16 +241,16 @@ export default function ManageStudentsPage() {
                             <Badge
                               className={
                                 student.status === "active"
-                                  ? "bg-green-500/20 text-green-700 dark:text-green-300"
+                                  ? "bg-green-500/20 text-green-700"
                                   : student.status === "placed"
-                                  ? "bg-blue-500/20 text-blue-700 dark:text-blue-300"
-                                  : "bg-red-500/20 text-red-700 dark:text-red-300"
+                                  ? "bg-blue-500/20 text-blue-700"
+                                  : "bg-red-500/20 text-red-700"
                               }
                             >
                               {student.status.charAt(0).toUpperCase() + student.status.slice(1)}
                             </Badge>
                           </div>
-                          <p className="text-sm text-muted-foreground mb-3">
+                          <p className="text-sm text-gray-600 mb-3">
                             Roll: {student.rollNumber} | CGPA: {student.cgpa} | Branch: {student.branch} | Year: {student.year}
                           </p>
                           <div className="grid md:grid-cols-2 gap-2 text-sm">
@@ -268,20 +268,20 @@ export default function ManageStudentsPage() {
                           <Button 
                             size="sm" 
                             variant="outline" 
-                            className="gap-2 bg-slate-50 dark:bg-slate-800/50"
+                            className="gap-2 bg-slate-50"
                             onClick={() => handleViewDetails(student)}
                           >
                             <Eye className="w-4 h-4" />
                             View
                           </Button>
-                          <Button size="sm" variant="outline" className="gap-2 bg-slate-50 dark:bg-slate-800/50">
+                          <Button size="sm" variant="outline" className="gap-2 bg-slate-50">
                             <Edit2 className="w-4 h-4" />
                             Edit
                           </Button>
                           <Button
                             size="sm"
                             variant="outline"
-                            className="gap-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 bg-transparent"
+                            className="gap-2 text-red-600 hover:bg-red-50 bg-transparent"
                           >
                             <Trash2 className="w-4 h-4" />
                           </Button>
@@ -306,42 +306,42 @@ export default function ManageStudentsPage() {
                     </DialogHeader>
                     <div className="space-y-6 mt-4">
                       {/* Basic Info */}
-                      <Card className="bg-slate-50 dark:bg-slate-800/50 p-4">
+                      <Card className="bg-slate-50 p-4">
                         <h3 className="font-semibold mb-3 flex items-center gap-2">
                           <User className="w-5 h-5" />
                           Basic Information
                         </h3>
                         <div className="grid md:grid-cols-2 gap-4 text-sm">
                           <div>
-                            <span className="text-muted-foreground">Roll Number:</span>
+                            <span className="text-gray-600">Roll Number:</span>
                             <p className="font-medium">{selectedStudent.rollNumber}</p>
                           </div>
                           <div>
-                            <span className="text-muted-foreground">Email:</span>
+                            <span className="text-gray-600">Email:</span>
                             <p className="font-medium">{selectedStudent.email}</p>
                           </div>
                           <div>
-                            <span className="text-muted-foreground">Phone:</span>
+                            <span className="text-gray-600">Phone:</span>
                             <p className="font-medium">{selectedStudent.phone}</p>
                           </div>
                           <div>
-                            <span className="text-muted-foreground">Branch:</span>
+                            <span className="text-gray-600">Branch:</span>
                             <p className="font-medium">{selectedStudent.branch}</p>
                           </div>
                           <div>
-                            <span className="text-muted-foreground">Section:</span>
+                            <span className="text-gray-600">Section:</span>
                             <p className="font-medium">{selectedStudent.section}</p>
                           </div>
                           <div>
-                            <span className="text-muted-foreground">Year:</span>
+                            <span className="text-gray-600">Year:</span>
                             <p className="font-medium">{selectedStudent.year}</p>
                           </div>
                           <div>
-                            <span className="text-muted-foreground">CGPA:</span>
+                            <span className="text-gray-600">CGPA:</span>
                             <p className="font-medium">{selectedStudent.cgpa}</p>
                           </div>
                           <div>
-                            <span className="text-muted-foreground">Status:</span>
+                            <span className="text-gray-600">Status:</span>
                             <Badge className={selectedStudent.status === "active" ? "bg-green-500/20 text-green-700" : "bg-blue-500/20 text-blue-700"}>
                               {selectedStudent.status.charAt(0).toUpperCase() + selectedStudent.status.slice(1)}
                             </Badge>
@@ -351,16 +351,16 @@ export default function ManageStudentsPage() {
 
                       {/* Placement Offers */}
                       {selectedStudent.selectedDrives.length > 0 && (
-                        <Card className="bg-slate-50 dark:bg-slate-800/50 p-4">
+                        <Card className="bg-slate-50 p-4">
                           <h3 className="font-semibold mb-3 flex items-center gap-2">
                             <Briefcase className="w-5 h-5" />
                             Placement Offers ({selectedStudent.selectedDrives.length})
                           </h3>
                           <div className="space-y-2">
                             {selectedStudent.selectedDrives.map((driveId, idx) => (
-                              <div key={idx} className="p-3 bg-white dark:bg-slate-900 rounded-lg border">
+                              <div key={idx} className="p-3 bg-white rounded-lg border">
                                 <p className="font-medium">Offer #{idx + 1}</p>
-                                <p className="text-sm text-muted-foreground">Drive ID: {driveId}</p>
+                                <p className="text-sm text-gray-600">Drive ID: {driveId}</p>
                               </div>
                             ))}
                           </div>
@@ -369,14 +369,14 @@ export default function ManageStudentsPage() {
 
                       {/* Academic Performance */}
                       {studentPerformance && (
-                        <Card className="bg-slate-50 dark:bg-slate-800/50 p-4">
+                        <Card className="bg-slate-50 p-4">
                           <h3 className="font-semibold mb-3 flex items-center gap-2">
                             <GraduationCap className="w-5 h-5" />
                             Academic Performance
                           </h3>
                           <div className="space-y-3">
                             <div>
-                              <span className="text-muted-foreground text-sm">CGPA:</span>
+                              <span className="text-gray-600 text-sm">CGPA:</span>
                               <p className="font-bold text-lg">{studentPerformance.cgpa}</p>
                             </div>
                             {studentPerformance.semesterMarks && studentPerformance.semesterMarks.length > 0 && (
@@ -384,8 +384,8 @@ export default function ManageStudentsPage() {
                                 <p className="text-sm font-semibold mb-2">Semester Marks:</p>
                                 <div className="grid grid-cols-2 gap-2">
                                   {studentPerformance.semesterMarks.map((sem, idx) => (
-                                    <div key={idx} className="p-2 bg-white dark:bg-slate-900 rounded border">
-                                      <p className="text-xs text-muted-foreground">Semester {sem.semester}</p>
+                                    <div key={idx} className="p-2 bg-white rounded border">
+                                      <p className="text-xs text-gray-600">Semester {sem.semester}</p>
                                       <p className="font-medium">{sem.marks}% ({sem.grade})</p>
                                     </div>
                                   ))}
@@ -398,18 +398,18 @@ export default function ManageStudentsPage() {
 
                       {/* Training Performance */}
                       {studentPerformance && studentPerformance.trainingPerformance && (
-                        <Card className="bg-slate-50 dark:bg-slate-800/50 p-4">
+                        <Card className="bg-slate-50 p-4">
                           <h3 className="font-semibold mb-3 flex items-center gap-2">
                             <Award className="w-5 h-5" />
                             Training Performance
                           </h3>
                           <div className="space-y-2">
                             <div>
-                              <span className="text-muted-foreground text-sm">Average Score:</span>
+                              <span className="text-gray-600 text-sm">Average Score:</span>
                               <p className="font-medium">{studentPerformance.trainingPerformance.averageScore}%</p>
                             </div>
                             <div>
-                              <span className="text-muted-foreground text-sm">Completed Trainings:</span>
+                              <span className="text-gray-600 text-sm">Completed Trainings:</span>
                               <p className="font-medium">{studentPerformance.trainingPerformance.completedTrainings}</p>
                             </div>
                           </div>
@@ -418,18 +418,18 @@ export default function ManageStudentsPage() {
 
                       {/* Assignment Performance */}
                       {studentPerformance && studentPerformance.assignmentPerformance && (
-                        <Card className="bg-slate-50 dark:bg-slate-800/50 p-4">
+                        <Card className="bg-slate-50 p-4">
                           <h3 className="font-semibold mb-3 flex items-center gap-2">
                             <Award className="w-5 h-5" />
                             Assignment Performance
                           </h3>
                           <div className="space-y-2">
                             <div>
-                              <span className="text-muted-foreground text-sm">Average Score:</span>
+                              <span className="text-gray-600 text-sm">Average Score:</span>
                               <p className="font-medium">{studentPerformance.assignmentPerformance.averageScore}%</p>
                             </div>
                             <div>
-                              <span className="text-muted-foreground text-sm">Submitted Assignments:</span>
+                              <span className="text-gray-600 text-sm">Submitted Assignments:</span>
                               <p className="font-medium">{studentPerformance.assignmentPerformance.submittedAssignments}</p>
                             </div>
                           </div>

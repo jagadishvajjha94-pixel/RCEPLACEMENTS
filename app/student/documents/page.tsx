@@ -162,7 +162,7 @@ export default function StudentDocumentsPage() {
                 <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-2">
                   My Documents
                 </h1>
-                <p className="text-muted-foreground">Upload and manage your resume, certificates, and documents</p>
+                <p className="text-gray-600">Upload and manage your resume, certificates, and documents</p>
               </div>
               <Button 
                 className="gap-2 bg-accent text-accent-foreground"
@@ -187,7 +187,7 @@ export default function StudentDocumentsPage() {
                       }`}
                     >
                       <div className="font-medium">All Documents</div>
-                      <div className="text-xs text-muted-foreground">{documents.length} files</div>
+                      <div className="text-xs text-gray-600">{documents.length} files</div>
                     </button>
                     {categories.map((cat) => (
                       <button
@@ -198,7 +198,7 @@ export default function StudentDocumentsPage() {
                         }`}
                       >
                         <div className="font-medium">{cat.name}</div>
-                        <div className="text-xs text-muted-foreground">{cat.count} files</div>
+                        <div className="text-xs text-gray-600">{cat.count} files</div>
                       </button>
                     ))}
                   </div>
@@ -207,7 +207,7 @@ export default function StudentDocumentsPage() {
                 {/* Upload Info */}
                 <Card className="glass-lg p-6 mt-4">
                   <h3 className="font-bold text-sm mb-3">Upload Tips</h3>
-                  <ul className="text-xs text-muted-foreground space-y-2">
+                  <ul className="text-xs text-gray-600 space-y-2">
                     <li>• Use PDF for resumes</li>
                     <li>• Max file size: 10 MB</li>
                     <li>• Keep names clear</li>
@@ -229,7 +229,7 @@ export default function StudentDocumentsPage() {
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: index * 0.05 }}
                         >
-                          <Card className="glass-lg p-6 hover:shadow-lg transition-all duration-300">
+                          <Card className="glass-lg p-6 hover:shadow-sm transition-all duration-300">
                             <div className="flex items-start justify-between">
                               <div className="flex items-start gap-4 flex-1">
                                 <div className="p-3 rounded-lg bg-accent/20 text-accent">
@@ -237,7 +237,7 @@ export default function StudentDocumentsPage() {
                                 </div>
                                 <div className="flex-1">
                                   <h4 className="font-semibold mb-1">{doc.name}</h4>
-                                  <div className="flex flex-wrap gap-2 items-center text-sm text-muted-foreground">
+                                  <div className="flex flex-wrap gap-2 items-center text-sm text-gray-600">
                                     <span>{doc.type}</span>
                                     <span>•</span>
                                     <span>{doc.size}</span>
@@ -287,9 +287,9 @@ export default function StudentDocumentsPage() {
                   </motion.div>
                 ) : (
                   <Card className="glass-lg p-12 text-center">
-                    <Upload className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-50" />
+                    <Upload className="w-12 h-12 text-gray-600 mx-auto mb-4 opacity-50" />
                     <h3 className="font-semibold mb-2">No documents uploaded yet</h3>
-                    <p className="text-muted-foreground mb-6">Upload your resume and documents to get started</p>
+                    <p className="text-gray-600 mb-6">Upload your resume and documents to get started</p>
                     <Button 
                       className="gap-2 bg-accent text-accent-foreground"
                       onClick={handleUpload}

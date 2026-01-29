@@ -80,7 +80,7 @@ export default function ConsultantHRDataPage() {
   ])
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="flex h-screen bg-gray-50">
       <AdminSidebar />
       <div className="flex-1 flex flex-col ml-72">
         <AdminHeader />
@@ -109,7 +109,7 @@ export default function ConsultantHRDataPage() {
             </motion.div>
 
             {/* Search & Filters */}
-            <Card className="p-4 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+            <Card className="p-4 border border-gray-200 bg-white">
               <div className="flex items-center gap-4">
                 <div className="flex-1 max-w-md">
                   <div className="relative">
@@ -136,7 +136,7 @@ export default function ConsultantHRDataPage() {
 
             {/* Main Tabs */}
             <Tabs defaultValue="hr-master" className="w-full">
-              <TabsList className="grid w-full grid-cols-6 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-2 border-gray-100 shadow-lg">
+              <TabsList className="grid w-full grid-cols-4 bg-gray-100 border border-gray-200">
                 <TabsTrigger value="hr-master">HR Master</TabsTrigger>
                 <TabsTrigger value="company-followup">Company Follow-up</TabsTrigger>
                 <TabsTrigger value="drive-status">Drive Status</TabsTrigger>
@@ -147,7 +147,7 @@ export default function ConsultantHRDataPage() {
 
               {/* HR Master Sheet Tab */}
               <TabsContent value="hr-master" className="space-y-6 mt-6">
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-xl font-bold text-gray-900">HR Master Sheet</h3>
                     <Button className="gap-2" onClick={() => {
@@ -210,7 +210,7 @@ export default function ConsultantHRDataPage() {
 
               {/* Company Follow-up Tab */}
               <TabsContent value="company-followup" className="space-y-6 mt-6">
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-xl font-bold text-gray-900">Company Follow-up Sheet (Area wise)</h3>
                     <Button className="gap-2">
@@ -293,7 +293,7 @@ export default function ConsultantHRDataPage() {
                     </div>
                   </Card>
                 </div>
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <h3 className="text-xl font-bold text-gray-900 mb-4">Drive Status Master Sheet</h3>
                   <div className="space-y-2">
                     <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
@@ -323,7 +323,7 @@ export default function ConsultantHRDataPage() {
 
               {/* Consultant Details Tab */}
               <TabsContent value="consultant" className="space-y-6 mt-6">
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <h3 className="text-xl font-bold text-gray-900 mb-4">Consultant Details</h3>
                   <div className="space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -344,7 +344,7 @@ export default function ConsultantHRDataPage() {
 
               {/* Career Links Tab */}
               <TabsContent value="career-links" className="space-y-6 mt-6">
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-xl font-bold text-gray-900">Career Links</h3>
                     <Button className="gap-2">
@@ -395,7 +395,7 @@ export default function ConsultantHRDataPage() {
 
               {/* Named Contacts Tab */}
               <TabsContent value="contacts" className="space-y-6 mt-6">
-                <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                <Card className="p-6 border border-gray-200 bg-white">
                   <h3 className="text-xl font-bold text-gray-900 mb-4">Named Contact Sheets</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {["Surendra Sir Contacts", "Prabhu Contacts", "Janardhan Contacts", "My Own Contacts", "IT Sector", "Non-IT Sector"].map((name) => (

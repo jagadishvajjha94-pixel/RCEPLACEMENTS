@@ -16,7 +16,7 @@ import { AdminHeader } from "@/components/admin-header"
 
 export default function ActivitiesPostersPage() {
   return (
-    <div className="flex h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="flex h-screen bg-gray-50">
       <AdminSidebar />
       <div className="flex-1 flex flex-col ml-72">
         <AdminHeader />
@@ -42,7 +42,7 @@ export default function ActivitiesPostersPage() {
 
             {/* Main Tabs */}
             <Tabs defaultValue="activities" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-2 border-gray-100 shadow-lg">
+              <TabsList className="grid w-full grid-cols-4 bg-gray-100 border border-gray-200">
                 <TabsTrigger value="activities">Activities & Photos</TabsTrigger>
                 <TabsTrigger value="posters">Posters</TabsTrigger>
               </TabsList>
@@ -50,7 +50,7 @@ export default function ActivitiesPostersPage() {
               {/* Activities Tab */}
               <TabsContent value="activities" className="space-y-6 mt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                  <Card className="p-6 border border-gray-200 bg-white">
                     <div className="flex items-center gap-3 mb-4">
                       <Camera className="w-6 h-6 text-blue-600" />
                       <h3 className="text-xl font-bold text-gray-900">T&P Activities & Photos</h3>
@@ -62,7 +62,7 @@ export default function ActivitiesPostersPage() {
                     </Button>
                   </Card>
 
-                  <Card className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm">
+                  <Card className="p-6 border border-gray-200 bg-white">
                     <div className="flex items-center gap-3 mb-4">
                       <Camera className="w-6 h-6 text-purple-600" />
                       <h3 className="text-xl font-bold text-gray-900">MBA Activities & Photos</h3>
@@ -80,7 +80,7 @@ export default function ActivitiesPostersPage() {
               <TabsContent value="posters" className="space-y-6 mt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {["Placement Posters", "Summer BootCamp Posters", "Welcome Posters"].map((poster, idx) => (
-                    <Card key={idx} className="p-6 border-2 border-gray-100 bg-white/80 backdrop-blur-sm hover:shadow-xl transition-all">
+                    <Card key={idx} className="p-6 border border-gray-200 bg-white hover:shadow-sm transition-all">
                       <div className="flex items-center gap-3 mb-4">
                         <FileImage className="w-6 h-6 text-orange-600" />
                         <h3 className="text-lg font-bold text-gray-900">{poster}</h3>
