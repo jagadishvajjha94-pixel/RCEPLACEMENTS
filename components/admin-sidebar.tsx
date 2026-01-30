@@ -2,7 +2,7 @@
 
 import { Link, useNavigate, useLocation } from "react-router-dom"
 import { motion } from "framer-motion"
-import { LayoutGrid, Briefcase, Users, Settings, LogOut, TrendingUp, GraduationCap, BookCheck, Zap, Code, Image, Database, Bot, Phone, BookOpen, HelpCircle, Link2 } from "lucide-react"
+import { LayoutGrid, Briefcase, Users, Settings, LogOut, TrendingUp, GraduationCap, BookCheck, Zap, Code, Database, Bot, Phone, BookOpen, HelpCircle, Link2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { AuthService } from "@/lib/auth-service"
 
@@ -14,7 +14,6 @@ const navItems = [
   { icon: Users, label: "Students", href: "/admin/students" },
   { icon: BookCheck, label: "Training & Assessments", href: "/admin/training-assessments" },
   { icon: Zap, label: "Boot Camps & Infosys", href: "/admin/bootcamp-infosys" },
-  { icon: Image, label: "Activities & Posters", href: "/admin/activities-posters" },
   { icon: GraduationCap, label: "Career Guidance", href: "/admin/career-guidance" },
   { icon: Phone, label: "Consultant & HR Data", href: "/admin/consultant-hr-data" },
   { icon: BookOpen, label: "ServiceNow Modules", href: "/admin/servicenow-modules" },

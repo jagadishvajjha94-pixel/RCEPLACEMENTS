@@ -33,7 +33,6 @@ import AdminTrainingAssessments from '@/app/admin/training-assessments/page';
 import AdminBootcampInfosys from '@/app/admin/bootcamp-infosys/page';
 import AdminInterviewPrep from '@/app/admin/interview-prep/page';
 import AdminMidMarksSyllabus from '@/app/admin/mid-marks-syllabus/page';
-import AdminActivitiesPosters from '@/app/admin/activities-posters/page';
 import AdminAicteRiseup from '@/app/admin/aicte-riseup/page';
 import AdminAIAutomation from '@/app/admin/ai-automation/page';
 import { AIAutomationService } from '@/lib/ai-automation-service';
@@ -151,7 +150,6 @@ const App = () => (
                 <Route path="bootcamp-infosys" element={<AdminBootcampInfosys />} />
                 <Route path="interview-prep" element={<AdminInterviewPrep />} />
                 <Route path="mid-marks-syllabus" element={<AdminMidMarksSyllabus />} />
-                <Route path="activities-posters" element={<AdminActivitiesPosters />} />
                 <Route path="aicte-riseup" element={<AdminAicteRiseup />} />
               </Route>
 
